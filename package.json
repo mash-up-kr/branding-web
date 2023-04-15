@@ -17,5 +17,10 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "engines": {
+    "node": "^16.x || ^18.x",
+    "npm": "please-use-yarn",
+    "yarn": "^1.22.x"
+  }
 }
