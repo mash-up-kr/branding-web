@@ -1,0 +1,9 @@
+{
+  "extends": ["stylelint-config-custom"],
+  "overrides": [
+    {
+      "files": ["**/*.{ts,tsx}"],
+      "customSyntax": "@stylelint/postcss-css-in-js"
+    }
+  ]
+}

@@ -17,6 +17,7 @@
     "@types/react": "^18.0.22",
     "eslint": "^7.32.0",
     "eslint-config-custom": "*",
+    "stylelint-config-custom": "*",
     "tsconfig": "*",
     "typescript": "^4.5.2"
   }

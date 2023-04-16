@@ -10,11 +10,16 @@
     "prepare": "husky install"
   },
   "devDependencies": {
+    "@stylelint/postcss-css-in-js": "^0.38.0",
     "eslint": "^7.32.0",
     "eslint-config-custom": "*",
     "husky": "^8.0.0",
     "lint-staged": "^13.2.1",
+    "postcss": "^8.4.21",
+    "postcss-syntax": "^0.36.2",
     "prettier": "^2.5.1",
+    "stylelint": "^15.5.0",
+    "stylelint-config-custom": "*",
     "turbo": "latest"
   },
   "name": "branding-web",
