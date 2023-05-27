@@ -13,7 +13,7 @@ class MyDocument extends Document {
         <Head>
           <meta charSet="UTF-8" />
           <link
-            href="https://static.mash-up.kr/fonts/Gilroy-Light.woff2"
+            href="https://static.mash-up.kr/fonts/Gilroy-Bold.woff2"
             rel="preload"
             as="font"
             type="font/woff2"
