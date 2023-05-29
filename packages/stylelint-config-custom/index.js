@@ -8,7 +8,7 @@ module.exports = {
   rules: {
     'font-family-no-missing-generic-family-keyword': [
       true,
-      { ignoreFontFamilies: ['Pretendard', 'Gilroy'] },
+      { ignoreFontFamilies: ['Pretendard', 'SpoqaHanSansNeo', 'Gilroy'] },
     ],
   },
 };
