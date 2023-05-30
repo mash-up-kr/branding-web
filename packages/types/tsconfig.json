@@ -1,8 +1,5 @@
 {
   "extends": "tsconfig/base.json",
-  "compilerOptions": {
-    "typeRoots": ["./@types/*"]
-  },
   "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["dist", "build", "node_modules"]
 }

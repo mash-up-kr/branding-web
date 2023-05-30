@@ -1,10 +1,5 @@
-import { Button } from 'ui';
+import { Header } from '@/common';
 
-const Home = () => (
-  <div>
-    <h1>Landing</h1>
-    <Button />
-  </div>
-);
+const Home = () => <Header />;
 
 export default Home;
