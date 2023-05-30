@@ -10,21 +10,24 @@ export const Header = styled.header`
     width: 144rem;
     height: 10rem;
     padding: 2.8rem 8rem;
-    background: ${theme.colors.black};
+    background: rgba(0, 0, 0, 0.8);
     transform: translate3d(-50%, 0, 0);
-    opacity: 0.8;
     backdrop-filter: blur(1rem);
 
     @media (max-width: ${theme.breakPoint.media.notebook}) {
       width: 100%;
     }
 
-    @media (max-width: ${theme.breakPoint.media.tablet}) {
+    @media (max-width: ${theme.breakPoint.media.tabletL}) {
       padding: 3rem 6rem;
     }
 
+    @media (max-width: ${theme.breakPoint.media.tabletS}) {
+      padding: 1.4rem 3rem;
+    }
+
     @media (max-width: ${theme.breakPoint.media.mobile}) {
-      padding: 1rem 2rem;
+      padding: 1.4rem 2rem;
     }
   `}
 `;
