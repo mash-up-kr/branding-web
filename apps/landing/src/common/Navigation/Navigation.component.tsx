@@ -1,10 +1,11 @@
+import { SECTION_IDS } from '@/constants';
 import * as Styled from './Navigation.styled';
 
 const NAVIGATION_ITEMS = [
-  { name: 'about', id: '/#about' },
-  { name: 'project', id: '/#project' },
-  { name: 'review', id: '/#review' },
-  { name: 'brand story', id: '/#brandStory' },
+  { name: 'about', id: SECTION_IDS.ABOUT },
+  { name: 'project', id: SECTION_IDS.PROJECT },
+  { name: 'review', id: SECTION_IDS.REVIEW },
+  { name: 'brand story', id: SECTION_IDS.BRAND_STORY },
 ];
 
 const Navigation = () => (
