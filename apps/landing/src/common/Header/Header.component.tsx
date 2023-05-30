@@ -1,9 +1,9 @@
-import { MashUpLogo } from 'ui';
 import * as Styled from './Header.styled';
+import { Heading } from '@/common';
 
 const Header = () => (
   <Styled.Header>
-    <MashUpLogo />
+    <Heading />
   </Styled.Header>
 );
 
