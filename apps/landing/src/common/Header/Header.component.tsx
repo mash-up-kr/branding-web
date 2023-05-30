@@ -1,9 +1,10 @@
 import * as Styled from './Header.styled';
-import { Heading } from '@/common';
+import { Heading, Navigation } from '@/common';
 
 const Header = () => (
   <Styled.Header>
     <Heading />
+    <Navigation />
   </Styled.Header>
 );
 

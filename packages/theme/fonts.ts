@@ -264,6 +264,12 @@ export const fonts = {
       font-family: Gilroy;
       line-height: normal;
     `,
+    bold14: css`
+      font-weight: 700;
+      font-size: 1.4rem;
+      font-family: Gilroy;
+      line-height: normal;
+    `,
     light60: css`
       font-weight: 300;
       font-size: 6rem;

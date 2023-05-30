@@ -7,6 +7,10 @@ export const Header = styled.header`
     top: 0;
     left: 50%;
     z-index: ${theme.zIndex.header};
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
     width: 144rem;
     height: 10rem;
     padding: 2.8rem 8rem;
