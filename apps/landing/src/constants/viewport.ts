@@ -4,6 +4,7 @@ export const VIEWPORT_SIZE = {
   MOBILE: 'MOBILE',
   TABLET_S: 'TABLET_S',
   TABLET_L: 'TABLET_L',
+  NOTEBOOK: 'NOTEBOOK',
   DESKTOP: 'DESKTOP',
 } as const;
 
