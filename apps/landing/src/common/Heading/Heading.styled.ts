@@ -1,7 +1,8 @@
+import Link from 'next/link';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
-export const Heading = styled.h1`
+export const LinkToHome = styled(Link)`
   display: flex;
   flex-flow: row nowrap;
   gap: 0.8rem;
