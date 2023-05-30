@@ -4,7 +4,7 @@ import { breakPoint } from '@/styles/breakPoint';
 import { VIEWPORT_SIZE, TViewPortSize } from '@/constants';
 
 export const useDetectViewport = (initialViewPort = breakPoint.value) => {
-  const [size, setSize] = useState<TViewPortSize>(VIEWPORT_SIZE.DESKTOP);
+  const [viewportSize, setViewportSize] = useState<TViewPortSize>(VIEWPORT_SIZE.DESKTOP);
 
   const { mobile, tabletS, tabletL } = initialViewPort;
 
@@ -13,13 +13,13 @@ export const useDetectViewport = (initialViewPort = breakPoint.value) => {
       const { innerWidth: vw } = window;
 
       if (vw <= mobile) {
-        setSize(VIEWPORT_SIZE.MOBILE);
+        setViewportSize(VIEWPORT_SIZE.MOBILE);
       } else if (vw > mobile && vw <= tabletS) {
-        setSize(VIEWPORT_SIZE.TABLET_S);
+        setViewportSize(VIEWPORT_SIZE.TABLET_S);
       } else if (vw > tabletS && vw <= tabletL) {
-        setSize(VIEWPORT_SIZE.TABLET_L);
+        setViewportSize(VIEWPORT_SIZE.TABLET_L);
       } else if (vw > tabletL) {
-        setSize(VIEWPORT_SIZE.DESKTOP);
+        setViewportSize(VIEWPORT_SIZE.DESKTOP);
       }
     };
 
@@ -33,5 +33,5 @@ export const useDetectViewport = (initialViewPort = breakPoint.value) => {
     };
   }, [mobile, tabletL, tabletS]);
 
-  return { size };
+  return { viewportSize };
 };
