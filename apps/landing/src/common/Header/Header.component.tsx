@@ -3,8 +3,10 @@ import { Heading, Navigation } from '@/common';
 
 const Header = () => (
   <Styled.Header>
-    <Heading />
-    <Navigation />
+    <Styled.HeaderInner>
+      <Heading />
+      <Navigation />
+    </Styled.HeaderInner>
   </Styled.Header>
 );
 
