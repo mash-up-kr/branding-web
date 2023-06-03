@@ -1,5 +1,10 @@
-import { Header } from '@/components/common';
+import { Header, Main } from '@/components/common';
 
-const Home = () => <Header />;
+const Home = () => (
+  <>
+    <Header />
+    <Main />
+  </>
+);
 
 export default Home;
