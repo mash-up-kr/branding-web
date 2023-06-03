@@ -4,9 +4,24 @@ import * as Styled from './IntroSection.styled';
 const IntroSection = () => (
   <DefaultLayout>
     <Styled.IntroSection>
-      <Styled.IntroTextAlignLeft>MASH-UP</Styled.IntroTextAlignLeft>
-      <Styled.IntroTextAlignRight>SEEKING</Styled.IntroTextAlignRight>
-      <Styled.IntroTextAlignLeft>VALUE FOR GROWTH</Styled.IntroTextAlignLeft>
+      <Styled.IntroTextAlignLeft>
+        <span>MASH-UP</span>
+        <Styled.GradientLineWrapper>
+          <Styled.GradientLine />
+        </Styled.GradientLineWrapper>
+      </Styled.IntroTextAlignLeft>
+      <Styled.IntroTextAlignRight>
+        <Styled.GradientLineWrapper>
+          <Styled.GradientLine />
+        </Styled.GradientLineWrapper>
+        <span>SEEKING</span>
+      </Styled.IntroTextAlignRight>
+      <Styled.IntroTextAlignLeft>
+        <span>VALUE FOR GROWTH</span>
+        <Styled.GradientLineWrapper>
+          <Styled.GradientLine />
+        </Styled.GradientLineWrapper>
+      </Styled.IntroTextAlignLeft>
     </Styled.IntroSection>
   </DefaultLayout>
 );

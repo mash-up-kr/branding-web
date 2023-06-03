@@ -11,6 +11,10 @@ export const IntroSection = styled.section`
 export const IntroTextAlignLeft = styled.div`
   ${({ theme }) => css`
     ${theme.fonts.en.extrabold110};
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 5rem;
+    align-items: flex-end;
     width: 100%;
     text-align: left;
 
@@ -39,6 +43,10 @@ export const IntroTextAlignLeft = styled.div`
 export const IntroTextAlignRight = styled.div`
   ${({ theme }) => css`
     ${theme.fonts.en.extrabold110};
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 5rem;
+    align-items: flex-end;
     width: 100%;
     margin: 1rem 0;
     text-align: right;
@@ -63,4 +71,14 @@ export const IntroTextAlignRight = styled.div`
       ${theme.fonts.en.extrabold58};
     }
   `}
+`;
+
+export const GradientLineWrapper = styled.div`
+  flex-grow: 1;
+  padding-bottom: 3.1rem;
+`;
+
+export const GradientLine = styled.div`
+  height: 0.2rem;
+  background: linear-gradient(90.38deg, #ff3b5e 0.11%, #6046ff 99.8%);
 `;
