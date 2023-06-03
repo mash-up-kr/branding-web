@@ -1,4 +1,4 @@
-import { Header } from '@/common';
+import { Header } from '@/components/common';
 
 const Home = () => <Header />;
 
