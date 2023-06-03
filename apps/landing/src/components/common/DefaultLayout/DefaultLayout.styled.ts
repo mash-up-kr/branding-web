@@ -20,6 +20,8 @@ export const Layout = styled.div`
     }
 
     @media (max-width: ${theme.breakPoint.media.mobile}) {
+      width: 37.5rem;
+      margin: 0 auto;
       padding: 0 2rem;
     }
   `}
