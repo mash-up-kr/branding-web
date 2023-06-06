@@ -5,10 +5,13 @@ import { breakPoint } from '@/styles/breakPoint';
 
 export const IntroSection = styled.section`
   ${({ theme }) => css`
+    position: relative;
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
     height: 100vh;
+    max-height: 100vh;
+    overflow: hidden;
 
     @media (max-width: ${theme.breakPoint.media.mobile}) {
       padding: 0 1.8rem 0 1.9rem;
