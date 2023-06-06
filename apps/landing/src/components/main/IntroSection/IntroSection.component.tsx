@@ -34,6 +34,7 @@ const IntroSection = () => (
         </Styled.GradientLineWrapper>
       </Styled.Growth>
       <LinearGradientSphere diameterRem={128} position="absolute" top="33.426%" left="0" />
+      <Styled.LinearGradientSphereDeem />
     </Styled.IntroSection>
   </DefaultLayout>
 );
