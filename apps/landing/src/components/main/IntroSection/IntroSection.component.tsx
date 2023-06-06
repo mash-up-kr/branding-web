@@ -1,3 +1,4 @@
+import { LinearGradientSphere } from 'ui';
 import { DefaultLayout } from '@/components/common';
 import * as Styled from './IntroSection.styled';
 
@@ -32,6 +33,7 @@ const IntroSection = () => (
           <Styled.GradientLine />
         </Styled.GradientLineWrapper>
       </Styled.Growth>
+      <LinearGradientSphere diameterRem={128} position="absolute" top="33.426%" left="0" />
     </Styled.IntroSection>
   </DefaultLayout>
 );
