@@ -144,3 +144,31 @@ export const GradientLine = styled.div`
     }
   `}
 `;
+
+export const LinearGradientSphereDeem = styled.div`
+  ${({ theme }) => css`
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: ${theme.globalZIndex.background};
+    width: 100%;
+    height: 44.44%;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%);
+
+    @media (max-width: ${theme.breakPoint.media.notebook}) {
+      height: 43.1944%;
+    }
+
+    @media (max-width: ${theme.breakPoint.media.tabletL}) {
+      height: 43.8888%;
+    }
+
+    @media (max-width: ${theme.breakPoint.media.tabletS}) {
+      height: 50.2471%;
+    }
+
+    @media (max-width: ${theme.breakPoint.media.mobile}) {
+      height: 50.0749%;
+    }
+  `}
+`;

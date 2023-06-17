@@ -39,8 +39,10 @@ const SPHERE_COLOR = {
   NODE: 'linear-gradient(180deg, #580000 -3.9%, #000000 20.31%)',
 };
 
+type TDiameter = string;
+
 export interface SphereContainerProps {
-  diameterRem: number;
+  diameter: TDiameter;
   position?: 'relative' | 'absolute' | 'static' | 'fixed' | 'sticky';
   top?: string;
   bottom?: string;
@@ -49,7 +51,7 @@ export interface SphereContainerProps {
 }
 
 export const SphereContainer = styled.div<SphereContainerProps>`
-  ${({ theme, diameterRem, position = 'relative', top, bottom, left, right }) => css`
+  ${({ theme, diameter, position = 'relative', top, bottom, left, right }) => css`
     position: ${position};
     top: ${top ? `${top}` : 'unset'};
     right: ${right ? `${right}` : 'unset'};
@@ -60,31 +62,31 @@ export const SphereContainer = styled.div<SphereContainerProps>`
     flex-direction: column;
     align-items: center;
     width: 100%;
-    height: ${diameterRem}rem;
+    height: ${diameter};
     opacity: 0.7;
   `}
 `;
 
-export const BackLight = styled.div<{ variant?: TSphereVariants; diameterRem: number }>`
-  ${({ variant, diameterRem }) => css`
+export const BackLight = styled.div<{ variant?: TSphereVariants; diameter: TDiameter }>`
+  ${({ variant, diameter }) => css`
     position: absolute;
     top: -0.5rem;
-    width: ${diameterRem}rem;
-    height: ${diameterRem}rem;
+    width: ${diameter};
+    height: ${diameter};
     background: ${variant ? SPHERE_BACKLIGHT_COLOR[variant] : SPHERE_BACKLIGHT_COLOR.DEFAULT};
-    border-radius: ${diameterRem}rem;
+    border-radius: ${diameter};
     opacity: 0.8;
     filter: blur(6.4rem);
   `}
 `;
 
-export const Sphere = styled.div<{ variant?: TSphereVariants; diameterRem: number }>`
-  ${({ variant, diameterRem }) => css`
+export const Sphere = styled.div<{ variant?: TSphereVariants; diameter: TDiameter }>`
+  ${({ variant, diameter }) => css`
     position: absolute;
-    width: ${diameterRem}rem;
-    height: ${diameterRem}rem;
+    width: ${diameter};
+    height: ${diameter};
     background: ${variant ? SPHERE_COLOR[variant] : SPHERE_COLOR.DEFAULT};
-    border-radius: ${diameterRem}rem;
+    border-radius: ${diameter};
     box-shadow: ${variant ? BOX_SHADOW[variant] : BOX_SHADOW.DEFAULT};
   `}
 `;
