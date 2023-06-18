@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 export const Layout = styled.div`
   ${({ theme }) => css`
     width: 144rem;
+    height: 100%;
     margin: 0 auto;
     padding: 0 8rem;
 

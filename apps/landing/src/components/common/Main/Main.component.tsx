@@ -1,8 +1,9 @@
-import { IntroSection } from '@/components/main';
+import { IntroSection, IntroTypingSection } from '@/components/main';
 
 const Main = () => (
   <main>
     <IntroSection />
+    <IntroTypingSection />
   </main>
 );
 
