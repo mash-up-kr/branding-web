@@ -5,24 +5,24 @@ import { fonts } from 'theme';
 import { breakPoint } from '@/styles/breakPoint';
 
 export const IntroSection = styled.section`
+  position: relative;
+  height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+  scroll-snap-align: center;
+`;
+
+export const IntroSectionLayout = styled.div`
   ${({ theme }) => css`
-    position: relative;
-    height: 100vh;
-    max-height: 100vh;
-    overflow: hidden;
-    scroll-snap-align: center;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    height: 100%;
 
     @media (max-width: ${theme.breakPoint.media.mobile}) {
       padding: 0 1.8rem 0 1.9rem;
     }
   `}
-`;
-
-export const IntroSectionLayout = styled.div`
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
-  height: 100%;
 `;
 
 const infoTextWrapperStyle = css`
