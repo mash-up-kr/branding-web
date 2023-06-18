@@ -130,7 +130,7 @@ export const GradientLineWrapper = styled.div`
     }
 
     @media (max-width: ${theme.breakPoint.media.mobile}) {
-      padding-bottom: 1.5rem;
+      padding-bottom: 1.6rem;
     }
   `}
 `;
