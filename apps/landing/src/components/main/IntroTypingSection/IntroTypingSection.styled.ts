@@ -7,6 +7,7 @@ export const IntroTypingSection = styled.section`
   height: 100vh;
   max-height: 100vh;
   overflow: hidden;
+  scroll-snap-align: center;
 `;
 
 export const TypingContainer = styled.div`
