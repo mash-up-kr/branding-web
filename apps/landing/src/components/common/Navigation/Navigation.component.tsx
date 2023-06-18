@@ -1,4 +1,5 @@
 import { SECTION_IDS } from '@/constants';
+
 import * as Styled from './Navigation.styled';
 
 const NAVIGATION_ITEMS = [

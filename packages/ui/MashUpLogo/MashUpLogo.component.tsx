@@ -1,4 +1,5 @@
 import { HTMLAttributes } from 'react';
+
 import MashUpLogoSvg from '../assets/svg/mash-up-logo.svg';
 
 interface MashUpLogoProps extends HTMLAttributes<SVGSVGElement> {

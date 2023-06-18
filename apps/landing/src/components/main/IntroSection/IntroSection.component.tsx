@@ -1,8 +1,10 @@
 import { LinearGradientSphere } from 'ui';
+
 import { DefaultLayout } from '@/components/common';
-import * as Styled from './IntroSection.styled';
-import { useDetectViewport } from '@/hooks';
 import { TViewPortSize } from '@/constants';
+import { useDetectViewport } from '@/hooks';
+
+import * as Styled from './IntroSection.styled';
 
 const LINEAR_GRADIENT_SPHERE_DIAMETER: Record<TViewPortSize, string> = {
   DESKTOP: '128rem',
