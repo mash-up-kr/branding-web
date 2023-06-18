@@ -1,9 +1,15 @@
-import { PropsWithChildren } from 'react';
+import { ReactNode } from 'react';
 
 import * as Styled from './SnapParent.styled';
 
-const SnapParent = ({ children }: PropsWithChildren) => (
-  <Styled.SnapParent>{children}</Styled.SnapParent>
+interface SnapParentProps extends Styled.SnapParentProps {
+  children: ReactNode;
+}
+
+const SnapParent = ({ axis, strictness, children }: SnapParentProps) => (
+  <Styled.SnapParent axis={axis} strictness={strictness}>
+    {children}
+  </Styled.SnapParent>
 );
 
 export default SnapParent;

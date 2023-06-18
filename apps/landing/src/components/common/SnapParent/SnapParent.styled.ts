@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
-interface SnapParentProps {
+export interface SnapParentProps {
   axis?: 'x' | 'y';
   strictness?: 'proximity' | 'mandatory';
 }
