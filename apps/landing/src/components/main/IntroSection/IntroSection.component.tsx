@@ -26,45 +26,47 @@ const IntroSection = () => {
   const { viewportSize } = useDetectViewport();
 
   return (
-    <DefaultLayout>
-      <Styled.IntroSection>
-        <Styled.MashUp>
-          <span>MASH-UP</span>
-          <Styled.GradientLineWrapper>
-            <Styled.GradientLine />
-          </Styled.GradientLineWrapper>
-        </Styled.MashUp>
-        <Styled.Seeking>
-          <Styled.GradientLineWrapper>
-            <Styled.GradientLine />
-          </Styled.GradientLineWrapper>
-          <span>SEEKING</span>
-        </Styled.Seeking>
-        <Styled.ValueForGrowth>
-          <span>VALUE FOR GROWTH</span>
-          <Styled.GradientLineWrapper>
-            <Styled.GradientLine />
-          </Styled.GradientLineWrapper>
-        </Styled.ValueForGrowth>
+    <Styled.IntroSection>
+      <DefaultLayout>
+        <Styled.IntroSectionLayout>
+          <Styled.MashUp>
+            <span>MASH-UP</span>
+            <Styled.GradientLineWrapper>
+              <Styled.GradientLine />
+            </Styled.GradientLineWrapper>
+          </Styled.MashUp>
+          <Styled.Seeking>
+            <Styled.GradientLineWrapper>
+              <Styled.GradientLine />
+            </Styled.GradientLineWrapper>
+            <span>SEEKING</span>
+          </Styled.Seeking>
+          <Styled.ValueForGrowth>
+            <span>VALUE FOR GROWTH</span>
+            <Styled.GradientLineWrapper>
+              <Styled.GradientLine />
+            </Styled.GradientLineWrapper>
+          </Styled.ValueForGrowth>
 
-        <Styled.ValueFor>
-          <span>VALUE FOR</span>
-        </Styled.ValueFor>
-        <Styled.Growth>
-          <span>GROWTH</span>
-          <Styled.GradientLineWrapper>
-            <Styled.GradientLine />
-          </Styled.GradientLineWrapper>
-        </Styled.Growth>
-        <LinearGradientSphere
-          diameter={LINEAR_GRADIENT_SPHERE_DIAMETER[viewportSize]}
-          position="absolute"
-          top={LINEAR_GRADIENT_SPHERE_POSITION_TOP[viewportSize]}
-          left="0"
-        />
-        <Styled.LinearGradientSphereDeem />
-      </Styled.IntroSection>
-    </DefaultLayout>
+          <Styled.ValueFor>
+            <span>VALUE FOR</span>
+          </Styled.ValueFor>
+          <Styled.Growth>
+            <span>GROWTH</span>
+            <Styled.GradientLineWrapper>
+              <Styled.GradientLine />
+            </Styled.GradientLineWrapper>
+          </Styled.Growth>
+          <LinearGradientSphere
+            diameter={LINEAR_GRADIENT_SPHERE_DIAMETER[viewportSize]}
+            position="absolute"
+            top={LINEAR_GRADIENT_SPHERE_POSITION_TOP[viewportSize]}
+            left="0"
+          />
+          <Styled.LinearGradientSphereDeem />
+        </Styled.IntroSectionLayout>
+      </DefaultLayout>
+    </Styled.IntroSection>
   );
 };
 
