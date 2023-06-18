@@ -1,5 +1,6 @@
-import * as Styled from './Header.styled';
 import { Heading, Navigation } from '@/components/common';
+
+import * as Styled from './Header.styled';
 
 const Header = () => (
   <Styled.Header>
