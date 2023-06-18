@@ -9,6 +9,13 @@ export const fonts = {
       line-height: 1.5;
       letter-spacing: -0.03em;
     `,
+    bold36: css`
+      font-weight: 700;
+      font-size: 3.6rem;
+      font-family: SpoqaHanSansNeo;
+      line-height: 1.5;
+      letter-spacing: -0.05em;
+    `,
     bold32: css`
       font-weight: 700;
       font-size: 3.2rem;
