@@ -1,7 +1,8 @@
 import throttle from 'lodash-es/throttle';
 import { useEffect, useState } from 'react';
-import { breakPoint } from '@/styles/breakPoint';
+
 import { VIEWPORT_SIZE, TViewPortSize } from '@/constants';
+import { breakPoint } from '@/styles/breakPoint';
 
 export const useDetectViewport = (initialViewPort = breakPoint.value) => {
   const [viewportSize, setViewportSize] = useState<TViewPortSize>(VIEWPORT_SIZE.DESKTOP);

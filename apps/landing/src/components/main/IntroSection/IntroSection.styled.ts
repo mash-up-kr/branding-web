@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { fonts } from 'theme';
+
 import { breakPoint } from '@/styles/breakPoint';
 
 export const IntroSection = styled.section`

@@ -1,6 +1,7 @@
 import { fonts, colors, globalZIndex } from 'theme';
-import { zIndex } from './zIndex';
+
 import { breakPoint } from './breakPoint';
+import { zIndex } from './zIndex';
 
 export const theme = {
   fonts,

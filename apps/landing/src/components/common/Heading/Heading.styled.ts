@@ -1,6 +1,6 @@
-import Link from 'next/link';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import Link from 'next/link';
 
 export const LinkToHome = styled(Link)`
   display: flex;
