@@ -115,22 +115,22 @@ export const Growth = styled.div`
 export const GradientLineWrapper = styled.div`
   ${({ theme }) => css`
     flex-grow: 1;
-    padding-bottom: 3.7rem;
+    padding-bottom: 3rem;
 
     @media (max-width: ${theme.breakPoint.media.notebook}) {
-      padding-bottom: 2.8rem;
+      padding-bottom: 2.2rem;
     }
 
     @media (max-width: ${theme.breakPoint.media.tabletL}) {
-      padding-bottom: 2.1rem;
+      padding-bottom: 1.6rem;
     }
 
     @media (max-width: ${theme.breakPoint.media.tabletS}) {
-      padding-bottom: 1.8rem;
+      padding-bottom: 1.3rem;
     }
 
     @media (max-width: ${theme.breakPoint.media.mobile}) {
-      padding-bottom: 2.1rem;
+      padding-bottom: 1.5rem;
     }
   `}
 `;
