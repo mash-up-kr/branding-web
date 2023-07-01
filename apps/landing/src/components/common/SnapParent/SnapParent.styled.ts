@@ -11,5 +11,11 @@ export const SnapParent = styled.div<SnapParentProps>`
     scroll-snap-type: ${axis} ${strictness};
     height: 100vh;
     overflow-y: scroll;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+
+    &::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera*/
+    }
   `}
 `;
