@@ -21,6 +21,8 @@ export const TypingContainer = styled.div`
     padding: 0 8.9rem 0 9rem;
     line-height: 8rem;
     letter-spacing: normal;
+    white-space: nowrap;
+    text-align: center;
 
     @media (max-width: ${theme.breakPoint.media.notebook}) {
       ${theme.fonts.kr.bold26};
@@ -46,5 +48,26 @@ export const TypingContainer = styled.div`
     @media (max-width: ${theme.breakPoint.media.mobile}) {
       padding: 0 1.9rem;
     }
+  `}
+`;
+
+export const TextRelative = styled.div`
+  position: relative;
+`;
+
+interface MaskLineProps {
+  isMaskLineIntersect: boolean;
+}
+
+export const MaskLine = styled.div<MaskLineProps>`
+  ${({ isMaskLineIntersect }) => css`
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: ${isMaskLineIntersect ? '0%' : '100%'};
+    height: 100%;
+    background: #000000;
+    opacity: 0.9;
+    transition: 2s linear;
   `}
 `;
