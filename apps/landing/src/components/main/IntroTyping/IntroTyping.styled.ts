@@ -59,6 +59,6 @@ export const MaskLine = styled.div<MaskLineProps>`
     height: 100%;
     background: #000000;
     opacity: 0.9;
-    transition: 2s linear;
+    transition: ${isMaskLineIntersect ? '2s linear' : 'none'};
   `}
 `;
