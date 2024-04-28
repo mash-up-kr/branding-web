@@ -7,7 +7,8 @@
     "lint:code": "eslint --ext .js,.jsx,.ts,.tsx",
     "lint:code-fix": "eslint --fix --ext .js,.jsx,.ts,.tsx",
     "prettier:code-fix": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "nvm:setting": "cd ./script/nvm && chmod 755 ./nvm.sh && ./nvm.sh"
   },
   "devDependencies": {
     "@stylelint/postcss-css-in-js": "^0.38.0",
