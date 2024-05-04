@@ -1,4 +1,9 @@
 {
   "extends": "tsconfig/base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": { "@/*": ["src/*"] },
+    "typeRoots": ["./@types/*"]
+  },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
 }

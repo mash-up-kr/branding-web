@@ -1,10 +1,10 @@
-import { Button } from 'ui';
+import { Header, Main } from '@/components/common';
 
 const Home = () => (
-  <div>
-    <h1>Landing</h1>
-    <Button />
-  </div>
+  <>
+    <Header />
+    <Main />
+  </>
 );
 
 export default Home;

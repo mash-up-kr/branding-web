@@ -23,15 +23,15 @@
     "turbo": "latest"
   },
   "name": "branding-web",
-  "packageManager": "yarn@1.22.19",
+  "packageManager": "yarn@1.19.1",
   "workspaces": [
     "apps/*",
     "packages/*"
   ],
   "engines": {
-    "node": "^16.x || ^18.x",
+    "node": "^20.x",
     "npm": "please-use-yarn",
-    "yarn": "^1.22.x"
+    "yarn": "^1.19.x"
   },
   "lint-staged": {
     "*.json": [
