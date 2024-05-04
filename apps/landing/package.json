@@ -12,21 +12,22 @@
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "lodash-es": "^4.17.21",
-    "next": "latest",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "next": "14.2.3",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
     "ui": "*",
+    "constant": "*",
     "theme": "*",
     "types": "*"
   },
   "devDependencies": {
-    "@types/node": "^17.0.12",
+    "@types/node": "20.12.8",
     "@types/react": "^18.0.22",
     "@types/react-dom": "^18.0.7",
     "@types/lodash-es": "^4.17.7",
     "eslint-config-custom": "*",
     "tsconfig": "*",
-    "typescript": "^4.5.3",
+    "typescript": "5.4.5",
     "@svgr/webpack": "^8.0.1"
   }
 }

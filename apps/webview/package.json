@@ -1,5 +1,5 @@
 {
-  "name": "docs",
+  "name": "webview",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -9,17 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "next": "latest",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "next": "14.2.3",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
     "ui": "*"
   },
   "devDependencies": {
-    "@types/node": "^17.0.12",
+    "@types/node": "20.12.8",
     "@types/react": "^18.0.22",
     "@types/react-dom": "^18.0.7",
     "eslint-config-custom": "*",
     "tsconfig": "*",
-    "typescript": "^4.5.3"
+    "typescript": "5.4.5"
   }
 }
