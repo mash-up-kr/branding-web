@@ -1,6 +1,13 @@
+import localFont from 'next/font/local';
 import { type ReactNode } from 'react';
 
 import VConsoleScript from '@/lib/VConsole';
+
+const pretendard = localFont({
+  src: '../public/fonts/PretendardVariable.woff2',
+  display: 'swap',
+  weight: '45 920',
+});
 
 const RootLayout = ({
   // Layouts must accept a children prop.
@@ -9,7 +16,7 @@ const RootLayout = ({
 }: {
   children: ReactNode;
 }) => (
-  <html lang="en">
+  <html lang="ko" className={pretendard.className}>
     <body>{children}</body>
     <VConsoleScript />
   </html>
