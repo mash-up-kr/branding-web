@@ -1,5 +1,7 @@
 import { type ReactNode } from 'react';
 
+import VConsoleScript from '@/lib/VConsole';
+
 const RootLayout = ({
   // Layouts must accept a children prop.
   // This will be populated with nested layouts or pages
@@ -9,6 +11,7 @@ const RootLayout = ({
 }) => (
   <html lang="en">
     <body>{children}</body>
+    <VConsoleScript />
   </html>
 );
 
