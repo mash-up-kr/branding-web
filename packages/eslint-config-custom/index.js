@@ -41,5 +41,6 @@ module.exports = {
     ],
     'no-throw-literal': 'off',
     'no-nested-ternary': 'off',
+    'no-use-before-define': 'off',
   },
 };
