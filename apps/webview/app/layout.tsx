@@ -1,5 +1,6 @@
 import { type ReactNode } from 'react';
 
+import Providers from '@/app/providers';
 import VConsoleScript from '@/lib/VConsole';
 
 const RootLayout = ({
@@ -10,7 +11,9 @@ const RootLayout = ({
   children: ReactNode;
 }) => (
   <html lang="en">
-    <body>{children}</body>
+    <body>
+      <Providers>{children}</Providers>
+    </body>
     <VConsoleScript />
   </html>
 );

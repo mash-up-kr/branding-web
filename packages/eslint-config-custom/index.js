@@ -39,6 +39,7 @@ module.exports = {
         'newlines-between': 'always',
       },
     ],
+    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     'no-throw-literal': 'off',
     'no-nested-ternary': 'off',
     'no-use-before-define': 'off',
