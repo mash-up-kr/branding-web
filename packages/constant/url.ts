@@ -1,2 +1,3 @@
 const staticOrigin = 'static.mash-up.kr';
-export const createSvgUrl = (path: string) => `//${staticOrigin}/images/svg/breed/${path}`;
+export const createSvgUrl = (basePath: string) => (path: string) =>
+  `//${staticOrigin}/images/svg/${basePath}/${path}.svg`;

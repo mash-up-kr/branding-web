@@ -3,12 +3,15 @@ import Image from 'next/image';
 import React, { forwardRef } from 'react';
 
 type SvgImageProps = Omit<React.ComponentPropsWithoutRef<typeof Image>, 'src' | 'alt'> & {
-  pathname: string;
+  basePath?: string;
+  path: string;
 };
 
-const SvgImage = forwardRef<HTMLImageElement, SvgImageProps>(({ pathname, ...restProps }, ref) => (
-  <Image ref={ref} src={createSvgUrl(pathname)} alt="" unoptimized {...restProps} />
-));
+const SvgImage = forwardRef<HTMLImageElement, SvgImageProps>(
+  ({ basePath = 'mashong', path, ...restProps }, ref) => (
+    <Image ref={ref} src={createSvgUrl(basePath)(path)} alt="" unoptimized {...restProps} />
+  ),
+);
 
 SvgImage.displayName = 'SvgImage';
 
