@@ -1,8 +1,8 @@
 import { createSvgUrl } from 'constant';
 import Image from 'next/image';
-import React, { forwardRef } from 'react';
+import { forwardRef, type ComponentPropsWithoutRef } from 'react';
 
-type SvgImageProps = Omit<React.ComponentPropsWithoutRef<typeof Image>, 'src' | 'alt'> & {
+type SvgImageProps = Omit<ComponentPropsWithoutRef<typeof Image>, 'src' | 'alt'> & {
   basePath?: string;
   path: string;
 };
