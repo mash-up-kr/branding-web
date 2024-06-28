@@ -1,5 +1,6 @@
 import { css } from '@/styled-system/css';
 import BottomSheet, { BottomSheetProps } from '@/ui/BottomSheet';
+import SvgImage from '@/ui/svg-image';
 
 const CheckInBottomSheet = ({ isOpen, onClose, ...restProps }: BottomSheetProps) => (
   <BottomSheet isOpen={isOpen} onClose={onClose} height={278} {...restProps}>
@@ -102,13 +103,7 @@ const AttendanceCheck = ({ setChecked, checkIndex }) => (
         gap: '0.8rem',
       })}
     >
-      <div
-        className={css({
-          width: '2.4rem',
-          height: '2.4rem',
-          background: 'black',
-        })}
-      />
+      <SvgImage path={`icon-cloud-${checkIndex + 1}`} width={24} height={24} />
       <div
         className={css({
           fontWeight: 500,
