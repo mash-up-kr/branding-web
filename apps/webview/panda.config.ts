@@ -31,6 +31,7 @@ export default defineConfig({
         'gray.900': { value: '#2C3037' },
         'gray.600': { value: '#686F7E' },
         'brand.500': { value: '#6A36FF' },
+        'brand.300': { value: '#CDBFF6' },
       },
     },
   },
