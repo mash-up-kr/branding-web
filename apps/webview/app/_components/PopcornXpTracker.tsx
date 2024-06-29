@@ -1,6 +1,11 @@
 import { css } from '@/styled-system/css';
 
-export const PopcornXpTracker = () => (
+interface PopcornXpTrackerProps {
+  currentValue: number;
+  maxValue: number;
+}
+
+export const PopcornXpTracker = ({ currentValue, maxValue }: PopcornXpTrackerProps) => (
   <div
     className={css({
       display: 'flex',
@@ -51,12 +56,12 @@ export const PopcornXpTracker = () => (
           color: 'gray.500',
         })}
       >
-        10000점 남음
+        {maxValue - currentValue}점 남음
       </span>
     </div>
     <progress
-      value={50000}
-      max={100000}
+      value={currentValue}
+      max={maxValue}
       className={css({
         width: '100%',
         height: 12,
@@ -81,6 +86,7 @@ export const PopcornXpTracker = () => (
         flexDirection: 'column',
         alignItems: 'center',
         borderRadius: 12,
+        cursor: 'pointer',
       })}
     >
       <span
@@ -103,7 +109,7 @@ export const PopcornXpTracker = () => (
           letterSpacing: '-1%',
         })}
       >
-        10개 보유
+        {currentValue}개 보유
       </span>
     </button>
   </div>
