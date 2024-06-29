@@ -1,8 +1,13 @@
 'use client';
 
 // import { feedPopcorn } from '@/app/_actions/feedPopcorn';
+
+import { useState } from 'react';
+
 import { css } from '@/styled-system/css';
 import SvgImage from '@/ui/svg-image';
+
+import { ErrorToast } from './ErrorToast';
 
 interface PopcornXpTrackerProps {
   currentValue: number;
@@ -12,6 +17,7 @@ interface PopcornXpTrackerProps {
 export const PopcornXpTracker = ({ currentValue, maxValue }: PopcornXpTrackerProps) => {
   const remainingValue = maxValue - currentValue;
   const levelUpAvailable = remainingValue === 0;
+  const [isError, setIsError] = useState(false);
 
   return (
     <div
@@ -90,7 +96,11 @@ export const PopcornXpTracker = ({ currentValue, maxValue }: PopcornXpTrackerPro
         onClick={() => {
           console.log('clicked');
 
-          // feedPopcorn();
+          if (currentValue === 0) {
+            setIsError(true);
+          } else {
+            // feedPopcorn();
+          }
         }}
         className={css({
           background: levelUpAvailable ? '#6A36FF' : '#F5F1FF',
@@ -157,6 +167,9 @@ export const PopcornXpTracker = ({ currentValue, maxValue }: PopcornXpTrackerPro
           </>
         )}
       </button>
+      <ErrorToast isOpen={isError} onClose={() => setIsError(false)}>
+        팝콘을 모아주세요!
+      </ErrorToast>
     </div>
   );
 };
