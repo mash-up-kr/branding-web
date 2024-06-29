@@ -113,8 +113,8 @@ const BottomSheet = ({
     width: '100%',
     left: 0,
     height: '100%',
-    opacity: 0.2,
-    background: '#111',
+    opacity: 0.5,
+    background: '#000',
     zIndex: -1,
   });
 
@@ -127,6 +127,7 @@ const BottomSheet = ({
     borderRadius: '20px',
     position: 'relative',
     transition: isDragging ? 'none' : 'transform 0.5s ease',
+    marginBottom: 20,
   });
 
   const grabberStyle = css({
