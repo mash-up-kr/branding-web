@@ -1,11 +1,12 @@
 import { SnapParent } from '@/components/common';
-import { IntroSection, IntroTypingSection } from '@/components/main';
+import { IntroSection, IntroTypingSection, PlatformIntroduceSection } from '@/components/main';
 
 const Main = () => (
   <main>
     <SnapParent>
       <IntroSection />
       <IntroTypingSection />
+      <PlatformIntroduceSection />
     </SnapParent>
   </main>
 );
