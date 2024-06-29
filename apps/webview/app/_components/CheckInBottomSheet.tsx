@@ -43,7 +43,7 @@ const CheckInBottomSheet = ({ isOpen, onClose, ...restProps }: BottomSheetProps)
     >
       {/** @todo API */}
       {new Array(4).fill(null).map((_, index) => (
-        <AttendanceCheck key={index} checkIndex={index} setChecked={undefined} />
+        <AttendanceCheck key={index} checkIndex={index} setChecked={() => {}} />
       ))}
     </div>
     <button
@@ -68,26 +68,29 @@ const CheckInBottomSheet = ({ isOpen, onClose, ...restProps }: BottomSheetProps)
 );
 
 export default CheckInBottomSheet;
-const labelStyles = css({
-  display: 'inline-flex',
-  alignItems: 'center',
-  cursor: 'pointer',
-  userSelect: 'none',
-});
 
-const inputStyles = css({
-  display: 'none',
-});
+interface AttendanceCheckProps {
+  setChecked: () => void;
+  checkIndex: number;
+}
 
-// @ts-ignore
-const AttendanceCheck = ({ setChecked, checkIndex }) => (
+const AttendanceCheck = ({ setChecked, checkIndex }: AttendanceCheckProps) => (
   // eslint-disable-next-line jsx-a11y/label-has-associated-control
-  <label className={labelStyles}>
+  <label
+    className={css({
+      display: 'inline-flex',
+      alignItems: 'center',
+      cursor: 'pointer',
+      userSelect: 'none',
+    })}
+  >
     <input
       type="checkbox"
-      className={inputStyles}
+      className={css({
+        display: 'none',
+      })}
       onChange={() => {
-        setChecked(checkIndex);
+        setChecked();
       }}
     />
     <div
