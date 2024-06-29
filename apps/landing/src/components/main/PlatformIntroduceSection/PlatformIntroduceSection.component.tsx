@@ -30,7 +30,10 @@ const PlatformIntroduceSection = () => (
           ({ type, description, imageUrl, lottieData }, index) =>
             type === 'text' ? (
               <Styled.IntroduceTextCard key={`introduce-text-card-${index}`}>
-                <p>{description}</p>
+                <Styled.IntroduceText>
+                  {description}
+                  <Styled.IntroduceGradientText>{description}</Styled.IntroduceGradientText>
+                </Styled.IntroduceText>
                 <Styled.LottieWrapper>
                   <Lottie animationData={lottieData} />
                 </Styled.LottieWrapper>

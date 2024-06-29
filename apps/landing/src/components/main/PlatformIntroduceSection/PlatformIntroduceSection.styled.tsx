@@ -199,6 +199,12 @@ export const IntroduceTextCard = styled(IntroduceCard)`
     white-space: pre-wrap;
     background: ${theme.colors.gray95};
 
+    &:hover {
+      & > p > p {
+        opacity: 1;
+      }
+    }
+
     @media (max-width: ${theme.breakPoint.media.notebook}) {
       ${theme.fonts.kr.bold22};
     }
@@ -211,6 +217,29 @@ export const IntroduceTextCard = styled(IntroduceCard)`
       padding: 20px;
     }
   `}
+`;
+
+export const IntroduceText = styled.p`
+  ${({ theme }) => css`
+    position: relative;
+    z-index: 1;
+    color: transparent;
+    background-image: linear-gradient(to right, ${theme.colors.gray50}, ${theme.colors.gray50});
+    background-clip: text;
+  `}
+`;
+
+export const IntroduceGradientText = styled.p`
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  background-image: linear-gradient(90deg, #ff3b5e 0.11%, #6046ff 99.8%);
+  background-clip: text;
+  opacity: 0;
+  transition: opacity 0.3s linear;
 `;
 
 interface IntroduceImageCardProps {
