@@ -3,3 +3,4 @@ export { default as IntroTypingSection } from './IntroTypingSection/IntroTypingS
 export { default as IntroTyping } from './IntroTyping/IntroTyping.component';
 export { default as IntroTypingMobile } from './IntroTypingMobile/IntroTypingMobile.component';
 export { default as PlatformIntroduceSection } from './PlatformIntroduceSection/PlatformIntroduceSection.component';
+export { default as JoinRecruitCard } from './JoinRecruitCard/JoinRecruitCard.component';

@@ -1,4 +1,4 @@
-import { css } from '@emotion/react';
+import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 
 export const PlatformIntroduceSection = styled.section`
@@ -93,6 +93,10 @@ export const PlatformSlideLayout = styled.div`
   display: flex;
   flex-flow: column nowrap;
   gap: 24px;
+  align-items: start;
+  justify-content: start;
+  max-width: 100vw;
+  overflow: hidden;
 `;
 
 export const PlatformList = styled.ul`
@@ -158,25 +162,35 @@ export const Platform = styled.li`
   `}
 `;
 
-export const IntroduceSlide = styled.ul`
-  display: flex;
-  gap: 22px;
-  max-width: 100vw;
-  padding: 0 22px;
-  overflow-x: scroll;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+const infiniteSlideAnimation = keyframes`
+0% {
+  transform: translate3d(0, 0, 0);
+}
+100% {
+  transform: translate3d(-50%, 0, 0);
+}
+`;
 
-  &:-webkit-scrollbar {
-    display: none;
-  }
+interface IntroduceSlideProps {
+  isAnimationPause: boolean;
+}
+
+export const IntroduceSlide = styled.ul<IntroduceSlideProps>`
+  ${({ isAnimationPause }) => css`
+    display: flex;
+    gap: 22px;
+    padding-right: 22px;
+    overflow-x: visible;
+    animation: ${infiniteSlideAnimation} 20s infinite linear;
+    animation-play-state: ${isAnimationPause ? 'paused' : 'running'};
+  `}
 `;
 
 const IntroduceCard = styled.li`
   ${({ theme }) => css`
     min-width: 33.3rem;
     height: 30.3rem;
-    border-radius: 1.6rem;
+    border-radius: 1rem;
 
     @media (max-width: ${theme.breakPoint.media.notebook}) {
       min-width: 29.6rem;
@@ -200,7 +214,7 @@ export const IntroduceTextCard = styled(IntroduceCard)`
     background: ${theme.colors.gray95};
 
     &:hover {
-      & > p > p {
+      & > p > span {
         opacity: 1;
       }
     }
@@ -229,17 +243,19 @@ export const IntroduceText = styled.p`
   `}
 `;
 
-export const IntroduceGradientText = styled.p`
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: -1;
-  background-image: linear-gradient(90deg, #ff3b5e 0.11%, #6046ff 99.8%);
-  background-clip: text;
-  opacity: 0;
-  transition: opacity 0.3s linear;
+export const IntroduceGradientText = styled.span`
+  ${({ theme }) => css`
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: ${theme.globalZIndex.background};
+    background-image: linear-gradient(90deg, #ff3b5e 0.11%, #6046ff 99.8%);
+    background-clip: text;
+    opacity: 0;
+    transition: opacity 0.3s linear;
+  `}
 `;
 
 interface IntroduceImageCardProps {
@@ -258,12 +274,12 @@ export const LottieWrapper = styled.div`
     position: absolute;
     right: 2.4rem;
     bottom: 2.4rem;
-    width: 9rem;
-    height: 9rem;
+    width: 8rem;
+    height: 8rem;
 
     @media (max-width: ${theme.breakPoint.media.notebook}) {
-      width: 8rem;
-      height: 8rem;
+      width: 7rem;
+      height: 7rem;
     }
 
     @media (max-width: ${theme.breakPoint.media.tabletL}) {

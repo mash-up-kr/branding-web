@@ -1,13 +1,16 @@
 import lottie from 'lottie-web';
 import { useEffect, useRef } from 'react';
 
+import * as Styled from './Lottie.styled';
+
 interface LottieProps {
   animationData: any;
   width?: number;
   height?: number;
+  isAutoplay?: boolean;
 }
 
-const Lottie = ({ animationData, width, height, ...restProps }: LottieProps) => {
+const Lottie = ({ animationData, width, height, isAutoplay = true, ...restProps }: LottieProps) => {
   const element = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -15,17 +18,12 @@ const Lottie = ({ animationData, width, height, ...restProps }: LottieProps) => 
       lottie.loadAnimation({
         animationData,
         container: element.current,
+        autoplay: isAutoplay,
       });
     }
-  }, [animationData]);
+  }, [animationData, isAutoplay]);
 
-  return (
-    <div
-      style={{ width: width ?? '100%', height: height ?? '100%' }}
-      ref={element}
-      {...restProps}
-    />
-  );
+  return <Styled.Lottie width={width} height={height} ref={element} {...restProps} />;
 };
 
 export default Lottie;
