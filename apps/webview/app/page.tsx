@@ -1,11 +1,13 @@
 'use client';
 
+import { PLATFORM_NAME_MAP } from '@/../../packages/constant';
 import { useState } from 'react';
 
 import { PopcornToast } from '@/app/_components/PopcornToast';
 import SvgImage from '@/ui/svg-image';
 
 import CheckInBottomSheet from './_components/CheckInBottomSheet';
+import { MashongRoom } from './_components/MashongRoom';
 
 const Webview = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -37,6 +39,7 @@ const Webview = () => {
       >
         먹이 주기
       </button>
+      <MashongRoom keyValue={popcornValue} teamName={PLATFORM_NAME_MAP.WEB} mashongLevel={10} />
       <CheckInBottomSheet isOpen={isOpen} onClose={onBottomSheetConfirm} />
       <PopcornToast value={popcornValue} />
     </div>

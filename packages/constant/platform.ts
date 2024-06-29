@@ -18,4 +18,4 @@ export const PLATFORM_NAME_MAP = {
   IOS: 'iOS',
   NODE: 'Node',
   SPRING: 'Spring',
-};
+} as const;
