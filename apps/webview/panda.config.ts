@@ -28,6 +28,7 @@ export default defineConfig({
       colors: {
         'gray.50': { value: '#F8F7FC' },
         'gray.100': { value: '#EBEFF9' },
+        'gray.500': { value: '#959CAC' },
         'gray.600': { value: '#686F7E' },
         'gray.800': { value: '#383E4C' },
         'gray.900': { value: '#2C3037' },
