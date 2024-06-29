@@ -21,6 +21,10 @@ const Lottie = ({ animationData, width, height, isAutoplay = true, ...restProps 
         autoplay: isAutoplay,
       });
     }
+
+    return () => {
+      lottie.destroy();
+    };
   }, [animationData, isAutoplay]);
 
   return <Styled.Lottie width={width} height={height} ref={element} {...restProps} />;
