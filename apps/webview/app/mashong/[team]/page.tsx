@@ -1,5 +1,8 @@
+import { PLATFORM_NAME_MAP } from '@/../../packages/constant';
 import { headers } from 'next/headers';
 
+import { MashongRoom } from '@/app/_components/MashongRoom';
+import { PopcornToast } from '@/app/_components/PopcornToast';
 import { PopcornXpTracker } from '@/app/_components/PopcornXpTracker';
 
 async function getPopcorn() {
@@ -29,6 +32,8 @@ const Page = async ({ params }: { params: { team: string } }) => {
   return (
     <div>
       {params.team} Dashboard
+      <MashongRoom keyValue={popcornValue} teamName={PLATFORM_NAME_MAP.WEB} mashongLevel={10} />
+      <PopcornToast value={popcornValue} />
       <PopcornXpTracker currentValue={popcornValue ?? 0} maxValue={15} />
     </div>
   );
