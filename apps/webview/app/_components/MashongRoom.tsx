@@ -1,11 +1,14 @@
+'use client';
+
 import { PLATFORM_NAME_MAP } from 'constant';
 import { motion } from 'framer-motion';
-import { PropsWithChildren } from 'react';
 import { NumericRange, ValueOf } from 'types';
 
 import { css } from '@/styled-system/css';
 import { styled } from '@/styled-system/jsx';
 import SvgImage from '@/ui/svg-image';
+
+import { SpeechBubble } from './SpeechBubble';
 
 export const StyledMotionDiv = styled(motion.div);
 
@@ -19,7 +22,7 @@ export const MashongRoom = ({ keyValue, teamName, mashongLevel }: MashongRoomPro
   const teamNameSlug = teamName.replace(/\s+/g, '-').toLowerCase();
 
   return (
-    <styled.div position="relative" display="inline-block">
+    <styled.div position="relative" display="inline-block" minWidth={360} height={381} mb="30">
       <SpeechBubble key={keyValue}>냠냠 고마워!</SpeechBubble>
       <SvgImage path={`main/interior-${teamNameSlug}`} width={360} height={381} />
       <SvgImage
@@ -42,7 +45,7 @@ export const MashongRoom = ({ keyValue, teamName, mashongLevel }: MashongRoomPro
         letterSpacing="-1%"
         color="#686F7E"
         position="absolute"
-        bottom={30}
+        bottom={-10}
         left="50%"
         transform="translate(-50%, 0)"
       >
@@ -51,30 +54,3 @@ export const MashongRoom = ({ keyValue, teamName, mashongLevel }: MashongRoomPro
     </styled.div>
   );
 };
-const SpeechBubble = ({ children }: PropsWithChildren) => (
-  <StyledMotionDiv
-    position="relative"
-    display="inline-block"
-    top="173"
-    left="114"
-    initial={{ opacity: 0, scale: 0.8 }}
-    animate={{ opacity: 1, scale: 1 }}
-    exit={{ opacity: 0, scale: 0.8 }}
-  >
-    <SvgImage path="main/speech-bubble" width={132} height={38} />
-    <styled.div
-      position="absolute"
-      left="50%"
-      top="50%"
-      fontWeight={400}
-      fontSize={14}
-      lineHeight="16.7px"
-      transform="translate(-50%, -65%)"
-      width="100%"
-      textAlign="center"
-      userSelect="none"
-    >
-      <p>{children}</p>
-    </styled.div>
-  </StyledMotionDiv>
-);

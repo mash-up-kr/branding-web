@@ -106,7 +106,7 @@ const AttendanceCheck = ({ setChecked, checkIndex }: AttendanceCheckProps) => (
         gap: '0.8rem',
       })}
     >
-      <SvgImage path={`icon-cloud-${checkIndex + 1}`} width={24} height={24} />
+      <SvgImage path={`main/icon-cloud-${checkIndex + 1}`} width={24} height={24} />
       <div
         className={css({
           fontWeight: 500,

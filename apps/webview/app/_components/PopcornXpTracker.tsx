@@ -15,7 +15,9 @@ interface PopcornXpTrackerProps {
 }
 
 export const PopcornXpTracker = ({ currentValue, maxValue }: PopcornXpTrackerProps) => {
-  const remainingValue = maxValue - currentValue;
+  const [testValue, setTestValue] = useState(0);
+  // const remainingValue = maxValue - currentValue;
+  const remainingValue = maxValue - testValue;
   const levelUpAvailable = remainingValue === 0;
   const [isError, setIsError] = useState(false);
 
@@ -74,7 +76,8 @@ export const PopcornXpTracker = ({ currentValue, maxValue }: PopcornXpTrackerPro
         </span>
       </div>
       <progress
-        value={currentValue}
+        // value={currentValue}
+        value={testValue}
         max={maxValue}
         className={css({
           width: '100%',
@@ -96,8 +99,12 @@ export const PopcornXpTracker = ({ currentValue, maxValue }: PopcornXpTrackerPro
         onClick={() => {
           console.log('clicked');
 
+          if (testValue < 15) {
+            setTestValue((prev) => prev + 1);
+          }
+
           if (currentValue === 0) {
-            setIsError(true);
+            // setIsError(true);
           } else {
             // feedPopcorn();
           }
@@ -162,7 +169,8 @@ export const PopcornXpTracker = ({ currentValue, maxValue }: PopcornXpTrackerPro
                 letterSpacing: '-1%',
               })}
             >
-              {currentValue}개 보유
+              {/* {currentValue}개 보유 */}
+              {remainingValue}개 보유
             </span>
           </>
         )}

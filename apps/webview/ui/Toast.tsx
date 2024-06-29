@@ -16,6 +16,7 @@ export const Toast = () => (
   <Toaster
     position="top-center"
     reverseOrder={false}
+    containerStyle={{ top: 60 }}
     toastOptions={{
       duration: 2_000,
       style: {
