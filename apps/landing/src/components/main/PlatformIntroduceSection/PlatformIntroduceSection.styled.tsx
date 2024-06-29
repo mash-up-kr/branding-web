@@ -137,13 +137,22 @@ export const PlatformList = styled.ul`
   `}
 `;
 
-export const Platform = styled.li`
-  ${({ theme }) => css`
-    ${theme.fonts.en.bold18};
+interface PlatformProps {
+  isSelected: boolean;
+}
+
+export const Platform = styled.li<PlatformProps>`
+  ${({ theme, isSelected }) => css`
+    ${isSelected ? theme.fonts.en.extrabold18 : theme.fonts.en.bold18};
     padding: 9px 20px;
     white-space: nowrap;
-    border: 1px solid ${theme.colors.white};
+    background: ${isSelected
+      ? 'linear-gradient(90deg, #FF3B5E 0.11%, #6046FF 99.8%)'
+      : 'transparent'};
+    background-origin: border-box;
+    border: 1px solid ${isSelected ? 'transparent' : theme.colors.white};
     border-radius: 50px;
+    cursor: pointer;
 
     @media (max-width: ${theme.breakPoint.media.notebook}) {
       ${theme.fonts.en.bold16};

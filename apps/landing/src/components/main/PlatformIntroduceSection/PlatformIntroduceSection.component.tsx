@@ -2,12 +2,18 @@ import { useState } from 'react';
 import { Lottie } from 'ui';
 
 import { JoinRecruitCard } from '@/components/main';
-import { PLATFORM_INTRODUCE, PLATFORM_RADIO_ITEMS } from '@/constants';
+import { PLATFORM_INTRODUCE, PLATFORM_RADIO_ITEMS, TPlatformName } from '@/constants';
 
 import * as Styled from './PlatformIntroduceSection.styled';
 
 const PlatformIntroduceSection = () => {
   const [isAnimationPause, setIsAnimationPause] = useState(false);
+  const [currentSelectedPlatform, setCurrentSelectedPlatform] =
+    useState<TPlatformName>('productDesign');
+
+  const handleSelectPlatform = (platform: TPlatformName) => {
+    setCurrentSelectedPlatform(platform);
+  };
 
   const handlePauseSlideAnimation = () => {
     setIsAnimationPause(true);
@@ -18,23 +24,24 @@ const PlatformIntroduceSection = () => {
   };
 
   const introduceSlideArray = [
-    ...PLATFORM_INTRODUCE.productDesign.map(({ type, description, imageUrl, lottieData }, index) =>
-      type === 'text' ? (
-        <Styled.IntroduceTextCard key={`introduce-text-card-${index}`}>
-          <Styled.IntroduceText>
-            {description}
-            <Styled.IntroduceGradientText aria-hidden>{description}</Styled.IntroduceGradientText>
-          </Styled.IntroduceText>
-          <Styled.LottieWrapper>
-            <Lottie animationData={lottieData} />
-          </Styled.LottieWrapper>
-        </Styled.IntroduceTextCard>
-      ) : (
-        <Styled.IntroduceImageCard
-          backgroundUrl={imageUrl ?? ''}
-          key={`introduce-text-card-${index}`}
-        />
-      ),
+    ...PLATFORM_INTRODUCE[currentSelectedPlatform].map(
+      ({ type, description, imageUrl, lottieData }, index) =>
+        type === 'text' ? (
+          <Styled.IntroduceTextCard key={`introduce-text-card-${index}`}>
+            <Styled.IntroduceText>
+              {description}
+              <Styled.IntroduceGradientText aria-hidden>{description}</Styled.IntroduceGradientText>
+            </Styled.IntroduceText>
+            <Styled.LottieWrapper>
+              <Lottie animationData={lottieData} />
+            </Styled.LottieWrapper>
+          </Styled.IntroduceTextCard>
+        ) : (
+          <Styled.IntroduceImageCard
+            backgroundUrl={imageUrl ?? ''}
+            key={`introduce-text-card-${index}`}
+          />
+        ),
     ),
     <JoinRecruitCard key={`introduce-text-card-${PLATFORM_INTRODUCE.productDesign.length}`} />,
   ];
@@ -56,7 +63,13 @@ const PlatformIntroduceSection = () => {
       <Styled.PlatformSlideLayout>
         <Styled.PlatformList>
           {PLATFORM_RADIO_ITEMS.map(({ displayName, name }) => (
-            <Styled.Platform key={name}>{displayName}</Styled.Platform>
+            <Styled.Platform
+              onClick={() => handleSelectPlatform(name)}
+              isSelected={name === currentSelectedPlatform}
+              key={name}
+            >
+              {displayName}
+            </Styled.Platform>
           ))}
         </Styled.PlatformList>
 

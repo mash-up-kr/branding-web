@@ -39,7 +39,7 @@ const PLATFORM = {
   branding: 'Branding',
 } as const;
 
-type TPlatformName = KeyOf<typeof PLATFORM>;
+export type TPlatformName = KeyOf<typeof PLATFORM>;
 type TPlatformDisplayName = ValueOf<typeof PLATFORM>;
 
 export const PLATFORM_RADIO_ITEMS: Array<{
