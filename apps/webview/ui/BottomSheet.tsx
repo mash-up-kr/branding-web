@@ -97,14 +97,17 @@ const BottomSheet = ({
     opacity: isOpen ? 1 : 0,
     pointerEvents: isOpen ? 'auto' : 'none',
     top: 0,
-    width: 'calc(100% - 40px)',
-    left: '20px',
+    width: '100%',
+    left: '50%',
+    transform: 'translateX(-50%)',
     height: '100%',
     display: 'flex',
     justifyContent: 'flex-end',
     alignItems: 'center',
     flexDirection: 'column',
     transition: '0.1s linear',
+    zIndex: 2147483647,
+    maxWidth: 768,
   });
 
   const backdropStyle = css({
@@ -128,6 +131,7 @@ const BottomSheet = ({
     position: 'relative',
     transition: isDragging ? 'none' : 'transform 0.5s ease',
     marginBottom: 20,
+    maxWidth: 'calc(100% - 40px)',
   });
 
   const grabberStyle = css({

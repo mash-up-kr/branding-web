@@ -22,7 +22,7 @@ export const MashongRoom = ({ keyValue, teamName, mashongLevel }: MashongRoomPro
   const teamNameSlug = teamName.replace(/\s+/g, '-').toLowerCase();
 
   return (
-    <styled.div position="relative" display="inline-block">
+    <styled.div position="relative" display="inline-block" minWidth={360} height={381} mb="30">
       <SpeechBubble key={keyValue}>냠냠 고마워!</SpeechBubble>
       <SvgImage path={`main/interior-${teamNameSlug}`} width={360} height={381} />
       <SvgImage
@@ -45,7 +45,7 @@ export const MashongRoom = ({ keyValue, teamName, mashongLevel }: MashongRoomPro
         letterSpacing="-1%"
         color="#686F7E"
         position="absolute"
-        bottom={30}
+        bottom={-10}
         left="50%"
         transform="translate(-50%, 0)"
       >

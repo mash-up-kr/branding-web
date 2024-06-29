@@ -4,6 +4,11 @@ import { headers } from 'next/headers';
 import { MashongRoom } from '@/app/_components/MashongRoom';
 import { PopcornToast } from '@/app/_components/PopcornToast';
 import { PopcornXpTracker } from '@/app/_components/PopcornXpTracker';
+import { styled } from '@/styled-system/jsx';
+
+import { GoDiaryButton } from './_components/GoDiaryButton';
+import { TopMenuButton } from './_components/TopMenuButton';
+import { TopNavigationButton } from './_components/TopNavigationButton';
 
 async function getPopcorn() {
   try {
@@ -28,14 +33,38 @@ async function getPopcorn() {
 
 const Page = async ({ params }: { params: { team: string } }) => {
   const { data: popcornValue } = await getPopcorn();
+  const teamName = params.team.toUpperCase() as keyof typeof PLATFORM_NAME_MAP;
 
   return (
-    <div>
-      {params.team} Dashboard
-      <MashongRoom keyValue={popcornValue} teamName={PLATFORM_NAME_MAP.WEB} mashongLevel={10} />
+    <styled.div>
+      <styled.div display="flex" justifyContent="space-between">
+        <TopNavigationButton />
+        <GoDiaryButton />
+      </styled.div>
+      <styled.h2
+        fontWeight={600}
+        fontSize={24}
+        lineHeight="28.6px"
+        letterSpacing="-1%"
+        mb={16}
+        mt={8}
+      >
+        매숑이가 성장한지 <styled.span color="brand.500">50</styled.span>일째
+      </styled.h2>
+      <styled.div display="flex" gap={16}>
+        <TopMenuButton variant="checkin">출석</TopMenuButton>
+        <TopMenuButton variant="mission">미션</TopMenuButton>
+      </styled.div>
+      <styled.div display="flex" justifyContent="center" mt="20px">
+        <MashongRoom
+          keyValue={popcornValue}
+          teamName={PLATFORM_NAME_MAP[teamName]}
+          mashongLevel={10}
+        />
+      </styled.div>
       <PopcornToast value={popcornValue} />
       <PopcornXpTracker currentValue={popcornValue ?? 0} maxValue={15} />
-    </div>
+    </styled.div>
   );
 };
 
