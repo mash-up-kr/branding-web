@@ -29,7 +29,7 @@ const Page = async ({ params }: { params: { team: string } }) => {
   return (
     <div>
       {params.team} Dashboard
-      <PopcornXpTracker currentValue={popcornValue ?? 0} maxValue={10} />
+      <PopcornXpTracker currentValue={popcornValue ?? 0} maxValue={15} />
     </div>
   );
 };
