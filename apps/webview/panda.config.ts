@@ -38,6 +38,16 @@ export default defineConfig({
         'brand.500': { value: '#6A36FF' },
       },
     },
+    keyframes: {
+      move: {
+        '0%': {
+          transform: 'translateX(-300%)',
+        },
+        '100%': {
+          transform: 'translateX(300%)',
+        },
+      },
+    },
   },
 
   // The output directory for your css system
