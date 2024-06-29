@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState, useEffect, PropsWithChildren } from 'react';
+import { useEventListener } from 'usehooks-ts';
 
 import { css } from '@/styled-system/css';
 
@@ -9,176 +10,176 @@ export interface BottomSheetProps extends PropsWithChildren {
   height?: number;
 }
 
-const BottomSheet = ({ isOpen, onClose, children, height, ...restProps }: BottomSheetProps) => {
+const BottomSheet = ({
+  isOpen,
+  onClose,
+  children,
+  height = 40,
+  ...restProps
+}: BottomSheetProps) => {
   const [isDragging, setIsDragging] = useState(false);
-  const [startY, setStartY] = useState<number | null>(null);
-  const [startHeight, setStartHeight] = useState<number>(40);
-  const [sheetHeight, setSheetHeight] = useState<number>(40);
+  const [startY, setStartY] = useState<number>(0);
+  const [startHeight, setStartHeight] = useState<number>(height);
+  const [translateY, setTranslateY] = useState(100);
+  const [isAnimating, setIsAnimating] = useState(false);
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!isDragging || startY === null) return;
-      const delta = startY - e.pageY;
-      const newHeight = startHeight + (delta / window.innerHeight) * 100;
-      setSheetHeight(newHeight);
-    };
+  const calculateNewTranslateY = (currentY: number) => {
+    if (currentY <= startY) return startHeight;
+    const dragDistance = currentY - startY;
+    const dragDistanceRatio = (dragDistance / window.innerHeight) * 100;
+    const newTranslateY = startHeight + dragDistanceRatio;
+    return Math.min(100, newTranslateY);
+  };
 
-    const handleTouchMove = (e: TouchEvent) => {
-      if (!isDragging || startY === null) return;
-      const delta = startY - e.touches[0].pageY;
-      const newHeight = startHeight + (delta / window.innerHeight) * 100;
-      setSheetHeight(newHeight);
-    };
-
-    const handleMouseUp = () => {
-      setIsDragging(false);
-      adjustSheetHeight();
-    };
-
-    const handleTouchEnd = () => {
-      setIsDragging(false);
-      adjustSheetHeight();
-    };
-
-    if (isDragging) {
-      document.addEventListener('mousemove', handleMouseMove);
-      document.addEventListener('mouseup', handleMouseUp);
-      document.addEventListener('touchmove', handleTouchMove);
-      document.addEventListener('touchend', handleTouchEnd);
+  const handleDragMove = (currentY: number) => {
+    if (!isDragging || startY === null) return;
+    const newTranslateY = calculateNewTranslateY(currentY);
+    if (newTranslateY > 30) {
+      animateClose();
     } else {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
-      document.removeEventListener('touchmove', handleTouchMove);
-      document.removeEventListener('touchend', handleTouchEnd);
+      setTranslateY(newTranslateY);
     }
+  };
 
-    return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
-      document.removeEventListener('touchmove', handleTouchMove);
-      document.removeEventListener('touchend', handleTouchEnd);
-    };
-  }, [isDragging, startY, startHeight]);
+  const handleMouseMove = (e: MouseEvent) => handleDragMove(e.pageY);
+  const handleTouchMove = (e: TouchEvent) => handleDragMove(e.touches[0].pageY);
+
+  const handleEndDrag = () => {
+    setIsDragging(false);
+    adjustSheetPosition();
+  };
+
+  useEventListener('mousemove', handleMouseMove);
+  useEventListener('mouseup', handleEndDrag);
+  useEventListener('touchmove', handleTouchMove);
+  useEventListener('touchend', handleEndDrag);
 
   useEffect(() => {
     if (isOpen) {
-      setSheetHeight(40);
+      setTranslateY(0);
       document.body.style.overflowY = 'hidden';
     } else {
+      setTranslateY(100);
       document.body.style.overflowY = 'auto';
     }
+    return () => {
+      document.body.style.overflowY = 'auto';
+    };
   }, [isOpen]);
 
   const handleDragStart = (e: React.MouseEvent | React.TouchEvent) => {
     setIsDragging(true);
-    if (e.type === 'mousedown') {
-      setStartY((e as React.MouseEvent).pageY);
-    } else if (e.type === 'touchstart') {
-      setStartY((e as React.TouchEvent).touches[0].pageY);
-    }
-    setStartHeight(sheetHeight);
+    const pageY =
+      e.type === 'mousedown'
+        ? (e as React.MouseEvent).pageY
+        : (e as React.TouchEvent).touches[0].pageY;
+    setStartY(pageY);
+    setStartHeight(translateY);
   };
 
-  const adjustSheetHeight = () => {
-    if (sheetHeight < 70) {
-      onClose();
-    } else if (sheetHeight > 70) {
-      setSheetHeight(100);
-    } else {
-      setSheetHeight(50);
+  const adjustSheetPosition = () => {
+    if (!isAnimating) {
+      setTranslateY(0);
     }
   };
+
+  const animateClose = () => {
+    setIsAnimating(true);
+    setTranslateY(100);
+    setTimeout(() => {
+      setIsAnimating(false);
+      onClose();
+    }, 500);
+  };
+
+  const containerStyle = css({
+    position: 'fixed',
+    opacity: isOpen ? 1 : 0,
+    pointerEvents: isOpen ? 'auto' : 'none',
+    top: 0,
+    width: 'calc(100% - 40px)',
+    left: '20px',
+    height: '100%',
+    display: 'flex',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    flexDirection: 'column',
+    transition: '0.1s linear',
+  });
+
+  const backdropStyle = css({
+    position: 'fixed',
+    top: 0,
+    width: '100%',
+    left: 0,
+    height: '100%',
+    opacity: 0.2,
+    background: '#111',
+    zIndex: -1,
+  });
+
+  const sheetStyle = css({
+    background: '#fff',
+    width: '100%',
+    minWidth: 320,
+    height: 287,
+    padding: '24px 20px 24px 20px',
+    borderRadius: '20px',
+    position: 'relative',
+    transition: isDragging ? 'none' : 'transform 0.5s ease',
+  });
+
+  const grabberStyle = css({
+    display: 'flex',
+    justifyContent: 'center',
+  });
+
+  const grabberButtonStyle = css({
+    cursor: 'grab',
+    userSelect: 'none',
+    padding: '10px 0 11px 0',
+    marginTop: '-25px',
+  });
+
+  const grabberLineStyle = css({
+    height: '3px',
+    borderRadius: '6px',
+    backgroundColor: '#D9D9D9',
+    width: '24px',
+    display: 'block',
+  });
+
+  const contentStyle = css({
+    overflowY: 'auto',
+    height: '100%',
+    scrollbarWidth: 'none',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+  });
 
   return (
-    <div
-      className={css({
-        position: 'fixed',
-        opacity: isOpen ? 1 : 0,
-        pointerEvents: isOpen ? 'auto' : 'none',
-        top: 0,
-        width: 'calc(100% - 40px)',
-        left: '20px',
-        height: '100%',
-        display: 'flex',
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-        flexDirection: 'column',
-        transition: '0.1s linear',
-      })}
-      {...restProps}
-    >
-      <div
-        role="dialog"
-        aria-hidden
-        className={css({
-          position: 'fixed',
-          top: 0,
-          width: '100%',
-          left: 0,
-          height: '100%',
-          opacity: 0.2,
-          background: '#111',
-          zIndex: -1,
-        })}
-        onClick={onClose}
-      />
+    <div className={containerStyle} {...restProps}>
+      <div role="dialog" aria-hidden className={backdropStyle} onClick={onClose} />
       <div
         style={{
-          height: `${sheetHeight}vh`,
+          transform: `translateY(${translateY}%)`,
+          transition: isAnimating ? 'transform 0.5s ease' : undefined,
         }}
-        className={css({
-          background: '#fff',
-          width: '100%',
-          minWidth: 320,
-          maxHeight: height,
-          padding: '24px 20px 24px 20px',
-          borderRadius: sheetHeight === 100 ? '0' : '20px',
-          position: 'relative',
-          transform: isOpen ? 'translateY(0%)' : 'translateY(100%)',
-          transition: isDragging ? 'none' : '0.5s ease',
-        })}
+        className={sheetStyle}
       >
-        <div
-          className={css({
-            display: 'flex',
-            justifyContent: 'center',
-          })}
-        >
+        <div className={grabberStyle}>
           <button
             type="button"
             aria-hidden
-            className={css({
-              cursor: 'grab',
-              userSelect: 'none',
-              padding: '10px 0 11px 0',
-              marginTop: '-25px',
-            })}
+            className={grabberButtonStyle}
             onMouseDown={handleDragStart}
             onTouchStart={handleDragStart}
           >
-            <span
-              className={css({
-                height: '3px',
-                borderRadius: '6px',
-                backgroundColor: '#D9D9D9',
-                width: '24px',
-                display: 'block',
-              })}
-            />
+            <span className={grabberLineStyle} />
           </button>
         </div>
-        <div
-          className={css({
-            overflowY: 'auto',
-            height: '100%',
-            scrollbarWidth: 'none',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-          })}
-        >
-          {children}
-        </div>
+        <div className={contentStyle}>{children}</div>
       </div>
     </div>
   );
