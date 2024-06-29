@@ -105,7 +105,6 @@ export const PlatformList = styled.ul`
     flex-flow: row nowrap;
     gap: 1.6rem;
     width: 144rem;
-    margin: 0 auto;
     padding: 0 8rem;
     overflow-x: scroll;
     -ms-overflow-style: none;
@@ -130,8 +129,6 @@ export const PlatformList = styled.ul`
     }
 
     @media (max-width: ${theme.breakPoint.media.mobile}) {
-      width: 37.5rem;
-      margin: 0 auto;
       padding: 0 2rem;
     }
   `}
