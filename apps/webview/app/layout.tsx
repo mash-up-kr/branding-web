@@ -3,7 +3,6 @@ import '@/index.css';
 import { type ReactNode } from 'react';
 
 import VConsoleScript from '@/lib/VConsole';
-import { Box } from '@/styled-system/jsx';
 
 const pretendard = localFont({
   src: '../public/fonts/PretendardVariable.woff2',
@@ -19,11 +18,7 @@ const RootLayout = ({
   children: ReactNode;
 }) => (
   <html lang="ko" className={pretendard.className}>
-    <body>
-      <Box maxW="[768px]" mx="auto">
-        {children}
-      </Box>
-    </body>
+    <body>{children}</body>
     <VConsoleScript />
   </html>
 );
