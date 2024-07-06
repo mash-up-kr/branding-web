@@ -1,7 +1,6 @@
 import { PLATFORM_NAME_MAP } from '@/../../packages/constant';
 import { headers } from 'next/headers';
 
-import { PopcornToast } from '@/app/_components/PopcornToast';
 import { styled } from '@/styled-system/jsx';
 
 import { GoDiaryButton } from './_components/GoDiaryButton';
@@ -55,7 +54,6 @@ const Page = async ({ params }: { params: { team: string } }) => {
         <TopMenuButton variant="mission">미션</TopMenuButton>
       </styled.div>
       <MashongRoomContainer popcornValue={popcornValue} teamName={teamName} />
-      <PopcornToast value={popcornValue} />
     </styled.div>
   );
 };

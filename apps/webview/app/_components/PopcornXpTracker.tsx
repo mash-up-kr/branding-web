@@ -4,6 +4,7 @@
 
 import { useState } from 'react';
 
+import { PopcornToast } from '@/app/_components/PopcornToast';
 import { css } from '@/styled-system/css';
 import SvgImage from '@/ui/svg-image';
 
@@ -187,6 +188,7 @@ export const PopcornXpTracker = ({
       <ErrorToast isOpen={isError} onClose={() => setIsError(false)}>
         팝콘을 모아주세요!
       </ErrorToast>
+      <PopcornToast value={testValue} />
     </div>
   );
 };
