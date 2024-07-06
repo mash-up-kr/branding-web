@@ -1,5 +1,5 @@
 import { PLATFORM_NAME_MAP } from '@/../../packages/constant';
-import { headers } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 
 import { styled } from '@/styled-system/jsx';
 
@@ -10,7 +10,7 @@ import { TopNavigationButton } from './_components/TopNavigationButton';
 
 async function getMashongStatus() {
   try {
-    const authToken = headers().get('authorization');
+    const authToken = cookies().get('token')?.value ?? headers().get('authorization');
 
     if (!authToken) {
       throw new Error(`유효한 인증 토큰이 필요합니다.`);
