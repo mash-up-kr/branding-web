@@ -20,6 +20,7 @@ async function getMashongStatus() {
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
+      next: { tags: ['mashong-status'] },
     });
 
     const { data } = await res.json();
@@ -61,9 +62,9 @@ const Page = async ({ params }: { params: { team: string } }) => {
         <TopMenuButton variant="mission">미션</TopMenuButton>
       </styled.div>
       <MashongRoomContainer
-        availablePopcorn={accumulatedPopcornValue}
+        availablePopcorn={lastPopcornValue}
         currentLevel={currentLevel}
-        currentXP={lastPopcornValue}
+        currentXP={accumulatedPopcornValue}
         maxXP={goalPopcornValue}
         teamName={teamName}
       />

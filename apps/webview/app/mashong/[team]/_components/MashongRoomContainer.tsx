@@ -36,6 +36,7 @@ export const MashongRoomContainer = ({
         currentXP={currentXP}
         maxXP={maxXP}
         availablePopcorn={availablePopcorn}
+        currentLevel={currentLevel}
         onClick={() => {
           setIsFeeding(true);
 

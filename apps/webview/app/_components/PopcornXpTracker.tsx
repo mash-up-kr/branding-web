@@ -15,6 +15,7 @@ interface PopcornXpTrackerProps {
   currentXP: number;
   maxXP: number;
   availablePopcorn: number;
+  currentLevel: number;
   onClick: () => void;
 }
 
@@ -23,13 +24,15 @@ export const PopcornXpTracker = ({
   currentXP,
   maxXP,
   availablePopcorn,
+  currentLevel,
   onClick,
 }: PopcornXpTrackerProps) => {
   const [isError, setIsError] = useState(false);
   const [currentFeedingPopcorn, setCurrentFeedingPopcorn] = useState(0);
 
   const remainingXP = maxXP - currentXP;
-  const levelUpAvailable = currentXP >= maxXP;
+
+  const levelUpAvailable = remainingXP === 0;
 
   return (
     <div
@@ -59,7 +62,7 @@ export const PopcornXpTracker = ({
               borderRadius: 4,
             })}
           >
-            Lv.1
+            Lv.{currentLevel}
           </span>
           <span
             className={css({
@@ -86,7 +89,6 @@ export const PopcornXpTracker = ({
         </span>
       </div>
       <progress
-        // value={currentValue}
         value={currentXP}
         max={maxXP}
         className={css({
@@ -108,33 +110,25 @@ export const PopcornXpTracker = ({
         type="button"
         disabled={isButtonDisabled}
         onClick={async () => {
-          if (currentXP === 0) {
+          if (availablePopcorn === 0) {
             setIsError(true);
           } else if (currentXP < maxXP) {
             onClick();
             setCurrentFeedingPopcorn((prev) => prev + 1);
-            const { fed, currentLevel, currentLevelGoalPopcorn, lastPopcornValue } =
-              await feedPopcorn();
+            const { fed } = await feedPopcorn();
 
-            console.log('TEST:fed', fed);
-
-            console.log(
-              'TEST: lastPopcornValue, currentLevelGoalPopcorn',
-              lastPopcornValue,
-              currentLevelGoalPopcorn,
-            );
-
-            if (fed && lastPopcornValue === currentLevelGoalPopcorn) {
-              const { currentLevel: nextLevel, levelUp: levelUpComplete } = await levelUp(
-                currentLevel + 1,
-              );
-
-              console.log('TEST:levelUpComplete', levelUpComplete);
+            if (fed && levelUpAvailable) {
+              const { levelUp: levelUpComplete } = await levelUp(currentLevel + 1);
 
               if (levelUpComplete) {
-                console.log('TEST:nextLevel', nextLevel);
                 // 레벨업 화면 전환
               }
+            }
+          } else if (levelUpAvailable) {
+            const { levelUp: levelUpComplete } = await levelUp(currentLevel + 1);
+
+            if (levelUpComplete) {
+              // 레벨업 화면 전환
             }
           }
         }}

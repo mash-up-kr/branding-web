@@ -1,5 +1,6 @@
 'use server';
 
+import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 
 export const feedPopcorn = async () => {
@@ -20,6 +21,8 @@ export const feedPopcorn = async () => {
         popcornCount: 1,
       }),
     });
+
+    revalidatePath('mashong-status');
 
     const { data } = await res.json();
     return data;
