@@ -12,9 +12,10 @@ import { ErrorToast } from './ErrorToast';
 interface PopcornXpTrackerProps {
   currentValue: number;
   maxValue: number;
+  onClick: () => void;
 }
 
-export const PopcornXpTracker = ({ currentValue, maxValue }: PopcornXpTrackerProps) => {
+export const PopcornXpTracker = ({ currentValue, maxValue, onClick }: PopcornXpTrackerProps) => {
   const [testValue, setTestValue] = useState(0);
   // const remainingValue = maxValue - currentValue;
   const remainingValue = maxValue - testValue;
@@ -101,6 +102,7 @@ export const PopcornXpTracker = ({ currentValue, maxValue }: PopcornXpTrackerPro
 
           if (testValue < 15) {
             setTestValue((prev) => prev + 1);
+            onClick();
           }
 
           if (currentValue === 0) {

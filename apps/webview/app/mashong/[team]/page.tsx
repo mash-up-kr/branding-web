@@ -1,12 +1,11 @@
 import { PLATFORM_NAME_MAP } from '@/../../packages/constant';
 import { headers } from 'next/headers';
 
-import { MashongRoom } from '@/app/_components/MashongRoom';
 import { PopcornToast } from '@/app/_components/PopcornToast';
-import { PopcornXpTracker } from '@/app/_components/PopcornXpTracker';
 import { styled } from '@/styled-system/jsx';
 
 import { GoDiaryButton } from './_components/GoDiaryButton';
+import { MashongRoomContainer } from './_components/MashongRoomContainer';
 import { TopMenuButton } from './_components/TopMenuButton';
 import { TopNavigationButton } from './_components/TopNavigationButton';
 
@@ -55,15 +54,8 @@ const Page = async ({ params }: { params: { team: string } }) => {
         <TopMenuButton variant="checkin">출석</TopMenuButton>
         <TopMenuButton variant="mission">미션</TopMenuButton>
       </styled.div>
-      <styled.div display="flex" justifyContent="center" mt="20px">
-        <MashongRoom
-          keyValue={popcornValue}
-          teamName={PLATFORM_NAME_MAP[teamName]}
-          mashongLevel={10}
-        />
-      </styled.div>
+      <MashongRoomContainer popcornValue={popcornValue} teamName={teamName} />
       <PopcornToast value={popcornValue} />
-      <PopcornXpTracker currentValue={popcornValue ?? 0} maxValue={15} />
     </styled.div>
   );
 };
