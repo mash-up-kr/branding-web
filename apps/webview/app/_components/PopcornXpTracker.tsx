@@ -1,9 +1,9 @@
 'use client';
 
-// import { feedPopcorn } from '@/app/_actions/feedPopcorn';
-
 import { useState } from 'react';
 
+import { feedPopcorn } from '@/app/_actions/feedPopcorn';
+import { levelUp } from '@/app/_actions/levelUp';
 import { PopcornToast } from '@/app/_components/PopcornToast';
 import { css } from '@/styled-system/css';
 import SvgImage from '@/ui/svg-image';
@@ -12,22 +12,24 @@ import { ErrorToast } from './ErrorToast';
 
 interface PopcornXpTrackerProps {
   isButtonDisabled: boolean;
-  currentValue: number;
-  maxValue: number;
+  currentXP: number;
+  maxXP: number;
+  availablePopcorn: number;
   onClick: () => void;
 }
 
 export const PopcornXpTracker = ({
   isButtonDisabled,
-  currentValue,
-  maxValue,
+  currentXP,
+  maxXP,
+  availablePopcorn,
   onClick,
 }: PopcornXpTrackerProps) => {
-  const [testValue, setTestValue] = useState(0);
-  // const remainingValue = maxValue - currentValue;
-  const remainingValue = maxValue - testValue;
-  const levelUpAvailable = remainingValue === 0;
   const [isError, setIsError] = useState(false);
+  const [currentFeedingPopcorn, setCurrentFeedingPopcorn] = useState(0);
+
+  const remainingXP = maxXP - currentXP;
+  const levelUpAvailable = currentXP >= maxXP;
 
   return (
     <div
@@ -80,13 +82,13 @@ export const PopcornXpTracker = ({
             color: 'gray.500',
           })}
         >
-          {remainingValue}점 남음
+          {remainingXP}점 남음
         </span>
       </div>
       <progress
         // value={currentValue}
-        value={testValue}
-        max={maxValue}
+        value={currentXP}
+        max={maxXP}
         className={css({
           width: '100%',
           height: 12,
@@ -105,18 +107,35 @@ export const PopcornXpTracker = ({
       <button
         type="button"
         disabled={isButtonDisabled}
-        onClick={() => {
-          console.log('clicked');
-
-          if (testValue < 15) {
-            setTestValue((prev) => prev + 1);
+        onClick={async () => {
+          if (currentXP === 0) {
+            setIsError(true);
+          } else if (currentXP < maxXP) {
             onClick();
-          }
+            setCurrentFeedingPopcorn((prev) => prev + 1);
+            const { fed, currentLevel, currentLevelGoalPopcorn, lastPopcornValue } =
+              await feedPopcorn();
 
-          if (currentValue === 0) {
-            // setIsError(true);
-          } else {
-            // feedPopcorn();
+            console.log('TEST:fed', fed);
+
+            console.log(
+              'TEST: lastPopcornValue, currentLevelGoalPopcorn',
+              lastPopcornValue,
+              currentLevelGoalPopcorn,
+            );
+
+            if (fed && lastPopcornValue === currentLevelGoalPopcorn) {
+              const { currentLevel: nextLevel, levelUp: levelUpComplete } = await levelUp(
+                currentLevel + 1,
+              );
+
+              console.log('TEST:levelUpComplete', levelUpComplete);
+
+              if (levelUpComplete) {
+                console.log('TEST:nextLevel', nextLevel);
+                // 레벨업 화면 전환
+              }
+            }
           }
         }}
         className={css({
@@ -179,8 +198,7 @@ export const PopcornXpTracker = ({
                 letterSpacing: '-1%',
               })}
             >
-              {/* {currentValue}개 보유 */}
-              {remainingValue}개 보유
+              {availablePopcorn}개 보유
             </span>
           </>
         )}
@@ -188,7 +206,7 @@ export const PopcornXpTracker = ({
       <ErrorToast isOpen={isError} onClose={() => setIsError(false)}>
         팝콘을 모아주세요!
       </ErrorToast>
-      <PopcornToast value={testValue} />
+      <PopcornToast value={currentFeedingPopcorn} />
     </div>
   );
 };

@@ -8,10 +8,16 @@ import { PopcornXpTracker } from '@/app/_components/PopcornXpTracker';
 import { styled } from '@/styled-system/jsx';
 
 export const MashongRoomContainer = ({
-  popcornValue,
+  availablePopcorn,
+  currentLevel,
+  currentXP,
+  maxXP,
   teamName,
 }: {
-  popcornValue: number;
+  availablePopcorn: number;
+  currentLevel: number;
+  currentXP: number;
+  maxXP: number;
   teamName: keyof typeof PLATFORM_NAME_MAP;
 }) => {
   const [isFeeding, setIsFeeding] = useState(false);
@@ -20,16 +26,16 @@ export const MashongRoomContainer = ({
     <div>
       <styled.div display="flex" justifyContent="center" mt="20px">
         <MashongRoom
-          keyValue={popcornValue}
           teamName={PLATFORM_NAME_MAP[teamName]}
-          mashongLevel={8}
+          mashongLevel={currentLevel}
           isFeeding={isFeeding}
         />
       </styled.div>
       <PopcornXpTracker
         isButtonDisabled={isFeeding}
-        currentValue={popcornValue ?? 0}
-        maxValue={15}
+        currentXP={currentXP}
+        maxXP={maxXP}
+        availablePopcorn={availablePopcorn}
         onClick={() => {
           setIsFeeding(true);
 

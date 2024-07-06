@@ -2,7 +2,7 @@
 
 import { cookies } from 'next/headers';
 
-export const feedPopcorn = async () => {
+export const levelUp = async (goalLevel: number) => {
   try {
     const authToken = cookies().get('token');
 
@@ -10,14 +10,14 @@ export const feedPopcorn = async () => {
       throw new Error(`유효한 인증 토큰이 필요합니다.`);
     }
 
-    const res = await fetch(`https://api.dev-member.mash-up.kr/api/v1/mashong/popcorn/feed`, {
+    const res = await fetch(`https://api.dev-member.mash-up.kr/api/v1/mashong/level-up`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${authToken.value}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        popcornCount: 1,
+        goalLevel,
       }),
     });
 
@@ -26,7 +26,8 @@ export const feedPopcorn = async () => {
   } catch (error) {
     console.error(error);
     return {
-      fed: false,
+      currentLevel: goalLevel - 1,
+      levelUp: false,
     };
   }
 };

@@ -8,7 +8,7 @@ import { MashongRoomContainer } from './_components/MashongRoomContainer';
 import { TopMenuButton } from './_components/TopMenuButton';
 import { TopNavigationButton } from './_components/TopNavigationButton';
 
-async function getPopcorn() {
+async function getMashongStatus() {
   try {
     const authToken = headers().get('authorization');
 
@@ -16,21 +16,28 @@ async function getPopcorn() {
       throw new Error(`유효한 인증 토큰이 필요합니다.`);
     }
 
-    const res = await fetch(`https://api.dev-member.mash-up.kr/api/v1/mashong/popcorn`, {
+    const res = await fetch(`https://api.dev-member.mash-up.kr/api/v1/mashong/status`, {
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
     });
 
-    return res.json();
+    const { data } = await res.json();
+    return data;
   } catch (error) {
     console.error(error);
-    return { data: null };
+    return {
+      accumulatedPopcornValue: 0,
+      currentLevel: 1,
+      goalPopcornValue: 0,
+      lastPopcornValue: 0,
+    };
   }
 }
 
 const Page = async ({ params }: { params: { team: string } }) => {
-  const { data: popcornValue } = await getPopcorn();
+  const { accumulatedPopcornValue, currentLevel, goalPopcornValue, lastPopcornValue } =
+    await getMashongStatus();
   const teamName = params.team.toUpperCase() as keyof typeof PLATFORM_NAME_MAP;
 
   return (
@@ -53,7 +60,13 @@ const Page = async ({ params }: { params: { team: string } }) => {
         <TopMenuButton variant="checkin">출석</TopMenuButton>
         <TopMenuButton variant="mission">미션</TopMenuButton>
       </styled.div>
-      <MashongRoomContainer popcornValue={popcornValue} teamName={teamName} />
+      <MashongRoomContainer
+        availablePopcorn={accumulatedPopcornValue}
+        currentLevel={currentLevel}
+        currentXP={lastPopcornValue}
+        maxXP={goalPopcornValue}
+        teamName={teamName}
+      />
     </styled.div>
   );
 };
