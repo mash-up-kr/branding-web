@@ -10,12 +10,18 @@ import SvgImage from '@/ui/svg-image';
 import { ErrorToast } from './ErrorToast';
 
 interface PopcornXpTrackerProps {
+  isButtonDisabled: boolean;
   currentValue: number;
   maxValue: number;
   onClick: () => void;
 }
 
-export const PopcornXpTracker = ({ currentValue, maxValue, onClick }: PopcornXpTrackerProps) => {
+export const PopcornXpTracker = ({
+  isButtonDisabled,
+  currentValue,
+  maxValue,
+  onClick,
+}: PopcornXpTrackerProps) => {
   const [testValue, setTestValue] = useState(0);
   // const remainingValue = maxValue - currentValue;
   const remainingValue = maxValue - testValue;
@@ -97,6 +103,7 @@ export const PopcornXpTracker = ({ currentValue, maxValue, onClick }: PopcornXpT
       />
       <button
         type="button"
+        disabled={isButtonDisabled}
         onClick={() => {
           console.log('clicked');
 

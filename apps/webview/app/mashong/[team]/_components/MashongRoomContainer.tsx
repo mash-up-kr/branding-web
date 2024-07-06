@@ -27,6 +27,7 @@ export const MashongRoomContainer = ({
         />
       </styled.div>
       <PopcornXpTracker
+        isButtonDisabled={isFeeding}
         currentValue={popcornValue ?? 0}
         maxValue={15}
         onClick={() => {
@@ -34,7 +35,7 @@ export const MashongRoomContainer = ({
 
           setTimeout(() => {
             setIsFeeding(false);
-          }, 2_000);
+          }, 3_000);
         }}
       />
     </div>
