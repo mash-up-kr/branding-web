@@ -13,26 +13,26 @@ import { SpeechBubble } from './SpeechBubble';
 export const StyledMotionDiv = styled(motion.div);
 
 interface MashongRoomProps {
-  keyValue: number;
   teamName: ValueOf<typeof PLATFORM_NAME_MAP>;
-  mashongLevel: NumericRange<1, 10>;
+  mashongLevel: number | NumericRange<1, 10>;
+  isFeeding: boolean;
 }
 
-export const MashongRoom = ({ keyValue, teamName, mashongLevel }: MashongRoomProps) => {
+export const MashongRoom = ({ teamName, mashongLevel, isFeeding }: MashongRoomProps) => {
   const teamNameSlug = teamName.replace(/\s+/g, '-').toLowerCase();
 
   return (
     <styled.div position="relative" display="inline-block" minWidth={360} height={381} mb="30">
-      <SpeechBubble key={keyValue}>냠냠 고마워!</SpeechBubble>
+      <SpeechBubble isVisible={isFeeding}>냠냠 고마워!</SpeechBubble>
       <SvgImage path={`main/interior-${teamNameSlug}`} width={360} height={381} />
       <SvgImage
-        path={`main/mashong-lv${mashongLevel}`}
+        path={`main/mashong-${isFeeding ? 'feed-' : ''}lv${mashongLevel}`}
         width={182}
         height={140}
         className={css({
           position: 'absolute',
           left: 89,
-          top: 212,
+          top: 215,
         })}
       />
       <styled.span
