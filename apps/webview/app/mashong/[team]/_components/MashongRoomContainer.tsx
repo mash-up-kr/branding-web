@@ -1,11 +1,12 @@
 'use client';
 
-import { PLATFORM_NAME_MAP } from '@/../../packages/constant';
+import { PLATFORM_NAME_MAP } from 'constant';
 import { useState } from 'react';
 
-import { MashongRoom } from '@/app/_components/MashongRoom';
-import { PopcornXpTracker } from '@/app/_components/PopcornXpTracker';
 import { styled } from '@/styled-system/jsx';
+
+import { MashongRoom } from './MashongRoom';
+import { PopcornXpTracker } from './PopcornXpTracker';
 
 export const MashongRoomContainer = ({
   availablePopcorn,

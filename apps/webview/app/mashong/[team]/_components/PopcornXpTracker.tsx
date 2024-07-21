@@ -4,11 +4,11 @@ import { useState } from 'react';
 
 import { feedPopcorn } from '@/app/_actions/feedPopcorn';
 import { levelUp } from '@/app/_actions/levelUp';
-import { PopcornToast } from '@/app/_components/PopcornToast';
+import { ErrorToast } from '@/app/_components/ErrorToast';
 import { css } from '@/styled-system/css';
 import SvgImage from '@/ui/svg-image';
 
-import { ErrorToast } from './ErrorToast';
+import { PopcornToast } from './PopcornToast';
 
 interface PopcornXpTrackerProps {
   isButtonDisabled: boolean;
