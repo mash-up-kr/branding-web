@@ -1,50 +1,12 @@
 'use client';
 
-import Cookies from 'js-cookie';
-import { useEffect, useState } from 'react';
-
+import useFetch from '@/hooks/useFetch';
 import { css } from '@/styled-system/css';
 import BottomSheet, { BottomSheetProps } from '@/ui/BottomSheet';
 import SvgImage from '@/ui/svg-image';
 
-async function getAttendStatus() {
-  try {
-    const authToken = Cookies.get('token');
-
-    if (!authToken) {
-      throw new Error(`유효한 인증 토큰이 필요합니다.`);
-    }
-
-    const res = await fetch(
-      `https://api.dev-member.mash-up.kr/api/v1/mashong-mission/attendances`,
-      {
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
-        next: { tags: ['mashong-attendances'] },
-      },
-    );
-
-    const { data } = await res.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-    return {
-      attendanceCount: 0,
-    };
-  }
-}
-
 const CheckInBottomSheet = ({ isOpen, onClose, ...restProps }: BottomSheetProps) => {
-  const [attendCount, setAttendCount] = useState(1);
-
-  useEffect(() => {
-    if (isOpen) {
-      getAttendStatus().then(({ attendanceCount }: { attendanceCount: number }) =>
-        setAttendCount(attendanceCount),
-      );
-    }
-  }, [isOpen]);
+  const { data } = useFetch<{ attendanceCount: number }>('/v1/mashong-mission/attendances');
 
   return (
     <BottomSheet isOpen={isOpen} onClose={onClose} height={278} {...restProps}>
@@ -89,7 +51,7 @@ const CheckInBottomSheet = ({ isOpen, onClose, ...restProps }: BottomSheetProps)
           <AttendanceCheck
             key={`attend-check-${index}`}
             checkIndex={index}
-            isChecked={index < attendCount}
+            isChecked={index < (data ? Number(data.attendanceCount) : 1)}
           />
         ))}
       </div>
