@@ -12,6 +12,7 @@
   "dependencies": {
     "constant": "*",
     "framer-motion": "11.2.10",
+    "js-cookie": "^3.0.5",
     "next": "14.2.3",
     "react": "18.3.1",
     "react-dom": "18.3.1",
@@ -21,12 +22,13 @@
   },
   "devDependencies": {
     "@pandacss/dev": "0.40.1",
+    "@types/js-cookie": "^3.0.6",
     "@types/node": "20.12.8",
     "@types/react": "^18.0.22",
     "@types/react-dom": "^18.0.7",
     "eslint-config-custom": "*",
     "tsconfig": "*",
-    "typescript": "5.4.5",
-    "types": "*"
+    "types": "*",
+    "typescript": "5.4.5"
   }
 }

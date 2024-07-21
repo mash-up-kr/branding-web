@@ -46,7 +46,9 @@ export const TopMenuButton = ({
           {children}
         </styled.span>
       </styled.button>
-      <CheckInBottomSheet isOpen={isSheetOpen} onClose={() => setIsSheetOpen(false)} />
+      {variant === 'checkin' && (
+        <CheckInBottomSheet isOpen={isSheetOpen} onClose={() => setIsSheetOpen(false)} />
+      )}
     </>
   );
 };
