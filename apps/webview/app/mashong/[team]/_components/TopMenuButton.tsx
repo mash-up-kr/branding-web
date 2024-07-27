@@ -2,10 +2,11 @@
 
 import { PropsWithChildren, useState } from 'react';
 
-import CheckInBottomSheet from '@/app/_components/CheckInBottomSheet';
 import { css } from '@/styled-system/css';
 import { styled } from '@/styled-system/jsx';
 import SvgImage from '@/ui/svg-image';
+
+import CheckInBottomSheet from './CheckInBottomSheet';
 
 export const TopMenuButton = ({
   variant,
@@ -46,7 +47,9 @@ export const TopMenuButton = ({
           {children}
         </styled.span>
       </styled.button>
-      <CheckInBottomSheet isOpen={isSheetOpen} onClose={() => setIsSheetOpen(false)} />
+      {variant === 'checkin' && (
+        <CheckInBottomSheet isOpen={isSheetOpen} onClose={() => setIsSheetOpen(false)} />
+      )}
     </>
   );
 };
