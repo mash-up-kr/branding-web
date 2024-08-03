@@ -27,7 +27,14 @@ const Page = ({ params }: { params: { level: number } }) => {
   });
 
   useEffect(() => {
-    levelUp(pendingLevel)
+    // 축하 화면을 최소 4초 동안 노출
+    const minWait = new Promise((resolve) => {
+      setTimeout(resolve, 4000);
+    });
+
+    const levelUpPromise = levelUp(pendingLevel);
+
+    Promise.all([minWait, levelUpPromise])
       .then(() => {
         setLevelUpComplete(true);
       })
