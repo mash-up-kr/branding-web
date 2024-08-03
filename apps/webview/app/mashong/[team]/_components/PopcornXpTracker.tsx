@@ -1,5 +1,6 @@
 'use client';
 
+import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -33,7 +34,7 @@ export const PopcornXpTracker = ({
 
   const remainingXP = maxXP - currentXP;
 
-  const levelUpAvailable = remainingXP === 0;
+  const levelUpAvailable = Boolean(remainingXP === 0 && Cookies.get('token'));
 
   return (
     <div
