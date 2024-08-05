@@ -1,11 +1,19 @@
+/* eslint-disable no-unused-vars */
 import { ElementRef, useRef } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
 
 import { styled } from '@/styled-system/jsx';
 import SvgImage from '@/ui/svg-image';
 
-// eslint-disable-next-line no-unused-vars
-const Popup = ({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: (value: boolean) => void }) => {
+const Popup = ({
+  isOpen,
+  setIsOpen,
+  popupData,
+}: {
+  isOpen: boolean;
+  setIsOpen: (value: boolean) => void;
+  popupData: number;
+}) => {
   const contentsRef = useRef<ElementRef<typeof styled.div>>(null);
 
   const handleClickContentsOutside = () => {
@@ -49,7 +57,7 @@ const Popup = ({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: (value: bool
             fontSize="20px"
             letterSpacing="-0.01em"
           >
-            매숑이에게 먹일{'\n'}팝콘 3알을 획득하셨어요!
+            매숑이에게 먹일{'\n'}팝콘 {popupData}알을 획득하셨어요!
           </styled.p>
           <styled.button
             rounded="12px"

@@ -1,9 +1,12 @@
+/* eslint-disable no-unused-vars */
+
 'use client';
 
 import { motion, useMotionValue, useMotionValueEvent, useScroll } from 'framer-motion';
 import { ElementRef, useEffect, useRef, useState } from 'react';
 import { useScrollLock } from 'usehooks-ts';
 
+import { compensatePopcorn } from '@/app/_actions/compensatePopcorn';
 import { MissionStatus } from '@/app/mashong/mission-board/page';
 import Popup from '@/app/mashong/mission-board/Popup';
 import { Square, styled } from '@/styled-system/jsx';
@@ -11,7 +14,6 @@ import SvgImage from '@/ui/svg-image';
 
 const EXPANDABLE_LIMIT = 150;
 
-// eslint-disable-next-line no-unused-vars
 function groupBy<T, K extends keyof any>(array: T[], getKey: (item: T) => K): Record<K, T[]> {
   return array.reduce((acc, curr) => {
     const key = getKey(curr);
@@ -25,31 +27,15 @@ function groupBy<T, K extends keyof any>(array: T[], getKey: (item: T) => K): Re
 
 const StyledMotionDiv = styled(motion.div);
 
-// const compensatePopcornUsingPOST = async ({
-//   missionLevelId,
-//   authorization,
-// }: {
-//   missionLevelId: number;
-//   authorization: string;
-// }) => {
-//   const params = new URLSearchParams({
-//     missionLevelId: String(missionLevelId),
-//   });
-//   const compensatePopcornUsingPOSTResponse = await fetch(
-//     `https://api.dev-member.mash-up.kr/api/v1/mashong/popcorn?${params.toString()}`,
-//     {
-//       method: 'POST',
-//       headers: {
-//         Authorization: `Bearer ${authorization}`,
-//       },
-//     },
-//   );
-
-//   if (!compensatePopcornUsingPOSTResponse.ok) return undefined;
-//   return compensatePopcornUsingPOSTResponse.json();
-// };
-
-const DailyMissions = ({ missions }: { missions: MissionStatus[] }) => (
+const DailyMissions = ({
+  missions,
+  setIsPopupOpen,
+  setPopupData,
+}: {
+  missions: MissionStatus[];
+  setIsPopupOpen: (value: boolean) => void;
+  setPopupData: (value: number) => void;
+}) => (
   <styled.ul display="flex" flexDirection="column" gap="10px">
     {missions.map((missionStatus) => {
       const progressPercentage = (missionStatus.currentStatus / missionStatus.goal) * 100;
@@ -57,7 +43,20 @@ const DailyMissions = ({ missions }: { missions: MissionStatus[] }) => (
       const isMissionInProgress = !missionStatus.isCompensated && missionStatus.goal !== 0;
 
       return (
-        <styled.li key={missionStatus.missionLevelId}>
+        <styled.li
+          key={missionStatus.missionLevelId}
+          onClick={async () => {
+            if (!isCompensable || missionStatus.isCompensated) return;
+
+            const result = await compensatePopcorn({
+              missionLevelId: missionStatus.missionLevelId,
+            });
+
+            if (!result) return;
+            setIsPopupOpen(true);
+            setPopupData(missionStatus.compensation);
+          }}
+        >
           <styled.div
             opacity={missionStatus.isCompensated ? 0.5 : 1}
             bg="white"
@@ -137,7 +136,15 @@ const DailyMissions = ({ missions }: { missions: MissionStatus[] }) => (
   </styled.ul>
 );
 
-const TeamMissions = ({ missions }: { missions: MissionStatus[] }) => (
+const TeamMissions = ({
+  missions,
+  setIsPopupOpen,
+  setPopupData,
+}: {
+  missions: MissionStatus[];
+  setIsPopupOpen: (value: boolean) => void;
+  setPopupData: (value: number) => void;
+}) => (
   <styled.ul display="flex" flexDirection="column" gap="10px">
     {missions.map((missionStatus) => {
       const progressPercentage = (missionStatus.currentStatus / missionStatus.goal) * 100;
@@ -145,7 +152,20 @@ const TeamMissions = ({ missions }: { missions: MissionStatus[] }) => (
       const isMissionInProgress = !missionStatus.isCompensated && missionStatus.goal !== 0;
 
       return (
-        <styled.li key={missionStatus.missionLevelId}>
+        <styled.li
+          key={missionStatus.missionLevelId}
+          onClick={async () => {
+            if (!isCompensable || missionStatus.isCompensated) return;
+
+            const result = await compensatePopcorn({
+              missionLevelId: missionStatus.missionLevelId,
+            });
+
+            if (!result) return;
+            setIsPopupOpen(true);
+            setPopupData(missionStatus.compensation);
+          }}
+        >
           <styled.div
             bg="white"
             rounded="16px"
@@ -208,7 +228,15 @@ const TeamMissions = ({ missions }: { missions: MissionStatus[] }) => (
   </styled.ul>
 );
 
-const IndividualMissions = ({ missions }: { missions: MissionStatus[] }) => (
+const IndividualMissions = ({
+  missions,
+  setIsPopupOpen,
+  setPopupData,
+}: {
+  missions: MissionStatus[];
+  setIsPopupOpen: (value: boolean) => void;
+  setPopupData: (value: number) => void;
+}) => (
   <styled.ul display="flex" flexDirection="column" gap="10px">
     {missions.map((missionStatus) => {
       const progressPercentage = (missionStatus.currentStatus / missionStatus.goal) * 100;
@@ -216,7 +244,20 @@ const IndividualMissions = ({ missions }: { missions: MissionStatus[] }) => (
       const isMissionInProgress = !missionStatus.isCompensated && missionStatus.goal !== 0;
 
       return (
-        <styled.li key={missionStatus.missionLevelId}>
+        <styled.li
+          key={missionStatus.missionLevelId}
+          onClick={async () => {
+            if (!isCompensable || missionStatus.isCompensated) return;
+
+            const result = await compensatePopcorn({
+              missionLevelId: missionStatus.missionLevelId,
+            });
+
+            if (!result) return;
+            setIsPopupOpen(true);
+            setPopupData(missionStatus.compensation);
+          }}
+        >
           <styled.div
             bg="white"
             rounded="16px"
@@ -281,7 +322,8 @@ const IndividualMissions = ({ missions }: { missions: MissionStatus[] }) => (
 
 const Sheet = ({ missions }: { missions: MissionStatus[] }) => {
   useScrollLock();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [popupData, setPopupData] = useState(0);
   const y = useMotionValue(0);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isShrinkable, setIsShrinkable] = useState(false);
@@ -321,13 +363,13 @@ const Sheet = ({ missions }: { missions: MissionStatus[] }) => {
         drag="y"
         style={{ y }}
         dragConstraints={{ top: -EXPANDABLE_LIMIT, bottom: 0 }}
-        bg="#F8F7FC"
+        bg="gray.50"
         rounded="24px 24px 0 0"
         minH="calc(100dvh - 56px)"
         w="100%"
-        maxW="[768px]"
+        maxW="768px"
         position="fixed"
-        top="205"
+        top="206"
         dragElastic={0}
         dragMomentum={false}
       >
@@ -367,24 +409,36 @@ const Sheet = ({ missions }: { missions: MissionStatus[] }) => {
                   매일 미션은 매일 밤 12시에 다시 시작돼요
                 </styled.span>
               </styled.div>
-              <DailyMissions missions={DAILY} />
+              <DailyMissions
+                missions={DAILY}
+                setIsPopupOpen={setIsPopupOpen}
+                setPopupData={setPopupData}
+              />
             </styled.div>
             <styled.div display="flex" flexDirection="column" gap="10px">
               <styled.h2 letterSpacing="-0.01em" lineHeight="1.2" fontSize="16px" fontWeight="700">
                 개인 미션
               </styled.h2>
-              <IndividualMissions missions={INDIVIDUAL} />
+              <IndividualMissions
+                missions={INDIVIDUAL}
+                setIsPopupOpen={setIsPopupOpen}
+                setPopupData={setPopupData}
+              />
             </styled.div>
             <styled.div display="flex" flexDirection="column" gap="10px">
               <styled.h2 letterSpacing="-0.01em" lineHeight="1.2" fontSize="16px" fontWeight="700">
                 팀 미션
               </styled.h2>
-              <TeamMissions missions={TEAM} />
+              <TeamMissions
+                missions={TEAM}
+                setIsPopupOpen={setIsPopupOpen}
+                setPopupData={setPopupData}
+              />
             </styled.div>
           </styled.div>
         </styled.div>
       </StyledMotionDiv>
-      <Popup isOpen={isOpen} setIsOpen={setIsOpen} />
+      <Popup isOpen={isPopupOpen} setIsOpen={setIsPopupOpen} popupData={popupData} />
     </>
   );
 };

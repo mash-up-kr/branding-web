@@ -1,4 +1,4 @@
-import { headers } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import { notFound } from 'next/navigation';
 
 import Sheet from '@/app/mashong/mission-board/Sheet';
@@ -29,6 +29,7 @@ const missionStatusListUsingGET = async ({
       headers: {
         Authorization: `Bearer ${authorization}`,
       },
+      next: { tags: ['mashong-mission-status'] },
     },
   );
 
@@ -37,7 +38,7 @@ const missionStatusListUsingGET = async ({
 };
 
 const Page = async () => {
-  const authorization = headers().get('authorization');
+  const authorization = cookies().get('token')?.value ?? headers().get('authorization');
 
   if (!authorization) {
     notFound();
