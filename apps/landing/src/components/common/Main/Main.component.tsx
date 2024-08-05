@@ -9,11 +9,11 @@ import {
 } from '@/components/main';
 
 const Main = () => {
-  const { ref, inView } = useInView();
+  const { ref, inView: isInViewActivitySection } = useInView();
 
   return (
     <main>
-      <SnapParent disabled={inView}>
+      <SnapParent disabled={isInViewActivitySection}>
         <IntroSection />
         <IntroTypingSection />
         <ActivitySection ref={ref} />
