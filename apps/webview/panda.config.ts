@@ -32,6 +32,7 @@ export default defineConfig({
         'gray.600': { value: '#686F7E' },
         'gray.800': { value: '#383E4C' },
         'gray.900': { value: '#2C3037' },
+        'gray.950': { value: '#25272E' },
         'red.100': { value: '#FFEBEE' },
         'brand.100': { value: '#F5F1FF' },
         'brand.200': { value: '#E7DEFF' },
@@ -46,6 +47,25 @@ export default defineConfig({
         },
         '100%': {
           transform: 'translateX(300%)',
+        },
+      },
+      fadeIn: {
+        '0%': {
+          opacity: 0,
+        },
+        '100%': {
+          opacity: 1,
+        },
+      },
+      expand: {
+        '0%': {
+          transform: 'scale(1)',
+        },
+        '50%': {
+          transform: 'scale(0.97)',
+        },
+        '100%': {
+          transform: 'scale(1.03)',
         },
       },
     },

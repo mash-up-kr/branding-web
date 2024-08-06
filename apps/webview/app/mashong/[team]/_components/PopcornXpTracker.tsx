@@ -1,9 +1,10 @@
 'use client';
 
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import { feedPopcorn } from '@/app/_actions/feedPopcorn';
-import { levelUp } from '@/app/_actions/levelUp';
 import { ErrorToast } from '@/app/_components/ErrorToast';
 import { css } from '@/styled-system/css';
 import SvgImage from '@/ui/svg-image';
@@ -27,12 +28,13 @@ export const PopcornXpTracker = ({
   currentLevel,
   onClick,
 }: PopcornXpTrackerProps) => {
+  const router = useRouter();
   const [isError, setIsError] = useState(false);
   const [currentFeedingPopcorn, setCurrentFeedingPopcorn] = useState(0);
 
   const remainingXP = maxXP - currentXP;
 
-  const levelUpAvailable = remainingXP === 0;
+  const levelUpAvailable = Boolean(remainingXP === 0 && Cookies.get('token'));
 
   return (
     <div
@@ -110,25 +112,21 @@ export const PopcornXpTracker = ({
         type="button"
         disabled={isButtonDisabled}
         onClick={async () => {
+          if (levelUpAvailable) {
+            router.push(`/mashong/evolution/${currentLevel + 1}`);
+            return;
+          }
+
           if (availablePopcorn === 0) {
             setIsError(true);
           } else if (currentXP < maxXP) {
             onClick();
-            setCurrentFeedingPopcorn((prev) => prev + 1);
-            const { fed } = await feedPopcorn();
 
-            if (fed && levelUpAvailable) {
-              const { levelUp: levelUpComplete } = await levelUp(currentLevel + 1);
-
-              if (levelUpComplete) {
-                // 레벨업 화면 전환
-              }
-            }
-          } else if (levelUpAvailable) {
-            const { levelUp: levelUpComplete } = await levelUp(currentLevel + 1);
-
-            if (levelUpComplete) {
-              // 레벨업 화면 전환
+            try {
+              await feedPopcorn();
+              setCurrentFeedingPopcorn((prev) => prev + 1);
+            } catch (error) {
+              // TODO: 에러 토스트
             }
           }
         }}
