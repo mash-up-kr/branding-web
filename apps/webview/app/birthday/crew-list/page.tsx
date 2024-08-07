@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import useFetch from '@/hooks/useFetch';
+import { useWebviewHandler } from '@/hooks/useWebviewHandler';
 import { styled } from '@/styled-system/jsx';
 import BottomSheet from '@/ui/BottomSheet';
 import SvgImage from '@/ui/svg-image';
@@ -22,6 +23,7 @@ type Birthday = {
 
 const Page = () => {
   const router = useRouter();
+  const webviewHandler = useWebviewHandler();
 
   const { data } = useFetch<{
     isBirthdayToday: boolean; // 해당 유저 생일
@@ -48,11 +50,7 @@ const Page = () => {
         bgColor="#F8F7FC"
         p="8px"
         onClick={() => {
-          // TODO: iOS, AOS 공통 브릿지 정의 예정
-          // @ts-ignore
-          window.webkit.messageHandlers.mashupBridge.postMessage({
-            step: 'back',
-          });
+          webviewHandler.step('back');
         }}
       >
         <svg
