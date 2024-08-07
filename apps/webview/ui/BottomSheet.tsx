@@ -125,7 +125,7 @@ const BottomSheet = ({
     background: '#fff',
     width: '100%',
     minWidth: 320,
-    height: 287,
+    minHeight: 287,
     padding: '24px 20px 24px 20px',
     borderRadius: '20px',
     position: 'relative',
