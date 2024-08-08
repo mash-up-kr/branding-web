@@ -53,7 +53,7 @@ const Page = async () => {
   return (
     <>
       <styled.div>
-        <styled.div px="20px">
+        <styled.div px="20px" pt="env(safe-area-inset-top)">
           <styled.h2
             whiteSpace="pre-wrap"
             fontWeight={700}

@@ -9,7 +9,8 @@ const Header = () => {
 
   return (
     <styled.header
-      height="56px"
+      height="calc(env(safe-area-inset-top) + 56px)"
+      pt="env(safe-area-inset-top)"
       position="fixed"
       maxW="[768px]"
       w="100%"

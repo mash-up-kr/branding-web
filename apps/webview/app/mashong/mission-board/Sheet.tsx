@@ -369,7 +369,7 @@ const Sheet = ({ missions }: { missions: MissionStatus[] }) => {
         w="100%"
         maxW="768px"
         position="fixed"
-        top="206"
+        top="calc(56px + env(safe-area-inset-top) + 150px)"
         dragElastic={0}
         dragMomentum={false}
       >

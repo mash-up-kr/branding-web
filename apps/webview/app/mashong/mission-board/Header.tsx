@@ -9,7 +9,7 @@ const Header = () => {
 
   return (
     <styled.header
-      height="[56px]"
+      height="calc(env(safe-area-inset-top) + 56px)"
       position="fixed"
       maxW="[768px]"
       w="100%"
@@ -17,6 +17,7 @@ const Header = () => {
       translate="auto"
       translateX="-1/2"
       bg="[#6A36FF]"
+      pt="env(safe-area-inset-top)"
       zIndex="1"
     >
       <styled.div
