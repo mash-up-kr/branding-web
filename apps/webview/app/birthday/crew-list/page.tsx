@@ -42,13 +42,15 @@ const Page = () => {
   }, [data]);
 
   return (
-    <styled.div bgColor="#F8F7FC" width="100%" height="100%">
+    <>
       <styled.div
-        height="56px"
-        position="sticky"
-        top="0px"
-        bgColor="#F8F7FC"
-        p="8px"
+        position="fixed"
+        bgColor="gray.50"
+        display="flex"
+        alignItems="center"
+        height="calc(env(safe-area-inset-top) + 56px)"
+        pt="env(safe-area-inset-top)"
+        minW="100%"
         onClick={() => {
           webviewHandler.step('back');
         }}
@@ -63,9 +65,9 @@ const Page = () => {
           <path
             d="M23 13L16 20L23 27"
             stroke="#383E4C"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
         </svg>
       </styled.div>
@@ -111,7 +113,13 @@ const Page = () => {
       )}
       <styled.div
         p="0 20px 20px"
-        height={data?.isBirthdayToday ? 'calc(100vh - 178px)' : 'calc(100vh - 56px)'}
+        bgColor="gray.50"
+        pt={
+          data?.isBirthdayToday
+            ? 'calc(178px + env(safe-area-inset-top))'
+            : 'calc(56px + env(safe-area-inset-top))'
+        }
+        height="100dvh"
         overflow="auto"
       >
         <styled.div display="flex" gap="32px" flexDirection="column">
@@ -282,7 +290,7 @@ const Page = () => {
           </styled.button>
         </styled.div>
       </BottomSheet>
-    </styled.div>
+    </>
   );
 };
 export default Page;

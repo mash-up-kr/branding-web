@@ -69,7 +69,7 @@ const Page = async ({ params }: { params: { team: string } }) => {
 
   return (
     <styled.div>
-      <styled.div display="flex" justifyContent="space-between">
+      <styled.div display="flex" justifyContent="space-between" my="8px">
         <TopNavigationButton />
         <GoDiaryButton />
       </styled.div>

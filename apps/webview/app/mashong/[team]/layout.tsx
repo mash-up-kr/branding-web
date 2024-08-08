@@ -11,13 +11,10 @@ const Layout = ({ children }: { children: ReactNode }) => (
     maxWidth="[768px]"
     mx="auto"
     minH="100dvh"
-    pt="56px"
-    pb="[env(safe-area-inset-bottom)]"
+    pt="env(safe-area-inset-top)"
+    pb="env(safe-area-inset-bottom)"
     px={24}
     backgroundColor="gray.50"
-    style={{
-      paddingTop: 'calc(56px + env(safe-area-inset-top))',
-    }}
   >
     {children}
   </styled.div>
