@@ -92,14 +92,16 @@ const Page = ({
   };
 
   return (
-    <styled.div display="flex" flexDirection="column" height="100vh" position="relative">
+    <styled.div display="flex" flexDirection="column" height="100dvh" position="relative">
       <styled.div
         display="flex"
-        height="56px"
+        height="calc(env(safe-area-inset-top) + 56px)"
+        pt="env(safe-area-inset-top)"
         position="sticky"
         top="0px"
-        bgColor="#F8F7FC"
+        bgColor="gray.50"
         justifyContent="end"
+        alignItems="center"
         px="20px"
         py="16px"
         onClick={() => {
@@ -114,10 +116,10 @@ const Page = ({
           onClick={goToCrewList}
         />
       </styled.div>
-      <styled.div bg="#F8F7FC" width="100%" flex="3" display="flex" flexDirection="column">
+      <styled.div bg="gray.50" width="100%" flex="3" display="flex" flexDirection="column">
         <styled.div p="0 20px 20px">
           <styled.div fontSize="24px" fontWeight={600}>
-            <styled.span color="#6A36FF">{searchParams.name}</styled.span>님의 생일을
+            <styled.span color="brand.500">{searchParams.name}</styled.span>님의 생일을
             <br />
             축하해 주세요.
           </styled.div>
@@ -125,7 +127,7 @@ const Page = ({
             <styled.img />
           </styled.div>
         </styled.div>
-        <styled.div p="16px 20px" borderBottom="1px solid #EBEFF9">
+        <styled.div p="16px 20px" borderBottom="1px solid red.100">
           {images && (
             <styled.div ref={emblaRef} display="flex" gap="6px" mb="16px" overflow="hidden">
               <styled.div display="flex" gap="6px">
