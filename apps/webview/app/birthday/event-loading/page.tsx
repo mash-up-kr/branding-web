@@ -3,32 +3,49 @@
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
+import { useTypingAnimation } from '@/hooks/useTypingAnimation';
 import { styled } from '@/styled-system/jsx';
 import SvgImage from '@/ui/svg-image';
 
-const EventLoading = () => {
+const Page = () => {
   const router = useRouter();
+
+  const typingRef = useTypingAnimation({
+    strings: ['<span>매숑이들이</span><br/><span>보낸 선물이 있어!</span>'],
+    typeSpeed: 40,
+  });
+
   useEffect(() => {
-    setTimeout(() => {
-      router.push('/birthday/card-list');
-    }, 2000);
+    const minWait = new Promise((resolve) => {
+      setTimeout(resolve, 2000);
+    });
+
+    Promise.all([minWait])
+      .then(() => {
+        router.replace('/birthday/card-list');
+      })
+      .catch(() => {
+        // TODO: 에러 토스트
+      });
   }, [router]);
+
   return (
-    <styled.div width="100%" height="100vh" display="flex" bg="#F8F7FC">
+    <styled.div display="flex" flexDirection="column" alignItems="center" gap={26}>
+      <SvgImage basePath="birthday" path="common/event-mashong" width={182} height={140} />
       <styled.div
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-        justifyContent="center"
-        flex={1}
+        fontWeight={600}
+        fontSize={20}
+        lineHeight="23.87px"
+        letterSpacing="-1%"
+        color="gray.950"
         textAlign="center"
+        whiteSpace="nowrap"
+        margin="0 auto"
+        overflow="hidden"
+        position="relative"
+        height={48}
       >
-        <SvgImage basePath="birthday" path="common/event-mashong" width={182} height={140} />
-        <styled.div fontWeight={600} color="#25272E" fontSize="20px" lineHeight="23.87px" mt="26px">
-          매숑이들이
-          <br />
-          보낸 선물이 있어!
-        </styled.div>
+        <span ref={typingRef} />
       </styled.div>
       <styled.div
         width="0px"
@@ -52,10 +69,10 @@ const EventLoading = () => {
         position="absolute"
         bottom="60px"
         right="30px"
-        boxShadow="0px 0px 400px 50px #5421E6"
+        boxShadow="0px 0px 200px 50px #5421E6"
       />
     </styled.div>
   );
 };
 
-export default EventLoading;
+export default Page;
