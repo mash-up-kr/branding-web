@@ -1,12 +1,11 @@
 'use client';
 
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
 
 import useFetch from '@/hooks/useFetch';
 import { useWebviewHandler } from '@/hooks/useWebviewHandler';
 import { styled } from '@/styled-system/jsx';
-import BottomSheet from '@/ui/BottomSheet';
 import SvgImage from '@/ui/svg-image';
 
 type Member = {
@@ -33,23 +32,15 @@ const Page = () => {
 
   const { data: myProfile } = useFetch<{ name: string }>('/v1/members');
 
-  const [isSheetOpen, setIsSheetOpen] = useState(false);
-
-  useEffect(() => {
-    if (data) {
-      setIsSheetOpen(data.isBirthdayToday);
-    }
-  }, [data]);
-
   return (
-    <>
+    <styled.div pt="env(safe-area-inset-top)">
       <styled.div
-        position="fixed"
+        position="sticky"
+        top="env(safe-area-inset-top)"
         bgColor="gray.50"
         display="flex"
         alignItems="center"
-        height="calc(env(safe-area-inset-top) + 56px)"
-        pt="env(safe-area-inset-top)"
+        height="56px"
         minW="100%"
         onClick={() => {
           webviewHandler.step('back');
@@ -72,7 +63,13 @@ const Page = () => {
         </svg>
       </styled.div>
       {data?.isBirthdayToday && (
-        <styled.div p="0 20px 20px">
+        <styled.div
+          position="sticky"
+          top="calc(56px + env(safe-area-inset-top))"
+          width="100vw"
+          p="0 20px 20px"
+          bgColor="gray.50"
+        >
           <styled.div
             display="flex"
             justifyContent="space-between"
@@ -85,11 +82,12 @@ const Page = () => {
               {myProfile?.name}님,
               <br /> 오늘 생일이시군요!
             </styled.div>
-            <SvgImage
-              basePath="birthday"
-              path="common/mashong-with-cake"
+            <Image
+              unoptimized
+              alt=""
               width={60}
               height={60}
+              src="https://static.mash-up.kr/images/png/birthday/mashong-with-cake.png"
               style={{ rotate: '2deg' }}
             />
           </styled.div>
@@ -114,52 +112,49 @@ const Page = () => {
       <styled.div
         p="0 20px 20px"
         bgColor="gray.50"
-        pt={
-          data?.isBirthdayToday
-            ? 'calc(178px + env(safe-area-inset-top))'
-            : 'calc(56px + env(safe-area-inset-top))'
-        }
-        height="100dvh"
         overflow="auto"
+        height="calc(100dvh - 179px - env(safe-area-inset-top))"
       >
         <styled.div display="flex" gap="32px" flexDirection="column">
-          {!data?.todayBirthday && data?.upcomingBirthdays.length === 0 && (
-            <styled.div>
-              <styled.div fontSize="24px" fontWeight={600} lineHeight="28.64px">
-                다가오는 생일이
-                <br />
-                없어요
-              </styled.div>
-              <styled.div
-                position="absolute"
-                left="50%"
-                top="50%"
-                transform="translate(-50%, -50%)"
-                width="100%"
-                display="flex"
-                flexDirection="column"
-                alignItems="center"
-              >
-                <SvgImage
-                  basePath="birthday"
-                  path="common/empty-mashong"
-                  width={284}
-                  height={256}
-                />
-                <styled.div
-                  fontSize="20px"
-                  fontWeight={700}
-                  lineHeight="23.87px"
-                  color="#25272E"
-                  mt="17px"
-                >
-                  축하받을 사람이가
+          {!data?.isBirthdayToday &&
+            !data?.todayBirthday &&
+            data?.upcomingBirthdays.length === 0 && (
+              <styled.div>
+                <styled.div fontSize="24px" fontWeight={600} lineHeight="28.64px">
+                  다가오는 생일이
                   <br />
-                  언제 나타날까..
+                  없어요
+                </styled.div>
+                <styled.div
+                  position="absolute"
+                  left="50%"
+                  top="50%"
+                  transform="translate(-50%, -50%)"
+                  width="100%"
+                  display="flex"
+                  flexDirection="column"
+                  alignItems="center"
+                >
+                  <SvgImage
+                    basePath="birthday"
+                    path="common/empty-mashong"
+                    width={284}
+                    height={256}
+                  />
+                  <styled.div
+                    fontSize="20px"
+                    fontWeight={700}
+                    lineHeight="23.87px"
+                    color="#25272E"
+                    mt="17px"
+                  >
+                    축하받을 사람이가
+                    <br />
+                    언제 나타날까..
+                  </styled.div>
                 </styled.div>
               </styled.div>
-            </styled.div>
-          )}
+            )}
           {(data?.todayBirthday?.members ?? []).length > 0 && (
             <styled.div display="flex" gap="12px" flexDirection="column" flex={1}>
               <styled.div fontSize="14px" fontWeight={500} color="#383E4C">
@@ -256,41 +251,7 @@ const Page = () => {
           )}
         </styled.div>
       </styled.div>
-      <BottomSheet isOpen={isSheetOpen} onClose={() => setIsSheetOpen(false)} height={320}>
-        <styled.div display="flex" alignItems="center" flexDirection="column">
-          <styled.div display="flex" gap="8px" flexDirection="column" alignItems="center" p="8px">
-            <styled.div fontSize="16px" fontWeight={700} color="#25272E">
-              {myProfile?.name}, 생일을 축하해
-            </styled.div>
-            <styled.div fontSize="14px" fontWeight={400} color="#ABB2C1">
-              매숑이들이 보낸 생일 선물을 확인해 보세요.
-            </styled.div>
-          </styled.div>
-          <SvgImage
-            basePath="birthday"
-            path="common/mashong-with-cake"
-            width={120}
-            height={120}
-            style={{ margin: '16px 0' }}
-          />
-          <styled.button
-            type="button"
-            bgColor="#6A36FF"
-            borderRadius="8px"
-            fontSize="16px"
-            fontWeight={500}
-            width="100%"
-            color="#fff"
-            p="12px 20px"
-            onClick={() => {
-              router.push('/birthday/event');
-            }}
-          >
-            생일 카드 보러가기
-          </styled.button>
-        </styled.div>
-      </BottomSheet>
-    </>
+    </styled.div>
   );
 };
 export default Page;
