@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { PropsWithChildren, useState } from 'react';
 
 import { css } from '@/styled-system/css';
@@ -12,13 +13,14 @@ export const TopMenuButton = ({
   variant,
   children,
 }: PropsWithChildren<{ variant: 'checkin' | 'mission' }>) => {
+  const router = useRouter();
   const [isSheetOpen, setIsSheetOpen] = useState(false);
 
   const onClick = () => {
     if (variant === 'checkin') {
       setIsSheetOpen(true);
     } else {
-      // TODO: mission route
+      router.push('/mashong/mission-board');
     }
   };
 
