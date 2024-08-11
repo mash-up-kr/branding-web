@@ -1,31 +1,25 @@
 'use client';
 
-import { PropsWithChildren, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 
 import { styled } from '@/styled-system/jsx';
-import { Toast } from '@/ui/Toast';
 
-export const ErrorToast = ({
-  isOpen,
-  onClose,
-  children,
-}: PropsWithChildren<{ isOpen: boolean; onClose: () => void }>) => {
-  useEffect(() => {
-    const toastId = isOpen
-      ? toast(
-          <styled.span fontWeight={500} fontSize={14} lineHeight="16.7px" letterSpacing="-1%">
-            {children}
-          </styled.span>,
-        )
-      : undefined;
+export const ErrorToast = ({ message }: { message: string }) => (
+  <styled.span
+    fontWeight={500}
+    fontSize={14}
+    lineHeight="16.7px"
+    letterSpacing="-1%"
+    bg="#2C3037"
+    color="white"
+    textAlign="center"
+    borderRadius={12}
+    padding="12px 16px"
+  >
+    {message}
+  </styled.span>
+);
 
-    onClose();
-
-    return () => {
-      toast.remove(toastId);
-    };
-  }, [onClose, isOpen, children]);
-
-  return <Toast />;
+export const showErrorToast = (message: string) => {
+  toast.custom(<ErrorToast message={message} />, { duration: 3000 });
 };
