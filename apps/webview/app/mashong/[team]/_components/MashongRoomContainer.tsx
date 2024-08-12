@@ -4,6 +4,7 @@ import { PLATFORM_NAME_MAP } from 'constant';
 import { useState } from 'react';
 
 import { styled } from '@/styled-system/jsx';
+import { Toast } from '@/ui/Toast';
 
 import { MashongRoom } from './MashongRoom';
 import { PopcornXpTracker } from './PopcornXpTracker';
@@ -46,6 +47,7 @@ export const MashongRoomContainer = ({
           }, 3_000);
         }}
       />
+      <Toast />
     </div>
   );
 };
