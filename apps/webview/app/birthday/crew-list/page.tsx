@@ -1,12 +1,12 @@
-'use client';
-
+import { cookies, headers } from 'next/headers';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 
-import useFetch from '@/hooks/useFetch';
-import { useWebviewHandler } from '@/hooks/useWebviewHandler';
 import { styled } from '@/styled-system/jsx';
 import SvgImage from '@/ui/svg-image';
+
+import GoBirthdayCardCreatorButton from './_components/GoBirthdayCardCreatorButton';
+import GoBirthdayEventButton from './_components/GoBirthdayEventButton';
+import TopNavigationButton from './_components/TopNavigationButton';
 
 type Member = {
   congratulated: boolean;
@@ -20,48 +20,60 @@ type Birthday = {
   members: Member[];
 };
 
-const Page = () => {
-  const router = useRouter();
-  const webviewHandler = useWebviewHandler();
+async function getCrewList() {
+  try {
+    const authToken = cookies().get('token')?.value ?? headers().get('authorization');
 
-  const { data } = useFetch<{
-    isBirthdayToday: boolean; // 해당 유저 생일
-    todayBirthday: Birthday;
-    upcomingBirthdays: Birthday[];
-  }>('/v1/birthdays/upcoming?days=7');
+    if (!authToken) {
+      throw new Error(`유효한 인증 토큰이 필요합니다.`);
+    }
 
-  const { data: myProfile } = useFetch<{ name: string }>('/v1/members');
+    const response = await fetch(
+      'https://api.dev-member.mash-up.kr/api/v1/birthdays/upcoming?days=7',
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      },
+    );
+    const { data } = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    return { isBirthdayToday: false, todayBirthday: false, upcomingBirthdays: [] };
+  }
+}
+
+async function getMyProfile() {
+  try {
+    const authToken = cookies().get('token')?.value ?? headers().get('authorization');
+
+    if (!authToken) {
+      throw new Error(`유효한 인증 토큰이 필요합니다.`);
+    }
+
+    const response = await fetch('https://api.dev-member.mash-up.kr/api/v1/members', {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+    const { data } = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    return { name: '' };
+  }
+}
+
+const Page = async () => {
+  const data = await getCrewList();
+  const myProfile = await getMyProfile();
 
   return (
     <styled.div pt="env(safe-area-inset-top)">
-      <styled.div
-        position="sticky"
-        top="env(safe-area-inset-top)"
-        bgColor="gray.50"
-        display="flex"
-        alignItems="center"
-        height="56px"
-        minW="100%"
-        onClick={() => {
-          webviewHandler.step('back');
-        }}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="40"
-          height="40"
-          viewBox="0 0 40 40"
-          fill="none"
-        >
-          <path
-            d="M23 13L16 20L23 27"
-            stroke="#383E4C"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </styled.div>
+      <TopNavigationButton />
       {data?.isBirthdayToday && (
         <styled.div
           position="sticky"
@@ -91,22 +103,7 @@ const Page = () => {
               style={{ rotate: '2deg' }}
             />
           </styled.div>
-          <styled.button
-            type="button"
-            mt="12px"
-            bgColor="#6A36FF"
-            borderRadius="8px"
-            fontSize="14px"
-            fontWeight={500}
-            height="32px"
-            width="127px"
-            color="#fff"
-            onClick={() => {
-              router.push('/birthday/event');
-            }}
-          >
-            생일 카드 보러가기
-          </styled.button>
+          <GoBirthdayEventButton />
         </styled.div>
       )}
       <styled.div
@@ -190,21 +187,7 @@ const Page = () => {
                         축하 완료
                       </styled.div>
                     ) : (
-                      <styled.button
-                        type="button"
-                        width="84px"
-                        height="32px"
-                        fontSize="14px"
-                        fontWeight={500}
-                        color="#6A36FF"
-                        bgColor="#F5F1FF"
-                        borderRadius="8px"
-                        onClick={() => {
-                          router.push(`/birthday/card-creator/${member.id}?name=${member.name}`);
-                        }}
-                      >
-                        축하해주기
-                      </styled.button>
+                      <GoBirthdayCardCreatorButton id={member.id} name={member.name} />
                     )}
                   </styled.div>
                 ))}
@@ -217,7 +200,7 @@ const Page = () => {
                 다가오는 생일
               </styled.div>
               <styled.div display="flex" flexDirection="column" gap="20px">
-                {data?.upcomingBirthdays.map((i, index) => (
+                {data?.upcomingBirthdays.map((i: Birthday, index: number) => (
                   <styled.div key={index} display="flex" flexDirection="column" gap="8px">
                     <styled.div fontSize="12px" fontWeight={400} color="#686F7E">
                       {new Date().getFullYear()}-{i.date}
