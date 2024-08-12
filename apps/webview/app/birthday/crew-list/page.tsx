@@ -29,7 +29,7 @@ async function getCrewList() {
     }
 
     const response = await fetch(
-      'https://api.dev-member.mash-up.kr/api/v1/birthdays/upcoming?days=7',
+      `${process.env.NEXT_PUBLIC_API_BASE_PATH}/v1/birthdays/upcoming?days=7`,
       {
         method: 'GET',
         headers: {
@@ -53,7 +53,7 @@ async function getMyProfile() {
       throw new Error(`유효한 인증 토큰이 필요합니다.`);
     }
 
-    const response = await fetch('https://api.dev-member.mash-up.kr/api/v1/members', {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_PATH}/v1/members`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${authToken}`,
