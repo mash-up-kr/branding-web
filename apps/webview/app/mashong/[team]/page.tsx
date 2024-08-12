@@ -16,7 +16,7 @@ async function getMashongStatus() {
       throw new Error(`유효한 인증 토큰이 필요합니다.`);
     }
 
-    const res = await fetch(`https://api.dev-member.mash-up.kr/api/v1/mashong/status`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_PATH}/v1/mashong/status`, {
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
@@ -44,7 +44,7 @@ async function checkAttendance() {
       throw new Error(`유효한 인증 토큰이 필요합니다.`);
     }
 
-    const res = await fetch(`https://api.dev-member.mash-up.kr/api/v1/mashong/attend`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_PATH}/v1/mashong/attend`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${authToken}`,

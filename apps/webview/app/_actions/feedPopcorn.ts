@@ -11,7 +11,7 @@ export const feedPopcorn = async () => {
       throw new Error(`유효한 인증 토큰이 필요합니다.`);
     }
 
-    const res = await fetch(`https://api.dev-member.mash-up.kr/api/v1/mashong/popcorn/feed`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_PATH}/v1/mashong/popcorn/feed`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${authToken.value}`,

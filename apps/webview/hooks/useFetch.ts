@@ -42,7 +42,7 @@ const getData = async <T>(
   }
 };
 
-const useFetch = <T>(url: string, baseUrl = 'https://api.dev-member.mash-up.kr/api') => {
+const useFetch = <T>(url: string, baseUrl = process.env.NEXT_PUBLIC_API_BASE_PATH) => {
   const [data, setData] = useState<T | undefined>(undefined);
   const [error, setError] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
