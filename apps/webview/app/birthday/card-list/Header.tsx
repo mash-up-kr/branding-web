@@ -1,11 +1,12 @@
 'use client';
 
-import { useWebviewHandler } from '@/hooks/useWebviewHandler';
+import { useRouter } from 'next/navigation';
+
 import { styled } from '@/styled-system/jsx';
 import SvgImage from '@/ui/svg-image';
 
 const Header = () => {
-  const webviewHandler = useWebviewHandler();
+  const router = useRouter();
 
   return (
     <styled.header
@@ -34,7 +35,7 @@ const Header = () => {
           height={24}
           fill={false}
           onClick={() => {
-            webviewHandler.step('back');
+            router.push('/birthday/crew-list');
           }}
         />
       </styled.div>

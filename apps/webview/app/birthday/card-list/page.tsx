@@ -1,4 +1,4 @@
-import { headers } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import { notFound } from 'next/navigation';
 
 import Contents from '@/app/birthday/card-list/Contents';
@@ -12,11 +12,7 @@ export interface BirthdayCardResponse {
   senderMemberPlatform: string;
 }
 
-const getMyUsingGET = async ({
-  authorization,
-}: {
-  authorization: string;
-}): Promise<
+const getMyUsingGET = async (): Promise<
   | undefined
   | {
       data: {
@@ -24,12 +20,18 @@ const getMyUsingGET = async ({
       };
     }
 > => {
+  const authToken = cookies().get('token')?.value ?? headers().get('authorization');
+
+  if (!authToken) {
+    throw new Error(`유효한 인증 토큰이 필요합니다.`);
+  }
+
   const getMyUsingGETResponse = await fetch(
     'https://api.dev-member.mash-up.kr/api/v1/birthday-cards',
     {
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${authorization}`,
+        Authorization: `Bearer ${authToken}`,
       },
     },
   );
@@ -38,13 +40,7 @@ const getMyUsingGET = async ({
 };
 
 const Page = async () => {
-  const authorization = headers().get('authorization');
-
-  if (!authorization) {
-    notFound();
-  }
-
-  const getMyUsingGETData = await getMyUsingGET({ authorization });
+  const getMyUsingGETData = await getMyUsingGET();
 
   if (!getMyUsingGETData) {
     notFound();
