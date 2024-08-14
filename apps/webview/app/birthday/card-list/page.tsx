@@ -27,7 +27,7 @@ const getMyUsingGET = async (): Promise<
   }
 
   const getMyUsingGETResponse = await fetch(
-    'https://api.dev-member.mash-up.kr/api/v1/birthday-cards',
+    `${process.env.NEXT_PUBLIC_API_BASE_PATH}/v1/birthday-cards`,
     {
       method: 'GET',
       headers: {

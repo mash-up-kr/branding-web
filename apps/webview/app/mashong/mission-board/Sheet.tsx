@@ -61,7 +61,7 @@ const DailyMissions = ({
             opacity={missionStatus.isCompensated ? 0.5 : 1}
             bg="white"
             rounded="16px"
-            border={isCompensable ? '1px solid transparent' : '1px solid #EBEFF9'}
+            border={isCompensable ? '1px solid transparent' : '1px solid gray.100'}
             {...(isCompensable && {
               backgroundImage:
                 'linear-gradient(#fff, #fff),linear-gradient(95.14deg, #6A36FF 1.15%, #31C1FF 102.67%)',
@@ -98,10 +98,10 @@ const DailyMissions = ({
               )}
               <styled.div display="flex" flexDirection="column" gap="10px" flexGrow="1">
                 <styled.div display="flex" flexDirection="column" gap="4px" w="100%">
-                  <styled.span lineHeight="1.2" color="#25272E" fontSize="16px" fontWeight="700">
+                  <styled.span lineHeight="1.2" color="gray.950" fontSize="16px" fontWeight="700">
                     {missionStatus.title}
                   </styled.span>
-                  <styled.span lineHeight="1.2" fontSize="13px" fontWeight="400" color="#686F7E">
+                  <styled.span lineHeight="1.2" fontSize="13px" fontWeight="400" color="gray.600">
                     팝콘 {missionStatus.compensation}알
                   </styled.span>
                   {missionStatus.isCompensated && (
@@ -169,7 +169,7 @@ const TeamMissions = ({
           <styled.div
             bg="white"
             rounded="16px"
-            border={isCompensable ? '1px solid transparent' : '1px solid #EBEFF9'}
+            border={isCompensable ? '1px solid transparent' : '1px solid gray.100'}
             {...(isCompensable && {
               backgroundImage:
                 'linear-gradient(#fff, #fff),linear-gradient(95.14deg, #6A36FF 1.15%, #31C1FF 102.67%)',
@@ -200,10 +200,10 @@ const TeamMissions = ({
               )}
               <styled.div display="flex" flexDirection="column" gap="10px" flexGrow="1">
                 <styled.div display="flex" flexDirection="column" gap="4px" w="100%">
-                  <styled.span lineHeight="1.2" color="#25272E" fontSize="16px" fontWeight="700">
+                  <styled.span lineHeight="1.2" color="gray.950" fontSize="16px" fontWeight="700">
                     {missionStatus.title}
                   </styled.span>
-                  <styled.span lineHeight="1.2" fontSize="13px" fontWeight="400" color="#686F7E">
+                  <styled.span lineHeight="1.2" fontSize="13px" fontWeight="400" color="gray.600">
                     팝콘 {missionStatus.compensation}알
                   </styled.span>
                 </styled.div>
@@ -261,7 +261,7 @@ const IndividualMissions = ({
           <styled.div
             bg="white"
             rounded="16px"
-            border={isCompensable ? '1px solid transparent' : '1px solid #EBEFF9'}
+            border={isCompensable ? '1px solid transparent' : '1px solid gray.100'}
             {...(isCompensable && {
               backgroundImage:
                 'linear-gradient(#fff, #fff),linear-gradient(95.14deg, #6A36FF 1.15%, #31C1FF 102.67%)',
@@ -292,10 +292,10 @@ const IndividualMissions = ({
               )}
               <styled.div display="flex" flexDirection="column" gap="10px" flexGrow="1">
                 <styled.div display="flex" flexDirection="column" gap="4px" w="100%">
-                  <styled.span lineHeight="1.2" color="#25272E" fontSize="16px" fontWeight="700">
+                  <styled.span lineHeight="1.2" color="gray.950" fontSize="16px" fontWeight="700">
                     {missionStatus.title}
                   </styled.span>
-                  <styled.span lineHeight="1.2" fontSize="13px" fontWeight="400" color="#686F7E">
+                  <styled.span lineHeight="1.2" fontSize="13px" fontWeight="400" color="gray.600">
                     팝콘 {missionStatus.compensation}알
                   </styled.span>
                 </styled.div>
