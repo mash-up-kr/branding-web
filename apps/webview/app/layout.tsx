@@ -14,6 +14,7 @@ const pretendard = localFont({
 export const viewport: Viewport = {
   initialScale: 1.0,
   viewportFit: 'cover',
+  userScalable: false,
 };
 
 const RootLayout = ({
