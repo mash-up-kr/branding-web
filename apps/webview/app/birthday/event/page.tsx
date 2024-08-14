@@ -9,19 +9,16 @@ import { styled } from '@/styled-system/jsx';
 const Page = () => {
   const router = useRouter();
   const [isDark, setIsDark] = useState(false);
-  const [isLongPress, setIsLongPress] = useState(false);
   const timerRef = useRef<any>(null);
 
   const handleTouchStart = () => {
     timerRef.current = setTimeout(() => {
-      setIsLongPress(true);
       setIsDark(true);
     }, 2000);
   };
 
   const handleTouchEnd = () => {
     clearTimeout(timerRef.current);
-    setIsLongPress(false);
   };
 
   // eslint-disable-next-line consistent-return
@@ -125,7 +122,7 @@ const Page = () => {
             />
           </styled.div>
           <styled.div
-            bg={!isLongPress ? '#5421E6' : ''}
+            bg={!isDark ? '#5421E6' : ''}
             opacity={0.6}
             width="59px"
             height="59px"
@@ -137,7 +134,7 @@ const Page = () => {
             transition="background-color 1s ease"
           />
           <styled.div
-            bg={!isLongPress ? '#5421E6' : ''}
+            bg={!isDark ? '#5421E6' : ''}
             opacity={0.3}
             width="89px"
             height="89px"
