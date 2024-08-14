@@ -5,11 +5,11 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import { feedPopcorn } from '@/app/_actions/feedPopcorn';
-import { ErrorToast } from '@/app/_components/ErrorToast';
+import { showErrorToast } from '@/app/_components/ErrorToast';
 import { css } from '@/styled-system/css';
 import SvgImage from '@/ui/svg-image';
 
-import { PopcornToast } from './PopcornToast';
+import { showPopcornToast } from './PopcornToast';
 
 interface PopcornXpTrackerProps {
   isButtonDisabled: boolean;
@@ -29,7 +29,7 @@ export const PopcornXpTracker = ({
   onClick,
 }: PopcornXpTrackerProps) => {
   const router = useRouter();
-  const [isError, setIsError] = useState(false);
+
   const [currentFeedingPopcorn, setCurrentFeedingPopcorn] = useState(0);
 
   const remainingXP = maxXP - currentXP;
@@ -118,15 +118,16 @@ export const PopcornXpTracker = ({
           }
 
           if (availablePopcorn === 0) {
-            setIsError(true);
+            showErrorToast('팝콘을 모아주세요!');
           } else if (currentXP < maxXP) {
             onClick();
 
             try {
               await feedPopcorn();
+              showPopcornToast(currentFeedingPopcorn + 1);
               setCurrentFeedingPopcorn((prev) => prev + 1);
             } catch (error) {
-              // TODO: 에러 토스트
+              showErrorToast('팝콘 주기를 실패했어요..');
             }
           }
         }}
@@ -195,10 +196,6 @@ export const PopcornXpTracker = ({
           </>
         )}
       </button>
-      <ErrorToast isOpen={isError} onClose={() => setIsError(false)}>
-        팝콘을 모아주세요!
-      </ErrorToast>
-      <PopcornToast value={currentFeedingPopcorn} />
     </div>
   );
 };

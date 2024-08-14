@@ -1,5 +1,5 @@
+/* eslint-disable no-unused-vars */
 export declare global {
-  // eslint-disable-next-line no-unused-vars
   interface Window {
     MashupBridge: {
       step: Function;
@@ -11,5 +11,11 @@ export declare global {
         };
       };
     };
+  }
+
+  namespace NodeJS {
+    interface ProcessEnv {
+      NEXT_PUBLIC_API_BASE_PATH: string;
+    }
   }
 }

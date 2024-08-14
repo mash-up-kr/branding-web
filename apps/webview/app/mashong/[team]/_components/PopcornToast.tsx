@@ -1,27 +1,28 @@
 'use client';
 
-import { useEffect } from 'react';
-import { toast } from 'react-hot-toast';
+import { toast } from 'react-hot-toast/headless';
 
 import { styled } from '@/styled-system/jsx';
-import { Toast } from '@/ui/Toast';
 
-export const PopcornToast = ({ value }: { value: number }) => {
-  useEffect(() => {
-    const toastId = toast(
-      <styled.span fontWeight={500} fontSize={14} lineHeight="16.7px" letterSpacing="-1%">
-        매숑이가{' '}
-        <styled.span fontWeight={700} color="brand.300">
-          팝콘 {value}개
-        </styled.span>
-        를 냠냠했어요
-      </styled.span>,
-    );
+const PopcornToast = ({ value }: { value: number }) => (
+  <styled.span
+    bg="#2C3037"
+    color="white"
+    textAlign="center"
+    borderRadius={12}
+    padding="12px 16px"
+    fontSize={14}
+  >
+    <span>매숑이가 </span>
+    <styled.span fontWeight={700} color="brand.300">
+      팝콘 {value}개
+    </styled.span>
+    <span>를 냠냠했어요</span>
+  </styled.span>
+);
 
-    return () => {
-      toast.remove(toastId);
-    };
-  }, [value]);
-
-  return <Toast />;
+export const showPopcornToast = (value: number) => {
+  toast.custom(<PopcornToast value={value} />, {
+    duration: 3000,
+  });
 };

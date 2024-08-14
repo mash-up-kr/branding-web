@@ -23,7 +23,7 @@ const missionStatusListUsingGET = async ({
   authorization: string;
 }): Promise<undefined | { data: MissionStatus[] }> => {
   const missionStatusListUsingGETResponse = await fetch(
-    'https://api.dev-member.mash-up.kr/api/v1/mashong-mission/status',
+    `${process.env.NEXT_PUBLIC_API_BASE_PATH}/v1/mashong-mission/status`,
     {
       method: 'GET',
       headers: {

@@ -43,7 +43,7 @@ const Page = ({
       }
 
       const response = await fetch(
-        'https://api.dev-member.mash-up.kr/api/v1/birthday-cards/random-message',
+        `${process.env.NEXT_PUBLIC_API_BASE_PATH}/v1/birthday-cards/random-message`,
         {
           method: 'GET',
           headers: {
@@ -66,7 +66,7 @@ const Page = ({
         throw new Error(`유효한 인증 토큰이 필요합니다.`);
       }
 
-      const response = await fetch('https://api.dev-member.mash-up.kr/api/v1/birthday-cards', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_PATH}/v1/birthday-cards`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${authToken}`,
