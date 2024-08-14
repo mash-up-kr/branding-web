@@ -9,11 +9,11 @@ const Layout = ({ children }: { children: ReactNode }) => (
     <styled.div
       display="flex"
       flexDirection="column"
-      maxWidth="[768px]"
+      maxWidth="768px"
       mx="auto"
       minH="100dvh"
       pb="env(safe-area-inset-bottom)"
-      bg="[#6A36FF]"
+      bg="brand.500"
       pt="calc(56px + env(safe-area-inset-top))"
     >
       {children}

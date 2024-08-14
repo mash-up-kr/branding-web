@@ -16,7 +16,7 @@ const Header = () => {
       left="[50%]"
       translate="auto"
       translateX="-1/2"
-      bg="[#6A36FF]"
+      bg="brand.500"
       pt="env(safe-area-inset-top)"
       zIndex="1"
     >
