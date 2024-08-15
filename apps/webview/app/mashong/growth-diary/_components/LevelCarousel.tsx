@@ -21,9 +21,15 @@ export const LevelCarousel = () => {
   const [activeLevel, setActiveLevel] = useState(currentLevel);
 
   useEffect(() => {
-    if (!emblaApi) return;
+    if (!emblaApi) return undefined;
 
-    emblaApi.scrollTo(currentLevel - 1);
+    const scrollTimeId = setTimeout(() => {
+      emblaApi.scrollTo(currentLevel - 1);
+    }, 1000);
+
+    return () => {
+      clearTimeout(scrollTimeId);
+    };
   }, [emblaApi, currentLevel]);
 
   return (
