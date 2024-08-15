@@ -1,17 +1,17 @@
 'use client';
 
-import { PLATFORM_NAME_MAP } from '@/../../packages/constant';
+import { PLATFORM_NAME_MAP } from 'constant';
 import { useSearchParams } from 'next/navigation';
 import { PropsWithChildren } from 'react';
+import { assert, isKeyOfObject } from 'utils';
 
 import { styled } from '@/styled-system/jsx';
 
 export const InfoBadges = () => {
   const searchParams = useSearchParams();
   const currentLevel = searchParams.get('level');
-  const currentPlatform = searchParams
-    .get('platform')
-    ?.toUpperCase() as keyof typeof PLATFORM_NAME_MAP;
+  const currentPlatform = searchParams.get('platform')?.toUpperCase();
+  assert(isKeyOfObject(currentPlatform, PLATFORM_NAME_MAP));
 
   return (
     <styled.div display="flex" gap={8}>
