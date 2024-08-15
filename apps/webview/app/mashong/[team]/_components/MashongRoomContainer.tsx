@@ -1,8 +1,8 @@
 'use client';
 
-import { PlatformNameKey } from '@/../../packages/types';
 import { PLATFORM_NAME_MAP } from 'constant';
 import { useState } from 'react';
+import { PlatformNameKey } from 'types';
 
 import { styled } from '@/styled-system/jsx';
 

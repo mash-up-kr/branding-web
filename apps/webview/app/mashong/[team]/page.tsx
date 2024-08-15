@@ -1,4 +1,4 @@
-import { PLATFORM_NAME_MAP } from '@/../../packages/constant';
+import { PLATFORM_NAME_MAP } from 'constant';
 import { cookies, headers } from 'next/headers';
 import { assert, isKeyOfObject } from 'utils';
 

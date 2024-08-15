@@ -1,9 +1,9 @@
 'use client';
 
-import { assert } from '@/../../packages/utils';
 import useEmblaCarousel from 'embla-carousel-react';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { assert } from 'utils';
 
 import { styled } from '@/styled-system/jsx';
 import SvgImage from '@/ui/svg-image';
