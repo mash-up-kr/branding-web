@@ -1,5 +1,6 @@
 'use client';
 
+import { PlatformNameKey } from '@/../../packages/types';
 import { PLATFORM_NAME_MAP } from 'constant';
 import { useState } from 'react';
 
@@ -13,13 +14,13 @@ export const MashongRoomContainer = ({
   currentLevel,
   currentXP,
   maxXP,
-  teamName,
+  platformName,
 }: {
   availablePopcorn: number;
   currentLevel: number;
   currentXP: number;
   maxXP: number;
-  teamName: keyof typeof PLATFORM_NAME_MAP;
+  platformName: PlatformNameKey;
 }) => {
   const [isFeeding, setIsFeeding] = useState(false);
 
@@ -27,7 +28,7 @@ export const MashongRoomContainer = ({
     <div>
       <styled.div display="flex" justifyContent="center" mt="20px">
         <MashongRoom
-          teamName={PLATFORM_NAME_MAP[teamName]}
+          platformName={PLATFORM_NAME_MAP[platformName]}
           mashongLevel={currentLevel}
           isFeeding={isFeeding}
         />

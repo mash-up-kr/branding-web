@@ -1,15 +1,24 @@
 'use client';
 
+import { PlatformNameKey } from '@/../../packages/types';
 import { useRouter } from 'next/navigation';
 
 import { styled } from '@/styled-system/jsx';
 
-export const GoDiaryButton = ({ currentLevel }: { currentLevel: number }) => {
+export const GoDiaryButton = ({
+  currentLevel,
+  platformName,
+}: {
+  currentLevel: number;
+  platformName: PlatformNameKey;
+}) => {
   const router = useRouter();
 
   const onClick = () => {
     if (currentLevel) {
-      router.push(`/mashong/growth-diary?level=${currentLevel}`);
+      router.push(
+        `/mashong/growth-diary?platform=${platformName.toLowerCase()}&level=${currentLevel}`,
+      );
     }
   };
 
