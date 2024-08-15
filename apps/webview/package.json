@@ -21,7 +21,8 @@
     "react-hot-toast": "^2.4.1",
     "typed.js": "^2.1.0",
     "ui": "*",
-    "usehooks-ts": "^3.1.0"
+    "usehooks-ts": "^3.1.0",
+    "utils": "*"
   },
   "devDependencies": {
     "@pandacss/dev": "0.40.1",
