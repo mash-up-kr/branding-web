@@ -6,7 +6,12 @@ import { TopNavigationButton } from '../[team]/_components/TopNavigationButton';
 
 const Page = async () => (
   <styled.div display="flex" flexDirection="column" justifyContent="space-around" h="80dvh">
-    <styled.div display="flex" justifyContent="space-between" alignItems="center">
+    <styled.div
+      display="flex"
+      justifyContent="space-between"
+      alignItems="center"
+      position="relative"
+    >
       <TopNavigationButton />
       <styled.span
         fontWeight={600}
@@ -14,6 +19,9 @@ const Page = async () => (
         letterSpacing="-1%"
         color="gray.900"
         userSelect="none"
+        position="absolute"
+        left="50%"
+        transform="translateX(-50%)"
       >
         성장 일기
       </styled.span>
