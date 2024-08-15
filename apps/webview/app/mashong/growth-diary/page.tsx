@@ -28,11 +28,6 @@ const Page = async ({ searchParams }: { searchParams: SearchParams }) => {
         >
           성장 일기
         </styled.span>
-        <styled.button type="button" cursor="pointer">
-          <styled.span fontWeight={600} fontSize={16} letterSpacing="-1%" color="gray.800">
-            공유
-          </styled.span>
-        </styled.button>
       </styled.div>
 
       <styled.div
