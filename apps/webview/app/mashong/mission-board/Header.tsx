@@ -1,10 +1,13 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+
 import { useWebviewHandler } from '@/hooks/useWebviewHandler';
 import { styled } from '@/styled-system/jsx';
 import SvgImage from '@/ui/svg-image';
 
 const Header = () => {
+  const router = useRouter();
   const webviewHandler = useWebviewHandler();
 
   return (
@@ -34,7 +37,7 @@ const Header = () => {
           height={40}
           fill={false}
           onClick={() => {
-            webviewHandler.step('back');
+            router.back();
           }}
         />
         <styled.h1
