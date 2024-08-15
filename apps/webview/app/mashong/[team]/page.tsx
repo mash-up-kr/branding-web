@@ -71,7 +71,7 @@ const Page = async ({ params }: { params: { team: string } }) => {
     <styled.div>
       <styled.div display="flex" justifyContent="space-between">
         <TopNavigationButton />
-        <GoDiaryButton />
+        <GoDiaryButton currentLevel={currentLevel} />
       </styled.div>
       <styled.h2
         fontWeight={600}
