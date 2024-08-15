@@ -6,10 +6,13 @@ import useWebShare from '@/app/birthday/hooks/useWebShare';
 const useDownloadElementToImage = <T extends HTMLElement>(ref: RefObject<T>, filename: string) => {
   const { isSupported, share } = useWebShare();
 
-  const saveImage = useCallback(() => {
+  const saveImage = useCallback(async () => {
     if (ref.current === null) {
       return;
     }
+
+    await toPng(ref.current, { cacheBust: true });
+    await toPng(ref.current, { cacheBust: true });
 
     toPng(ref.current, {
       cacheBust: true,
