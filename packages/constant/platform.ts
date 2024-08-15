@@ -1,5 +1,3 @@
-import { KeyOf } from 'types';
-
 export const PLATFORM = {
   DESIGN: 'DESIGN',
   WEB: 'WEB',
@@ -8,8 +6,6 @@ export const PLATFORM = {
   NODE: 'NODE',
   SPRING: 'SPRING',
 } as const;
-
-export type TPlatform = KeyOf<typeof PLATFORM>;
 
 export const PLATFORM_NAME_MAP = {
   DESIGN: 'Product Design',

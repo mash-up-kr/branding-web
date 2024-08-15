@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { TPlatform } from 'constant';
+import { TPlatform } from 'types';
 
 export type TSphereVariants = TPlatform | 'MASHUP' | 'DEFAULT';
 
