@@ -1,28 +1,30 @@
 'use client';
 
+import { assert } from '@/../../packages/utils';
 import useEmblaCarousel from 'embla-carousel-react';
+import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import { styled } from '@/styled-system/jsx';
 import SvgImage from '@/ui/svg-image';
 
-interface LevelCarouselProps {
-  initialLevel?: number;
-}
+export const LevelCarousel = () => {
+  const searchParams = useSearchParams();
+  const currentLevel = Number(searchParams.get('level'));
+  assert(!Number.isNaN(currentLevel));
 
-// TODO: REMOVE DEFAULT VALUE
-export const LevelCarousel = ({ initialLevel = 2 }: LevelCarouselProps) => {
   const [carouselRef, emblaApi] = useEmblaCarousel({
     align: 'start',
     dragFree: true,
   });
-  const [activeLevel, setActiveLevel] = useState(initialLevel);
+
+  const [activeLevel, setActiveLevel] = useState(currentLevel);
 
   useEffect(() => {
     if (!emblaApi) return;
 
-    emblaApi.scrollTo(initialLevel - 1);
-  }, [emblaApi, initialLevel]);
+    emblaApi.scrollTo(currentLevel - 1);
+  }, [emblaApi, currentLevel]);
 
   return (
     <styled.div ref={carouselRef} overflow="hidden">
@@ -32,9 +34,9 @@ export const LevelCarousel = ({ initialLevel = 2 }: LevelCarouselProps) => {
             key={level}
             level={level}
             isActive={activeLevel === level}
-            isLocked={initialLevel < level}
+            isLocked={currentLevel < level}
             onClick={() => {
-              if (level > initialLevel) return;
+              if (level > currentLevel) return;
               setActiveLevel(level);
             }}
           />
