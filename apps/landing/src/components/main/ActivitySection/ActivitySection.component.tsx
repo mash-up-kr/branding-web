@@ -80,6 +80,7 @@ const ActivitySection = forwardRef<HTMLElement>((_, ref) => {
     </Styled.ActivitySection>
   );
 });
+
 ActivitySection.displayName = 'ActivitySection';
 
 export default ActivitySection;

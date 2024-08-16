@@ -39,6 +39,7 @@ export const ActivitySectionHeading = styled.h2<ActivitySectionHeadingProps>`
 
 export const HeadingFirstLine = styled.span`
   ${() => css`
+    padding-right: 10rem;
     background: linear-gradient(91deg, #ff3b5e 0.4%, #6046ff 68.8%);
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -47,6 +48,7 @@ export const HeadingFirstLine = styled.span`
 
 export const HeadingSecondLine = styled.span`
   ${({ theme }) => css`
+    padding-left: 10rem;
     color: ${theme.colors.white};
   `}
 `;
