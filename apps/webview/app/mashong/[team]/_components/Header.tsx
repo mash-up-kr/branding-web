@@ -1,11 +1,16 @@
-'use client';
+import { PlatformNameKey } from '@/../../packages/types';
 
 import { styled } from '@/styled-system/jsx';
 
 import { GoDiaryButton } from './GoDiaryButton';
 import { TopNavigationButton } from './TopNavigationButton';
 
-const Header = () => (
+interface HeaderProps {
+  currentLevel: number;
+  platformName: PlatformNameKey;
+}
+
+const Header = ({ currentLevel, platformName }: HeaderProps) => (
   <styled.header
     height="calc(env(safe-area-inset-top) + 56px)"
     position="absolute"
@@ -26,7 +31,7 @@ const Header = () => (
       p="[8px]"
     >
       <TopNavigationButton />
-      <GoDiaryButton />
+      <GoDiaryButton currentLevel={currentLevel} platformName={platformName} />
     </styled.div>
   </styled.header>
 );

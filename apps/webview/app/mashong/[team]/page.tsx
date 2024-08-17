@@ -70,7 +70,7 @@ const Page = async ({ params }: { params: { team: string } }) => {
 
   return (
     <styled.div>
-      <Header />
+      <Header currentLevel={currentLevel} platformName={platformName} />
       <styled.div px={24} pt="calc(env(safe-area-inset-top) + 56px)">
         <styled.h2 fontWeight={600} fontSize={24} lineHeight="28.6px" letterSpacing="-1%" mb={16}>
           매숑이가 성장한지 <styled.span color="brand.500">50</styled.span>일째

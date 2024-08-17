@@ -1,3 +1,5 @@
+import { Suspense } from 'react';
+
 import { styled } from '@/styled-system/jsx';
 
 import { InfoBadges } from './_components/InfoBadge';
@@ -35,7 +37,9 @@ const Page = async () => (
       borderRadius={20}
       m="20px auto 29px auto"
     >
-      <InfoBadges />
+      <Suspense>
+        <InfoBadges />
+      </Suspense>
 
       <styled.strong
         fontWeight={700}
@@ -55,7 +59,9 @@ const Page = async () => (
       <styled.div color="gray.700" fontWeight={700} fontSize={16} letterSpacing="-1%" mb={10}>
         내 일기
       </styled.div>
-      <LevelCarousel />
+      <Suspense>
+        <LevelCarousel />
+      </Suspense>
     </div>
   </styled.div>
 );
