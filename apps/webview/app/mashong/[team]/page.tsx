@@ -73,7 +73,7 @@ const Page = async ({ params }: { params: { team: string } }) => {
       <Header currentLevel={currentLevel} platformName={platformName} />
       <styled.div px={24} pt={56}>
         <styled.h2 fontWeight={600} fontSize={24} lineHeight="28.6px" letterSpacing="-1%" mb={16}>
-          매숑이가 성장한지
+          매숑이가 성장한지{' '}
           <styled.span color="brand.500">
             {/** 14기 시작 기준 */}
             {getDaysSince('2024-03-09')}
