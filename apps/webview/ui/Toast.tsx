@@ -18,11 +18,15 @@ export const Toast = () => {
             key={toast.id}
             {...toast.ariaProps}
             position="absolute"
-            top="calc(85px + env(safe-area-inset-top))"
+            top="calc(24px + env(safe-area-inset-top))"
             left="50%"
             transform="translateX(-50%)"
-            width="100%"
             textAlign="center"
+            bg="#2C3037"
+            zIndex={99999}
+            padding="12px 16px"
+            display="inline-block"
+            borderRadius={12}
           >
             {isValidElement(toast.message) ? toast.message : String(toast.message)}
           </styled.div>

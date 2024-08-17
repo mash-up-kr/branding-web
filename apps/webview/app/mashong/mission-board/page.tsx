@@ -5,6 +5,8 @@ import Sheet from '@/app/mashong/mission-board/Sheet';
 import { Square, styled } from '@/styled-system/jsx';
 import SvgImage from '@/ui/svg-image';
 
+import { PopcornAlert } from './PopcornAlert';
+
 export type MissionStatus = {
   compensation: number;
   currentStatus: number;
@@ -87,6 +89,7 @@ const Page = async () => {
         </styled.div>
       </styled.div>
       <Sheet missions={missionStatusListUsingGETData.data} />
+      <PopcornAlert />
     </>
   );
 };

@@ -14,12 +14,12 @@ const Page = async () => (
     justifyContent="space-between"
     pt="56px"
   >
-    <styled.div margin="24px auto 0 auto" position="relative" width="100%" aspectRatio={32 / 45}>
-      <Suspense>
+    <Suspense>
+      <styled.div margin="24px auto 0 auto" position="relative" width="100%" aspectRatio={32 / 45}>
         <InfoBadges />
         <DiaryCardImage />
-      </Suspense>
-    </styled.div>
+      </styled.div>
+    </Suspense>
 
     <styled.div mt={12}>
       <styled.div color="gray.700" fontWeight={700} fontSize={16} letterSpacing="-1%" mb={10}>
