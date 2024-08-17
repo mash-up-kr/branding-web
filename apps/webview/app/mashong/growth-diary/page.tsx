@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 
 import { styled } from '@/styled-system/jsx';
 
+import { DiaryCardImage } from './_components/DiaryCardImage';
 import { InfoBadges } from './_components/InfoBadge';
 import { LevelCarousel } from './_components/LevelCarousel';
 
@@ -13,23 +14,11 @@ const Page = async () => (
     justifyContent="space-between"
     pt="calc(env(safe-area-inset-top) + 56px)"
   >
-    <styled.div w="100%" minH={450} bg="white" padding={20} borderRadius={20} mt={24}>
+    <styled.div margin="24px auto 0 auto" position="relative" width="100%" aspectRatio={32 / 45}>
       <Suspense>
         <InfoBadges />
+        <DiaryCardImage />
       </Suspense>
-
-      <styled.strong
-        fontWeight={700}
-        fontSize={30}
-        lineHeight="35.8px"
-        letterSpacing="-1%"
-        padding="20px 0"
-        display="inline-block"
-        color="gray.950"
-      >
-        나는 매쉬업에 <br />
-        태어나버렸다.
-      </styled.strong>
     </styled.div>
 
     <styled.div mt={12}>

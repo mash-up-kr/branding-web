@@ -12,6 +12,7 @@ const Layout = ({ children }: { children: ReactNode }) => (
     flexDirection="column"
     maxWidth="[768px]"
     mx="auto"
+    minW="344px"
     minH="100dvh"
     pt="env(safe-area-inset-top)"
     pb={48}
