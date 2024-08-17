@@ -66,7 +66,7 @@ const Page = async ({ params }: { params: { team: string } }) => {
   const platformName: string = params.team.toUpperCase();
   assert(isKeyOfObject(platformName, PLATFORM_NAME_MAP));
 
-  await checkAttendance();
+  const isAttendSuccess = (await checkAttendance()) ?? false;
 
   return (
     <styled.div>
@@ -76,7 +76,9 @@ const Page = async ({ params }: { params: { team: string } }) => {
           매숑이가 성장한지 <styled.span color="brand.500">50</styled.span>일째
         </styled.h2>
         <styled.div display="flex" gap={16}>
-          <TopMenuButton variant="checkin">출석</TopMenuButton>
+          <TopMenuButton variant="checkin" shouldOpenSheet={isAttendSuccess}>
+            출석
+          </TopMenuButton>
           <TopMenuButton variant="mission">미션</TopMenuButton>
         </styled.div>
         <MashongRoomContainer

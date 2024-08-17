@@ -11,10 +11,11 @@ import CheckInBottomSheet from './CheckInBottomSheet';
 
 export const TopMenuButton = ({
   variant,
+  shouldOpenSheet = false,
   children,
-}: PropsWithChildren<{ variant: 'checkin' | 'mission' }>) => {
+}: PropsWithChildren<{ variant: 'checkin' | 'mission'; shouldOpenSheet?: boolean }>) => {
   const router = useRouter();
-  const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const [isSheetOpen, setIsSheetOpen] = useState(shouldOpenSheet);
 
   const onClick = () => {
     if (variant === 'checkin') {
