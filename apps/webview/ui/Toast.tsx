@@ -18,7 +18,7 @@ export const Toast = () => {
             key={toast.id}
             {...toast.ariaProps}
             position="absolute"
-            top={32}
+            top="calc(85px + env(safe-area-inset-top))"
             left="50%"
             transform="translateX(-50%)"
             width="100%"
