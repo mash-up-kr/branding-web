@@ -1,24 +1,32 @@
 'use client';
 
+import { PLATFORM_NAME_MAP } from 'constant';
 import useEmblaCarousel from 'embla-carousel-react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { assert } from 'utils';
+import { assert, isKeyOfObject } from 'utils';
 
 import { styled } from '@/styled-system/jsx';
 import SvgImage from '@/ui/svg-image';
 
 export const LevelCarousel = () => {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const currentLevel = Number(searchParams.get('level'));
+  const activeLevelParam = Number(searchParams.get('activeLevel') ?? currentLevel);
+  const platformParam = searchParams.get('platform');
+
   assert(!Number.isNaN(currentLevel));
+  assert(isKeyOfObject(platformParam?.toUpperCase(), PLATFORM_NAME_MAP));
 
   const [carouselRef, emblaApi] = useEmblaCarousel({
     align: 'start',
     dragFree: true,
   });
 
-  const [activeLevel, setActiveLevel] = useState(currentLevel);
+  const [activeLevel, setActiveLevel] = useState(
+    currentLevel !== activeLevelParam ? activeLevelParam : currentLevel,
+  );
 
   useEffect(() => {
     if (!emblaApi) return undefined;
@@ -44,6 +52,9 @@ export const LevelCarousel = () => {
             onClick={() => {
               if (level > currentLevel) return;
               setActiveLevel(level);
+              router.push(
+                `/mashong/growth-diary?platform=${platformParam}&level=${currentLevel}&activeLevel=${level}`,
+              );
             }}
           />
         ))}

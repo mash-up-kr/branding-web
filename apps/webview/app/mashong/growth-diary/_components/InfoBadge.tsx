@@ -10,7 +10,7 @@ import SvgImage from '@/ui/svg-image';
 
 export const InfoBadges = () => {
   const searchParams = useSearchParams();
-  const currentLevel = searchParams.get('level');
+  const currentLevel = Number(searchParams.get('activeLevel'));
   const currentPlatform = searchParams.get('platform')?.toUpperCase();
   assert(isKeyOfObject(currentPlatform, PLATFORM_NAME_MAP));
 

@@ -6,6 +6,6 @@ import SvgImage from '@/ui/svg-image';
 
 export const DiaryCardImage = () => {
   const searchParams = useSearchParams();
-  const currentLevel = searchParams.get('level');
+  const currentLevel = Number(searchParams.get('activeLevel'));
   return <SvgImage path={`growth-diary/card/lv${currentLevel}`} fill priority quality={100} />;
 };
