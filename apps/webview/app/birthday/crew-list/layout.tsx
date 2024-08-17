@@ -1,8 +1,8 @@
-/** @see {@link https://github.com/vercel/next.js/issues/49373#issuecomment-1565502698} */
 import { type ReactNode } from 'react';
 
 import { styled } from '@/styled-system/jsx';
 
+/** @see {@link https://github.com/vercel/next.js/issues/49373#issuecomment-1565502698} */
 export const dynamic = 'force-dynamic';
 
 export const metadata = {};
