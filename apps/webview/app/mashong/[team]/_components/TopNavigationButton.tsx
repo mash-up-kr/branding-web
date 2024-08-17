@@ -1,10 +1,31 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+import React from 'react';
+
 import { useWebviewHandler } from '@/hooks/useWebviewHandler';
 import { styled } from '@/styled-system/jsx';
 
-export const TopNavigationButton = () => {
+type TopNavigationButtonProps = {
+  actionType: 'webviewBack' | 'routerBack';
+};
+
+export const TopNavigationButton = ({ actionType }: TopNavigationButtonProps) => {
   const webviewHandler = useWebviewHandler();
+  const router = useRouter();
+
+  const handleClick = () => {
+    switch (actionType) {
+      case 'webviewBack':
+        webviewHandler.step('back');
+        break;
+      case 'routerBack':
+        router.back();
+        break;
+      default:
+        console.warn(`Unknown action type: ${actionType}`);
+    }
+  };
 
   return (
     <styled.button
@@ -15,9 +36,7 @@ export const TopNavigationButton = () => {
       display="flex"
       justifyContent="center"
       alignItems="center"
-      onClick={() => {
-        webviewHandler.step('back');
-      }}
+      onClick={handleClick}
     >
       {/** SVG inlining for priority */}
       <svg xmlns="http://www.w3.org/2000/svg" width={9} height={16} fill="none">
