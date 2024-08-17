@@ -75,7 +75,7 @@ const LevelButton = ({ level, isActive = false, isLocked = false, onClick }: Lev
     <styled.div
       width={60}
       height={60}
-      backgroundColor={isLocked ? 'gray.100' : 'white'}
+      backgroundColor={isLocked ? 'gray.100' : isActive ? 'brand.100' : 'white'}
       display="flex"
       justifyContent="center"
       alignItems="center"
@@ -88,7 +88,9 @@ const LevelButton = ({ level, isActive = false, isLocked = false, onClick }: Lev
       {isLocked ? (
         <SvgImage path="growth-diary/level-lock" width={32} height={32} />
       ) : (
-        <styled.div width={32} height={32} backgroundColor="#D9D9D9" display="block" />
+        <styled.span fontWeight={700} fontSize={16} color={isActive ? 'brand.500' : 'gray.400'}>
+          Lv.{level}
+        </styled.span>
       )}
     </styled.div>
     <styled.span
