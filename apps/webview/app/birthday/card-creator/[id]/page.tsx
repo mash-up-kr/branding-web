@@ -43,7 +43,7 @@ const Page = ({
       }
 
       const response = await fetch(
-        'https://api.dev-member.mash-up.kr/api/v1/birthday-cards/random-message',
+        `${process.env.NEXT_PUBLIC_API_BASE_PATH}/v1/birthday-cards/random-message`,
         {
           method: 'GET',
           headers: {
@@ -66,7 +66,7 @@ const Page = ({
         throw new Error(`유효한 인증 토큰이 필요합니다.`);
       }
 
-      const response = await fetch('https://api.dev-member.mash-up.kr/api/v1/birthday-cards', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_PATH}/v1/birthday-cards`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${authToken}`,
@@ -92,16 +92,22 @@ const Page = ({
   };
 
   return (
-    <styled.div display="flex" flexDirection="column" height="100vh" position="relative">
+    <styled.div
+      display="flex"
+      flexDirection="column"
+      height="100dvh"
+      position="relative"
+      pt="env(safe-area-inset-top)"
+    >
       <styled.div
         display="flex"
-        height="56px"
+        height="calc(env(safe-area-inset-top) + 56px)"
         position="sticky"
         top="0px"
-        bgColor="#F8F7FC"
+        bgColor="gray.50"
         justifyContent="end"
-        px="20px"
-        py="16px"
+        alignItems="center"
+        p="16px 20px"
         onClick={() => {
           router.replace('/birthday/crew-list');
         }}
@@ -114,10 +120,10 @@ const Page = ({
           onClick={goToCrewList}
         />
       </styled.div>
-      <styled.div bg="#F8F7FC" width="100%" flex="3" display="flex" flexDirection="column">
+      <styled.div bg="gray.50" width="100%" flex="3" display="flex" flexDirection="column">
         <styled.div p="0 20px 20px">
           <styled.div fontSize="24px" fontWeight={600}>
-            <styled.span color="#6A36FF">{searchParams.name}</styled.span>님의 생일을
+            <styled.span color="brand.500">{searchParams.name}</styled.span>님의 생일을
             <br />
             축하해 주세요.
           </styled.div>
@@ -125,12 +131,24 @@ const Page = ({
             <styled.img />
           </styled.div>
         </styled.div>
-        <styled.div p="16px 20px" borderBottom="1px solid #EBEFF9">
+        <styled.div p="16px 20px" borderBottom="1px solid red.100">
           {images && (
-            <styled.div ref={emblaRef} display="flex" gap="6px" mb="16px" overflow="hidden">
-              <styled.div display="flex" gap="6px">
-                {images?.defaultImages.map((i) => (
-                  <styled.div key={i.imageUrl} position="relative" width="72px">
+            <styled.div ref={emblaRef} overflow="hidden">
+              <styled.div display="flex" mb="16px" maxW="calc(100%)">
+                {images.defaultImages.map((i, index, items) => (
+                  <styled.div
+                    key={i.imageUrl}
+                    w="72px"
+                    flexShrink="0"
+                    mr={index === items.length - 1 ? '0px' : '6px'}
+                    display="flex"
+                    flexDirection="column"
+                    gap="24px"
+                    onClick={() => {
+                      setSelectedImageUrl(i.imageUrl);
+                    }}
+                    position="relative"
+                  >
                     <Image
                       width="72"
                       height="52"
@@ -157,9 +175,6 @@ const Page = ({
                       display="flex"
                       alignItems="center"
                       justifyContent="center"
-                      onClick={() => {
-                        setSelectedImageUrl(i.imageUrl);
-                      }}
                     >
                       {selectedImageUrl === i.imageUrl && (
                         <svg
@@ -180,13 +195,6 @@ const Page = ({
                     </styled.div>
                   </styled.div>
                 ))}
-                {/* <styled.div
-                  position="absolute"
-                  right={0}
-                  width="92px"
-                  height="52px"
-                  bg="linear-gradient(to right, rgb(255 255 255 / 0%) 10%, #f8f7fc 100%)"
-                /> */}
               </styled.div>
             </styled.div>
           )}
@@ -285,11 +293,12 @@ const Page = ({
           justifyContent="center"
           textAlign="center"
         >
-          <SvgImage
-            basePath="birthday"
-            path="common/mashong-with-cake"
+          <Image
+            unoptimized
+            alt=""
             width={130}
             height={60}
+            src="https://static.mash-up.kr/images/png/birthday/mashong-with-cake.png"
             style={{ rotate: '2deg' }}
           />
           <styled.div fontWeight={600} fontSize="20px" lineHeight="23.87px" color="#fff" mt="20px">

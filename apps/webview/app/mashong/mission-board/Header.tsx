@@ -1,22 +1,26 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+
 import { useWebviewHandler } from '@/hooks/useWebviewHandler';
 import { styled } from '@/styled-system/jsx';
 import SvgImage from '@/ui/svg-image';
 
 const Header = () => {
+  const router = useRouter();
   const webviewHandler = useWebviewHandler();
 
   return (
     <styled.header
-      height="[56px]"
+      height="calc(env(safe-area-inset-top) + 56px)"
       position="fixed"
       maxW="[768px]"
       w="100%"
       left="[50%]"
       translate="auto"
       translateX="-1/2"
-      bg="[#6A36FF]"
+      bg="brand.500"
+      pt="env(safe-area-inset-top)"
       zIndex="1"
     >
       <styled.div
@@ -33,7 +37,7 @@ const Header = () => {
           height={40}
           fill={false}
           onClick={() => {
-            webviewHandler.step('back');
+            router.back();
           }}
         />
         <styled.h1

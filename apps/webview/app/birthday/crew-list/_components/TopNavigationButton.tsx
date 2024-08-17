@@ -3,32 +3,39 @@
 import { useWebviewHandler } from '@/hooks/useWebviewHandler';
 import { styled } from '@/styled-system/jsx';
 
-export const TopNavigationButton = () => {
+const TopNavigationButton = () => {
   const webviewHandler = useWebviewHandler();
 
   return (
-    <styled.button
-      type="button"
-      cursor="pointer"
-      width={40}
-      height={40}
+    <styled.div
+      position="sticky"
+      top="env(safe-area-inset-top)"
+      bgColor="gray.50"
       display="flex"
-      justifyContent="center"
       alignItems="center"
+      height="56px"
+      minW="100%"
       onClick={() => {
         webviewHandler.step('back');
       }}
     >
-      {/** SVG inlining for priority */}
-      <svg xmlns="http://www.w3.org/2000/svg" width={9} height={16} fill="none">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="40"
+        height="40"
+        viewBox="0 0 40 40"
+        fill="none"
+      >
         <path
+          d="M23 13L16 20L23 27"
           stroke="#383E4C"
+          strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
-          strokeWidth={2}
-          d="M8 1 1 8l7 7"
         />
       </svg>
-    </styled.button>
+    </styled.div>
   );
 };
+
+export default TopNavigationButton;

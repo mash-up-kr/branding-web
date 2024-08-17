@@ -1,30 +1,32 @@
 'use client';
 
-import dynamic from 'next/dynamic';
+import { isValidElement } from 'react';
+import { useToaster } from 'react-hot-toast/headless';
 
-const Toaster = dynamic(
-  async () => {
-    const { Toaster: ReactHotToast } = await import('react-hot-toast');
-    return ReactHotToast;
-  },
-  {
-    ssr: false,
-  },
-);
+import { styled } from '@/styled-system/jsx';
 
-export const Toast = () => (
-  <Toaster
-    position="top-center"
-    reverseOrder={false}
-    containerStyle={{ top: 60 }}
-    toastOptions={{
-      duration: 2_000,
-      style: {
-        background: '#2C3037',
-        padding: '8px 6px',
-        margin: 0,
-        color: '#fff',
-      },
-    }}
-  />
-);
+export const Toast = () => {
+  const { toasts, handlers } = useToaster();
+  const { startPause, endPause } = handlers;
+
+  return (
+    <div onMouseEnter={startPause} onMouseLeave={endPause}>
+      {toasts
+        .filter((toast) => toast.visible)
+        .map((toast) => (
+          <styled.div
+            key={toast.id}
+            {...toast.ariaProps}
+            position="absolute"
+            top="calc(85px + env(safe-area-inset-top))"
+            left="50%"
+            transform="translateX(-50%)"
+            width="100%"
+            textAlign="center"
+          >
+            {isValidElement(toast.message) ? toast.message : String(toast.message)}
+          </styled.div>
+        ))}
+    </div>
+  );
+};

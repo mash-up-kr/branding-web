@@ -19,5 +19,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: '/mashong/:path*',
+  matcher: ['/mashong/:path*', '/birthday/:path*'],
 };

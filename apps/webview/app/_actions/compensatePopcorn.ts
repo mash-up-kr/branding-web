@@ -16,7 +16,7 @@ export const compensatePopcorn = async ({ missionLevelId }: { missionLevelId: nu
     });
 
     const res = await fetch(
-      `https://api.dev-member.mash-up.kr/api/v1/mashong/popcorn?${params.toString()}`,
+      `${process.env.NEXT_PUBLIC_API_BASE_PATH}v1/mashong/popcorn?${params.toString()}`,
       {
         method: 'POST',
         headers: {
