@@ -39,6 +39,7 @@ export default defineConfig({
         'brand.100': { value: '#F5F1FF' },
         'brand.200': { value: '#E7DEFF' },
         'brand.300': { value: '#CDBFF6' },
+        'brand.400': { value: '#8A61FF' },
         'brand.500': { value: '#6A36FF' },
       },
     },

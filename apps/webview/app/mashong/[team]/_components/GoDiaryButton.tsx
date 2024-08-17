@@ -17,7 +17,7 @@ export const GoDiaryButton = ({
   const onClick = () => {
     if (currentLevel) {
       router.push(
-        `/mashong/growth-diary?platform=${platformName.toLowerCase()}&level=${currentLevel}`,
+        `/mashong/growth-diary?platform=${platformName.toLowerCase()}&level=${currentLevel}&activeLevel=${currentLevel}`,
       );
     }
   };

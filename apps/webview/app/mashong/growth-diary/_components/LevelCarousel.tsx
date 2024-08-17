@@ -1,24 +1,32 @@
 'use client';
 
+import { PLATFORM_NAME_MAP } from 'constant';
 import useEmblaCarousel from 'embla-carousel-react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { assert } from 'utils';
+import { assert, isKeyOfObject } from 'utils';
 
 import { styled } from '@/styled-system/jsx';
 import SvgImage from '@/ui/svg-image';
 
 export const LevelCarousel = () => {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const currentLevel = Number(searchParams.get('level'));
+  const activeLevelParam = Number(searchParams.get('activeLevel') ?? currentLevel);
+  const platformParam = searchParams.get('platform');
+
   assert(!Number.isNaN(currentLevel));
+  assert(isKeyOfObject(platformParam?.toUpperCase(), PLATFORM_NAME_MAP));
 
   const [carouselRef, emblaApi] = useEmblaCarousel({
     align: 'start',
     dragFree: true,
   });
 
-  const [activeLevel, setActiveLevel] = useState(currentLevel);
+  const [activeLevel, setActiveLevel] = useState(
+    currentLevel !== activeLevelParam ? activeLevelParam : currentLevel,
+  );
 
   useEffect(() => {
     if (!emblaApi) return undefined;
@@ -44,6 +52,9 @@ export const LevelCarousel = () => {
             onClick={() => {
               if (level > currentLevel) return;
               setActiveLevel(level);
+              router.push(
+                `/mashong/growth-diary?platform=${platformParam}&level=${currentLevel}&activeLevel=${level}`,
+              );
             }}
           />
         ))}
@@ -64,7 +75,7 @@ const LevelButton = ({ level, isActive = false, isLocked = false, onClick }: Lev
     <styled.div
       width={60}
       height={60}
-      backgroundColor={isLocked ? 'gray.100' : 'white'}
+      backgroundColor={isLocked ? 'gray.100' : isActive ? 'brand.100' : 'white'}
       display="flex"
       justifyContent="center"
       alignItems="center"
@@ -77,7 +88,9 @@ const LevelButton = ({ level, isActive = false, isLocked = false, onClick }: Lev
       {isLocked ? (
         <SvgImage path="growth-diary/level-lock" width={32} height={32} />
       ) : (
-        <styled.div width={32} height={32} backgroundColor="#D9D9D9" display="block" />
+        <styled.span fontWeight={700} fontSize={16} color={isActive ? 'brand.500' : 'gray.400'}>
+          Lv.{level}
+        </styled.span>
       )}
     </styled.div>
     <styled.span
