@@ -12,6 +12,7 @@ const Layout = ({ children }: { children: ReactNode }) => (
     maxWidth="768px"
     mx="auto"
     minH="100dvh"
+    pt="env(safe-area-inset-top)"
     pb="env(safe-area-inset-bottom)"
     px="24px"
     backgroundColor="gray.50"
