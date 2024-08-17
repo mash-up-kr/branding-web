@@ -52,7 +52,7 @@ export const LevelCarousel = () => {
             onClick={() => {
               if (level > currentLevel) return;
               setActiveLevel(level);
-              router.push(
+              router.replace(
                 `/mashong/growth-diary?platform=${platformParam}&level=${currentLevel}&activeLevel=${level}`,
               );
             }}
