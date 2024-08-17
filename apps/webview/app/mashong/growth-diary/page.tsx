@@ -12,7 +12,7 @@ const Page = async () => (
     display="flex"
     flexDirection="column"
     justifyContent="space-between"
-    pt="calc(env(safe-area-inset-top) + 56px)"
+    pt="56px"
   >
     <styled.div margin="24px auto 0 auto" position="relative" width="100%" aspectRatio={32 / 45}>
       <Suspense>
