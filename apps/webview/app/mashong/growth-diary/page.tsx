@@ -14,7 +14,7 @@ const Page = async () => (
       alignItems="center"
       position="relative"
     >
-      <TopNavigationButton />
+      <TopNavigationButton actionType="routerBack" />
       <styled.span
         fontWeight={600}
         fontSize={16}

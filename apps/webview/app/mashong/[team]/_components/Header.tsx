@@ -30,7 +30,7 @@ const Header = ({ currentLevel, platformName }: HeaderProps) => (
       h="full"
       p="[8px]"
     >
-      <TopNavigationButton />
+      <TopNavigationButton actionType="webviewBack" />
       <GoDiaryButton currentLevel={currentLevel} platformName={platformName} />
     </styled.div>
   </styled.header>
