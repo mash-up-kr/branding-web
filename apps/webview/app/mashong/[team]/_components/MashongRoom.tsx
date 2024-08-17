@@ -1,8 +1,7 @@
 'use client';
 
-import { PLATFORM_NAME_MAP } from 'constant';
 import { motion } from 'framer-motion';
-import { NumericRange, ValueOf } from 'types';
+import { NumericRange, PlatformNameValue } from 'types';
 
 import { css } from '@/styled-system/css';
 import { styled } from '@/styled-system/jsx';
@@ -13,13 +12,13 @@ import { SpeechBubble } from './SpeechBubble';
 export const StyledMotionDiv = styled(motion.div);
 
 interface MashongRoomProps {
-  teamName: ValueOf<typeof PLATFORM_NAME_MAP>;
+  platformName: PlatformNameValue;
   mashongLevel: number | NumericRange<1, 10>;
   isFeeding: boolean;
 }
 
-export const MashongRoom = ({ teamName, mashongLevel, isFeeding }: MashongRoomProps) => {
-  const teamNameSlug = teamName.replace(/\s+/g, '-').toLowerCase();
+export const MashongRoom = ({ platformName, mashongLevel, isFeeding }: MashongRoomProps) => {
+  const teamNameSlug = platformName.replace(/\s+/g, '-').toLowerCase();
 
   return (
     <styled.div position="relative" display="inline-block" minWidth={360} height={381} mb="30">
@@ -49,7 +48,7 @@ export const MashongRoom = ({ teamName, mashongLevel, isFeeding }: MashongRoomPr
         left="50%"
         transform="translate(-50%, 0)"
       >
-        {teamName}
+        {platformName}
       </styled.span>
     </styled.div>
   );

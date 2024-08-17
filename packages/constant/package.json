@@ -7,9 +7,6 @@
   "scripts": {
     "lint": "eslint \"**/*.ts*\""
   },
-  "dependencies": {
-    "types": "*"
-  },
   "devDependencies": {
     "@types/node": "20.12.8",
     "eslint": "^7.32.0",

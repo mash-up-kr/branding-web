@@ -23,6 +23,7 @@
     "eslint-config-custom": "*",
     "stylelint-config-custom": "*",
     "tsconfig": "*",
-    "typescript": "^4.5.2"
+    "typescript": "^4.5.2",
+    "types": "*"
   }
 }

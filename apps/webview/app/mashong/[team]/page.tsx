@@ -1,5 +1,6 @@
-import { PLATFORM_NAME_MAP } from '@/../../packages/constant';
+import { PLATFORM_NAME_MAP } from 'constant';
 import { cookies, headers } from 'next/headers';
+import { assert, isKeyOfObject } from 'utils';
 
 import { styled } from '@/styled-system/jsx';
 
@@ -62,7 +63,8 @@ const Page = async ({ params }: { params: { team: string } }) => {
   const { accumulatedPopcornValue, currentLevel, goalPopcornValue, lastPopcornValue } =
     await getMashongStatus();
 
-  const teamName = params.team.toUpperCase() as keyof typeof PLATFORM_NAME_MAP;
+  const platformName: string = params.team.toUpperCase();
+  assert(isKeyOfObject(platformName, PLATFORM_NAME_MAP));
 
   await checkAttendance();
 
@@ -82,7 +84,7 @@ const Page = async ({ params }: { params: { team: string } }) => {
           currentLevel={currentLevel}
           currentXP={accumulatedPopcornValue}
           maxXP={goalPopcornValue}
-          teamName={teamName}
+          platformName={platformName}
         />
       </styled.div>
     </styled.div>
