@@ -5,14 +5,7 @@ import { toast } from 'react-hot-toast/headless';
 import { styled } from '@/styled-system/jsx';
 
 const PopcornToast = ({ value }: { value: number }) => (
-  <styled.span
-    bg="#2C3037"
-    color="white"
-    textAlign="center"
-    borderRadius={12}
-    padding="12px 16px"
-    fontSize={14}
-  >
+  <styled.span color="white" textAlign="center">
     <span>매숑이가 </span>
     <styled.span fontWeight={700} color="brand.300">
       팝콘 {value}개

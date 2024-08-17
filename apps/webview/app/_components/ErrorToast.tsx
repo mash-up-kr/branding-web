@@ -1,25 +1,23 @@
 'use client';
 
+import { ReactNode } from 'react';
 import { toast } from 'react-hot-toast/headless';
 
 import { styled } from '@/styled-system/jsx';
 
-export const ErrorToast = ({ message }: { message: string }) => (
+export const ErrorToast = ({ message }: { message: ReactNode }) => (
   <styled.span
     fontWeight={500}
     fontSize={14}
     lineHeight="16.7px"
     letterSpacing="-1%"
-    bg="#2C3037"
     color="white"
-    textAlign="center"
-    borderRadius={12}
-    padding="12px 16px"
+    whiteSpace="nowrap"
   >
     {message}
   </styled.span>
 );
 
-export const showErrorToast = (message: string) => {
+export const showErrorToast = (message: ReactNode) => {
   toast.custom(<ErrorToast message={message} />, { duration: 3000 });
 };

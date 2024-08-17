@@ -118,7 +118,8 @@ export const PopcornXpTracker = ({
           }
 
           if (availablePopcorn === 0) {
-            showErrorToast('팝콘을 모아주세요!');
+            router.push('/mashong/mission-board');
+            Cookies.set('popcornAlertSeen', '1');
           } else if (currentXP < maxXP) {
             onClick();
 
