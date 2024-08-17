@@ -1,6 +1,6 @@
 import { PLATFORM_NAME_MAP } from 'constant';
 import { cookies, headers } from 'next/headers';
-import { assert, isKeyOfObject } from 'utils';
+import { assert, isKeyOfObject, getDaysSince } from 'utils';
 
 import { styled } from '@/styled-system/jsx';
 
@@ -73,7 +73,12 @@ const Page = async ({ params }: { params: { team: string } }) => {
       <Header currentLevel={currentLevel} platformName={platformName} />
       <styled.div px={24} pt="calc(env(safe-area-inset-top) + 56px)">
         <styled.h2 fontWeight={600} fontSize={24} lineHeight="28.6px" letterSpacing="-1%" mb={16}>
-          매숑이가 성장한지 <styled.span color="brand.500">50</styled.span>일째
+          매숑이가 성장한지
+          <styled.span color="brand.500">
+            {/** 14기 시작 기준 */}
+            {getDaysSince('2024-03-09')}
+          </styled.span>
+          일째
         </styled.h2>
         <styled.div display="flex" gap={16}>
           <TopMenuButton variant="checkin">출석</TopMenuButton>
