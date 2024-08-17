@@ -18,10 +18,10 @@ export const InfoBadges = () => {
     <styled.div display="flex" gap={8} pos="absolute" top={20} left={20} zIndex={1}>
       <InfoBadge bgColor="brand.400" color="white">
         <SvgImage path="growth-diary/platform-prefix" width={12} height={12} />
-        Lv.{currentLevel}
+        {PLATFORM_NAME_MAP[currentPlatform]}
       </InfoBadge>
       <InfoBadge bgColor="gray.100" color="gray.600">
-        {PLATFORM_NAME_MAP[currentPlatform]}
+        Lv.{currentLevel}
       </InfoBadge>
     </styled.div>
   );
