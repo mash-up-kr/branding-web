@@ -13,8 +13,7 @@ export const TopNavigationButton = () => {
       width={40}
       height={40}
       display="flex"
-      justifyContent="flex-start"
-      pl={4}
+      justifyContent="center"
       alignItems="center"
       onClick={() => {
         webviewHandler.step('back');
