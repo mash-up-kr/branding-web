@@ -11,7 +11,6 @@ const Header = () => (
     translate="auto"
     translateX="-1/2"
     bg="gray.50"
-    pt="env(safe-area-inset-top)"
     zIndex="1"
   >
     <styled.div
