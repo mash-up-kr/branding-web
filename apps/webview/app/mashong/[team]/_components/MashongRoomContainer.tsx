@@ -1,6 +1,6 @@
 'use client';
 
-import { PLATFORM_NAME_MAP } from 'constant';
+import { levelName, PLATFORM_NAME_MAP } from 'constant';
 import { useState } from 'react';
 import { PlatformNameKey } from 'types';
 
@@ -18,7 +18,7 @@ export const MashongRoomContainer = ({
   platformName,
 }: {
   availablePopcorn: number;
-  currentLevel: number;
+  currentLevel: keyof typeof levelName;
   currentXP: number;
   maxXP: number;
   platformName: PlatformNameKey;
