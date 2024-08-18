@@ -10,14 +10,12 @@ const Layout = ({ children }: { children: ReactNode }) => (
   <styled.div
     display="flex"
     flexDirection="column"
-    maxWidth="[768px]"
     mx="auto"
     minW="344px"
     minH="100dvh"
     pt="env(safe-area-inset-top)"
-    pb={48}
-    px={24}
-    backgroundColor="gray.50"
+    bg="gray.50"
+    maxW={768}
   >
     <Header />
     {children}

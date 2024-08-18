@@ -41,7 +41,7 @@ export const LevelCarousel = () => {
   }, [emblaApi, currentLevel]);
 
   return (
-    <styled.div ref={carouselRef} overflow="hidden">
+    <styled.div ref={carouselRef}>
       <styled.div display="flex" gap={16}>
         {Array.from({ length: 10 }, (_, i) => i + 1).map((level) => (
           <LevelButton
