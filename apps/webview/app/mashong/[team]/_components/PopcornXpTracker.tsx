@@ -124,8 +124,6 @@ export const PopcornXpTracker = ({
             router.push('/mashong/mission-board');
             Cookies.set('popcornAlertSeen', '1');
           } else if (localXP < maxXP) {
-            onClick();
-
             try {
               await feedPopcorn();
 
@@ -136,6 +134,7 @@ export const PopcornXpTracker = ({
               setCurrentFeedingPopcorn((prev) => prev + 1);
               setLocalXP((prevXP) => Math.min(prevXP + 1, maxXP));
               setAvailablePopcorn((prev) => prev - 1);
+              onClick();
             } catch (error) {
               showErrorToast('팝콘 주기를 실패했어요..');
             }
