@@ -19,5 +19,5 @@ export const ErrorToast = ({ message }: { message: ReactNode }) => (
 );
 
 export const showErrorToast = (message: ReactNode) => {
-  toast.custom(<ErrorToast message={message} />, { duration: 3000 });
+  toast.custom(<ErrorToast message={message} />, { duration: 300000000 });
 };
