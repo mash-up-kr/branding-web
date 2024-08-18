@@ -45,7 +45,7 @@ export const MashongRoomContainer = ({
 
           setTimeout(() => {
             setIsFeeding(false);
-          }, 3_000);
+          }, 200);
         }}
       />
       <Toast />

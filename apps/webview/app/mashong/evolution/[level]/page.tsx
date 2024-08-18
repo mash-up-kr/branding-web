@@ -4,19 +4,21 @@ import { STATIC_ORIGIN, levelName } from 'constant';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Lottie } from 'ui';
+import { assert, isKeyOfObject } from 'utils';
 
 import { levelUp } from '@/app/_actions/levelUp';
 import { useTypingAnimation } from '@/hooks/useTypingAnimation';
 import { css } from '@/styled-system/css';
 import { styled } from '@/styled-system/jsx';
-
-type LevelKeys = keyof typeof levelName;
+import SvgImage from '@/ui/svg-image';
 
 const Page = ({ params }: { params: { level: number } }) => {
   const router = useRouter();
-  const [levelUpComplete, setLevelUpComplete] = useState(true);
+  const [levelUpComplete, setLevelUpComplete] = useState(false);
 
-  const pendingLevel = params.level as LevelKeys;
+  const pendingLevel = params.level;
+  assert(isKeyOfObject(pendingLevel, levelName));
+
   const typingRef = useTypingAnimation({
     strings: [
       levelUpComplete && pendingLevel in levelName
@@ -45,14 +47,25 @@ const Page = ({ params }: { params: { level: number } }) => {
 
   return (
     <styled.div display="flex" flexDirection="column" alignItems="center" gap={26} mb={60}>
-      <Lottie
-        path={`${STATIC_ORIGIN}/lottie/mashong/evolution/lv-${pendingLevel}.json`}
-        width={182}
-        height={140}
-        className={css({
-          animation: 'fadeIn 2s ease-in, expand 2s linear infinite alternate',
-        })}
-      />
+      {levelUpComplete ? (
+        <SvgImage
+          path={`main/mashong-lv${pendingLevel}`}
+          width={182}
+          height={140}
+          className={css({
+            animation: 'fadeIn 1s ease-in, expand 2s linear infinite alternate',
+          })}
+        />
+      ) : (
+        <Lottie
+          path={`${STATIC_ORIGIN}/lottie/mashong/evolution/lv-${pendingLevel}.json`}
+          width={182}
+          height={140}
+          className={css({
+            animation: 'fadeIn 2s ease-in, expand 2s linear infinite alternate',
+          })}
+        />
+      )}
       <styled.div
         fontWeight={600}
         fontSize={20}
