@@ -37,7 +37,7 @@ export const PopcornXpTracker = ({
 
   const remainingXP = maxXP - localXP;
 
-  const levelUpAvailable = Boolean(remainingXP === 0 && Cookies.get('token'));
+  const levelUpAvailable = Boolean(remainingXP <= 0 && Cookies.get('token'));
 
   return (
     <div
@@ -90,7 +90,7 @@ export const PopcornXpTracker = ({
             color: 'gray.500',
           })}
         >
-          {remainingXP}점 남음
+          {remainingXP >= 0 ? remainingXP : 0}점 남음
         </span>
       </div>
       <progress
