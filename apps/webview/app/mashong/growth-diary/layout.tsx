@@ -12,7 +12,7 @@ const Layout = ({ children }: { children: ReactNode }) => (
     flexDirection="column"
     mx="auto"
     minW="344px"
-    minH="100dvh"
+    minH="calc(100dvh - env(safe-area-inset-top))"
     pt="env(safe-area-inset-top)"
     bg="gray.50"
     maxW={768}
