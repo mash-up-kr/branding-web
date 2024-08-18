@@ -1,5 +1,6 @@
 'use server';
 
+import { revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
 
 export const feedPopcorn = async () => {
@@ -22,6 +23,9 @@ export const feedPopcorn = async () => {
     });
 
     const { data } = await res.json();
+
+    revalidateTag('mashong-status');
+
     return data;
   } catch (error) {
     console.error(error);
