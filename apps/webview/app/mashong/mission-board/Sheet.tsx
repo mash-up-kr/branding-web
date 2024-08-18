@@ -3,8 +3,9 @@
 'use client';
 
 import { motion, useMotionValue, useMotionValueEvent, useScroll } from 'framer-motion';
+import { useRouter } from 'next/navigation';
 import { ElementRef, useEffect, useRef, useState } from 'react';
-import { useScrollLock } from 'usehooks-ts';
+import { useEventListener } from 'usehooks-ts';
 
 import { compensatePopcorn } from '@/app/_actions/compensatePopcorn';
 import { MissionStatus } from '@/app/mashong/mission-board/page';
@@ -321,7 +322,22 @@ const IndividualMissions = ({
 );
 
 const Sheet = ({ missions }: { missions: MissionStatus[] }) => {
-  useScrollLock();
+  const router = useRouter();
+
+  const documentRef = useRef<Document | null>(null);
+
+  useEffect(() => {
+    documentRef.current = document;
+  }, []);
+
+  useEventListener(
+    'visibilitychange',
+    () => {
+      if (document.hidden) return;
+      router.refresh();
+    },
+    documentRef,
+  );
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [popupData, setPopupData] = useState(0);
   const y = useMotionValue(0);
