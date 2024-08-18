@@ -60,13 +60,13 @@ async function checkAttendance() {
 }
 
 const Page = async ({ params }: { params: { team: string } }) => {
+  const isAttendSuccess = (await checkAttendance()) ?? false;
+
   const { accumulatedPopcornValue, currentLevel, goalPopcornValue, lastPopcornValue } =
     await getMashongStatus();
 
   const platformName: string = params.team.toUpperCase();
   assert(isKeyOfObject(platformName, PLATFORM_NAME_MAP));
-
-  const isAttendSuccess = (await checkAttendance()) ?? false;
 
   return (
     <styled.div>
