@@ -7,4 +7,5 @@ export const IntroTypingSection = styled.section`
   max-height: 100vh;
   overflow: hidden;
   scroll-snap-align: center;
+  scroll-snap-stop: always;
 `;
