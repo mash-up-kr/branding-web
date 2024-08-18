@@ -3,7 +3,7 @@ import { styled } from '@/styled-system/jsx';
 
 const Header = () => (
   <styled.header
-    height="calc(env(safe-area-inset-top) + 56px)"
+    height="56px"
     position="absolute"
     maxW="[768px]"
     w="100%"
