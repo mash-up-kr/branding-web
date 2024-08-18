@@ -3,6 +3,7 @@ import { useInView } from 'react-intersection-observer';
 import { SnapParent } from '@/components/common';
 import {
   ActivitySection,
+  CurrentInformationSection,
   IntroSection,
   IntroTypingSection,
   PlatformIntroduceSection,
@@ -18,7 +19,7 @@ const Main = () => {
         <IntroTypingSection />
         <ActivitySection ref={ref} />
         <PlatformIntroduceSection />
-        <PlatformIntroduceSection />
+        <CurrentInformationSection />
       </SnapParent>
     </main>
   );
