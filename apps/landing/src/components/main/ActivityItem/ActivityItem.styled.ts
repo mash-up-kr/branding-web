@@ -11,7 +11,7 @@ interface ActivityItemProps {
 }
 
 export const ActivityItem = styled.article<ActivityItemProps>`
-  ${({ position: { top = '', bottom = '', left = '', right = '' } }) => css`
+  ${({ position: { top = '', bottom = '', left = '', right = '' }, theme }) => css`
     position: absolute;
     top: ${top};
     right: ${right};
@@ -20,7 +20,15 @@ export const ActivityItem = styled.article<ActivityItemProps>`
     display: flex;
     flex-flow: column nowrap;
     gap: 2rem;
-    width: 37.1rem;
+    width: 37rem;
+
+    @media (max-width: ${theme.breakPoint.media.notebook}) {
+      width: 27rem;
+    }
+
+    @media (max-width: ${theme.breakPoint.media.tabletL}) {
+      width: 23rem;
+    }
   `}
 `;
 
@@ -35,12 +43,28 @@ export const ActivityTextWrapper = styled.div`
 export const Title = styled.h3`
   ${({ theme }) => css`
     ${theme.fonts.kr.bold24};
+
+    @media (max-width: ${theme.breakPoint.media.notebook}) {
+      ${theme.fonts.kr.bold20};
+    }
+
+    @media (max-width: ${theme.breakPoint.media.tabletL}) {
+      ${theme.fonts.kr.bold16};
+    }
   `}
 `;
 
 export const Description = styled.p`
   ${({ theme }) => css`
     ${theme.fonts.kr.regular16}
+
+    @media (max-width: ${theme.breakPoint.media.notebook}) {
+      ${theme.fonts.kr.regular14}
+    }
+
+    @media (max-width: ${theme.breakPoint.media.tabletL}) {
+      ${theme.fonts.kr.regular13}
+    }
   `}
 `;
 
