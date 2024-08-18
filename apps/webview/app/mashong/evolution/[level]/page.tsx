@@ -4,6 +4,7 @@ import { STATIC_ORIGIN, levelName } from 'constant';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Lottie } from 'ui';
+import { assert, isKeyOfObject } from 'utils';
 
 import { levelUp } from '@/app/_actions/levelUp';
 import { useTypingAnimation } from '@/hooks/useTypingAnimation';
@@ -11,13 +12,12 @@ import { css } from '@/styled-system/css';
 import { styled } from '@/styled-system/jsx';
 import SvgImage from '@/ui/svg-image';
 
-type LevelKeys = keyof typeof levelName;
-
 const Page = ({ params }: { params: { level: number } }) => {
   const router = useRouter();
   const [levelUpComplete, setLevelUpComplete] = useState(false);
 
-  const pendingLevel = params.level as LevelKeys;
+  const pendingLevel = params.level;
+  assert(isKeyOfObject(pendingLevel, levelName));
 
   const typingRef = useTypingAnimation({
     strings: [
