@@ -3,6 +3,7 @@
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { toast } from 'react-hot-toast/headless';
 
 import { feedPopcorn } from '@/app/_actions/feedPopcorn';
 import { showErrorToast } from '@/app/_components/ErrorToast';
@@ -24,15 +25,17 @@ export const PopcornXpTracker = ({
   isButtonDisabled,
   currentXP,
   maxXP,
-  availablePopcorn,
+  availablePopcorn: initialAvailablePopcorn,
   currentLevel,
   onClick,
 }: PopcornXpTrackerProps) => {
   const router = useRouter();
 
+  const [localXP, setLocalXP] = useState(currentXP);
+  const [availablePopcorn, setAvailablePopcorn] = useState(initialAvailablePopcorn);
   const [currentFeedingPopcorn, setCurrentFeedingPopcorn] = useState(0);
 
-  const remainingXP = maxXP - currentXP;
+  const remainingXP = maxXP - localXP;
 
   const levelUpAvailable = Boolean(remainingXP === 0 && Cookies.get('token'));
 
@@ -91,7 +94,7 @@ export const PopcornXpTracker = ({
         </span>
       </div>
       <progress
-        value={currentXP}
+        value={localXP}
         max={maxXP}
         className={css({
           width: '100%',
@@ -120,13 +123,19 @@ export const PopcornXpTracker = ({
           if (availablePopcorn === 0) {
             router.push('/mashong/mission-board');
             Cookies.set('popcornAlertSeen', '1');
-          } else if (currentXP < maxXP) {
+          } else if (localXP < maxXP) {
             onClick();
 
             try {
               await feedPopcorn();
+
+              toast.remove();
               showPopcornToast(currentFeedingPopcorn + 1);
+
+              // 애니메이션을 유지하기 위해 클라이언트 상태 관리
               setCurrentFeedingPopcorn((prev) => prev + 1);
+              setLocalXP((prevXP) => Math.min(prevXP + 1, maxXP));
+              setAvailablePopcorn((prev) => prev - 1);
             } catch (error) {
               showErrorToast('팝콘 주기를 실패했어요..');
             }
