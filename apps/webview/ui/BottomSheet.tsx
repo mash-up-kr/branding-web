@@ -130,7 +130,7 @@ const BottomSheet = ({
     borderRadius: '20px',
     position: 'relative',
     transition: isDragging ? 'none' : 'transform 0.5s ease',
-    marginBottom: 20,
+    marginBottom: 36,
     maxWidth: 'calc(100% - 40px)',
   });
 
