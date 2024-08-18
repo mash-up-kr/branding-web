@@ -1,7 +1,9 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { revalidatePath } from 'next/cache';
+import { usePathname, useRouter } from 'next/navigation';
 import { PropsWithChildren, useState } from 'react';
+import { useTimeout } from 'usehooks-ts';
 
 import { css } from '@/styled-system/css';
 import { styled } from '@/styled-system/jsx';
@@ -15,6 +17,7 @@ export const TopMenuButton = ({
   children,
 }: PropsWithChildren<{ variant: 'checkin' | 'mission'; shouldOpenSheet?: boolean }>) => {
   const router = useRouter();
+  const pathname = usePathname();
   const [isSheetOpen, setIsSheetOpen] = useState(shouldOpenSheet);
 
   const onClick = () => {
@@ -24,6 +27,10 @@ export const TopMenuButton = ({
       router.push('/mashong/mission-board');
     }
   };
+
+  useTimeout(() => {
+    revalidatePath(pathname);
+  }, 1000 * 60 * 30);
 
   return (
     <>
