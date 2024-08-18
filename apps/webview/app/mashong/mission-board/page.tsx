@@ -55,7 +55,7 @@ const Page = async () => {
   }
 
   const popcornCountRemainingToObtain = missionStatusListUsingGETData.data.reduce(
-    (acc, datum) => acc + datum.compensation,
+    (acc, { isCompensated, compensation }) => (isCompensated ? acc : acc + compensation),
     0,
   );
 
