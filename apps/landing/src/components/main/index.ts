@@ -6,3 +6,4 @@ export { default as PlatformIntroduceSection } from './PlatformIntroduceSection/
 export { default as JoinRecruitCard } from './JoinRecruitCard/JoinRecruitCard.component';
 export { default as ActivitySection } from './ActivitySection/ActivitySection.component';
 export { default as ActivityItem } from './ActivityItem/ActivityItem.component';
+export { default as CurrentInformationSection } from './CurrentInformationSection/CurrentInformationSection.component';

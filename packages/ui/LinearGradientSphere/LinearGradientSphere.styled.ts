@@ -48,10 +48,11 @@ export interface SphereContainerProps {
   bottom?: string;
   left?: string;
   right?: string;
+  transform?: string;
 }
 
 export const SphereContainer = styled.div<SphereContainerProps>`
-  ${({ theme, diameter, position = 'relative', top, bottom, left, right }) => css`
+  ${({ theme, diameter, position = 'relative', top, bottom, left, right, transform }) => css`
     position: ${position};
     top: ${top ? `${top}` : 'unset'};
     right: ${right ? `${right}` : 'unset'};
@@ -63,6 +64,7 @@ export const SphereContainer = styled.div<SphereContainerProps>`
     align-items: center;
     width: 100%;
     height: ${diameter};
+    transform: ${transform ? `${transform}` : 'unset'};
     opacity: 0.7;
   `}
 `;
