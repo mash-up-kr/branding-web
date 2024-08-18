@@ -1,9 +1,11 @@
 'use client';
 
+import { levelName } from 'constant';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { toast } from 'react-hot-toast/headless';
+import { assert, isKeyOfObject } from 'utils';
 
 import { feedPopcorn } from '@/app/_actions/feedPopcorn';
 import { showErrorToast } from '@/app/_components/ErrorToast';
@@ -17,7 +19,7 @@ interface PopcornXpTrackerProps {
   currentXP: number;
   maxXP: number;
   availablePopcorn: number;
-  currentLevel: number;
+  currentLevel: keyof typeof levelName;
   onClick: () => void;
 }
 
@@ -30,6 +32,7 @@ export const PopcornXpTracker = ({
   onClick,
 }: PopcornXpTrackerProps) => {
   const router = useRouter();
+  assert(isKeyOfObject(currentLevel, levelName));
 
   const [localXP, setLocalXP] = useState(currentXP);
   const [availablePopcorn, setAvailablePopcorn] = useState(initialAvailablePopcorn);
@@ -78,7 +81,7 @@ export const PopcornXpTracker = ({
               color: 'gray.800',
             })}
           >
-            매숑알
+            {levelName[currentLevel]}
           </span>
         </div>
         <span
