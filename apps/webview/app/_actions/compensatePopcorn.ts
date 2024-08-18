@@ -1,6 +1,6 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
+import { revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
 
 export const compensatePopcorn = async ({ missionLevelId }: { missionLevelId: number }) => {
@@ -26,7 +26,7 @@ export const compensatePopcorn = async ({ missionLevelId }: { missionLevelId: nu
       },
     );
 
-    revalidatePath('mashong-mission-status');
+    revalidateTag('mashong-mission-status');
 
     const { data } = await res.json();
     return data as boolean;
