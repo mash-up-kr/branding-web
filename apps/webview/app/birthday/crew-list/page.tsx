@@ -71,6 +71,11 @@ const Page = async () => {
   const data = await getCrewList();
   const myProfile = await getMyProfile();
 
+  const formatDate = (input: string) => {
+    const [month, day] = input.split('-');
+    return `${parseInt(month, 10)}월${parseInt(day, 10)}일`;
+  };
+
   return (
     <styled.div pt="env(safe-area-inset-top)">
       <TopNavigationButton />
@@ -110,7 +115,11 @@ const Page = async () => {
         p="0 20px 20px"
         bgColor="gray.50"
         overflow="auto"
-        height="calc(100dvh - 179px - env(safe-area-inset-top))"
+        height={
+          data?.isBirthdayToday
+            ? 'calc(100dvh - 179px - env(safe-area-inset-top))'
+            : 'calc(100dvh - 56px - env(safe-area-inset-top))'
+        }
       >
         <styled.div display="flex" gap="32px" flexDirection="column">
           {!data?.isBirthdayToday &&
@@ -155,7 +164,7 @@ const Page = async () => {
           {(data?.todayBirthday?.members ?? []).length > 0 && (
             <styled.div display="flex" gap="12px" flexDirection="column" flex={1}>
               <styled.div fontSize="14px" fontWeight={500} color="#383E4C">
-                오는 생일
+                오늘 생일
               </styled.div>
               <styled.div display="flex" flexDirection="column" gap="16px">
                 {data?.todayBirthday.members.map((member: any) => (
@@ -166,7 +175,6 @@ const Page = async () => {
                     alignItems="center"
                   >
                     <styled.div display="flex" gap="12px">
-                      {/* <styled.div width="44px" height="44px" bgColor="purple" borderRadius="8px" /> */}
                       <SvgImage
                         basePath="birthday"
                         path={`platform/${member.platform}`}
@@ -203,7 +211,7 @@ const Page = async () => {
                 {data?.upcomingBirthdays.map((i: Birthday, index: number) => (
                   <styled.div key={index} display="flex" flexDirection="column" gap="8px">
                     <styled.div fontSize="12px" fontWeight={400} color="#686F7E">
-                      {new Date().getFullYear()}-{i.date}
+                      {formatDate(i.date)}
                     </styled.div>
                     <styled.div display="flex" flexDirection="column" gap="16px">
                       {i.members.map((j) => (
