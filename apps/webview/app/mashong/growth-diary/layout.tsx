@@ -18,7 +18,18 @@ const Layout = ({ children }: { children: ReactNode }) => (
     maxW={768}
   >
     <Header />
-    {children}
+    <styled.div
+      minH="100dvh"
+      display="flex"
+      flexDirection="column"
+      justifyContent="space-between"
+      alignItems="center"
+      pt="56px"
+      overflow="hidden"
+      position="relative"
+    >
+      {children}
+    </styled.div>
   </styled.div>
 );
 

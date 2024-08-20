@@ -1,67 +1,40 @@
-'use client';
-
-import { PLATFORM_NAME_MAP } from 'constant';
-import useEmblaCarousel from 'embla-carousel-react';
-import { useSearchParams, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { assert, isKeyOfObject } from 'utils';
+import { EmblaViewportRefType } from 'embla-carousel-react';
+import React from 'react';
 
 import { styled } from '@/styled-system/jsx';
 import SvgImage from '@/ui/svg-image';
 
-export const LevelCarousel = () => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const currentLevel = Number(searchParams.get('level'));
-  const activeLevelParam = Number(searchParams.get('activeLevel') ?? currentLevel);
-  const platformParam = searchParams.get('platform');
+interface LevelCarouselProps {
+  currentLevel: number;
+  selectedIndex: number;
+  forwardedRef?: EmblaViewportRefType;
+  // eslint-disable-next-line no-unused-vars
+  onClick: (index: number) => void;
+}
 
-  assert(!Number.isNaN(currentLevel));
-  assert(isKeyOfObject(platformParam?.toUpperCase(), PLATFORM_NAME_MAP));
-
-  const [carouselRef, emblaApi] = useEmblaCarousel({
-    align: 'start',
-    dragFree: true,
-  });
-
-  const [activeLevel, setActiveLevel] = useState(
-    currentLevel !== activeLevelParam ? activeLevelParam : currentLevel,
-  );
-
-  useEffect(() => {
-    if (!emblaApi) return undefined;
-
-    const scrollTimeId = setTimeout(() => {
-      emblaApi.scrollTo(currentLevel - 1);
-    }, 1000);
-
-    return () => {
-      clearTimeout(scrollTimeId);
-    };
-  }, [emblaApi, currentLevel]);
-
-  return (
-    <styled.div ref={carouselRef}>
-      <styled.div display="flex" gap={16}>
-        {Array.from({ length: 10 }, (_, i) => i + 1).map((level) => (
-          <LevelButton
-            key={level}
-            level={level}
-            isActive={activeLevel === level}
-            isLocked={currentLevel < level}
-            onClick={() => {
-              if (level > currentLevel) return;
-              setActiveLevel(level);
-              router.replace(
-                `/mashong/growth-diary?platform=${platformParam}&level=${currentLevel}&activeLevel=${level}`,
-              );
-            }}
-          />
-        ))}
-      </styled.div>
+export const LevelCarousel = ({
+  currentLevel,
+  selectedIndex,
+  forwardedRef,
+  onClick,
+}: LevelCarouselProps) => (
+  <styled.div ref={forwardedRef}>
+    <styled.div display="flex" gap={16}>
+      {Array.from({ length: 10 }, (_, i) => i + 1).map((level) => (
+        <LevelButton
+          key={`button-${level}`}
+          level={level}
+          isActive={selectedIndex + 1 === level}
+          isLocked={currentLevel < level}
+          onClick={() => {
+            if (level > currentLevel) return;
+            onClick(level - 1);
+          }}
+        />
+      ))}
     </styled.div>
-  );
-};
+  </styled.div>
+);
 
 interface LevelButtonProps {
   level: number;
