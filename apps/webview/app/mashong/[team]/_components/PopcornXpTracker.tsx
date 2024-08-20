@@ -3,12 +3,13 @@
 import { levelName } from 'constant';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 import { toast } from 'react-hot-toast/headless';
+import { useInterval } from 'usehooks-ts';
 import { assert, isKeyOfObject } from 'utils';
 
 import { showErrorToast } from '@/app/_components/ErrorToast';
 import { feedPopcorn } from '@/app/mashong/_actions/feedPopcorn';
+import { revalidateMashongStatus } from '@/app/mashong/_actions/revalidateMashongStatus';
 import { css } from '@/styled-system/css';
 import SvgImage from '@/ui/svg-image';
 
@@ -23,24 +24,25 @@ interface PopcornXpTrackerProps {
   onClick: () => void;
 }
 
+let feedingPopcorn = 0;
+
 export const PopcornXpTracker = ({
   isButtonDisabled,
   currentXP,
   maxXP,
-  availablePopcorn: initialAvailablePopcorn,
+  availablePopcorn,
   currentLevel,
   onClick,
 }: PopcornXpTrackerProps) => {
   const router = useRouter();
   assert(isKeyOfObject(currentLevel, levelName));
 
-  const [localXP, setLocalXP] = useState(currentXP);
-  const [availablePopcorn, setAvailablePopcorn] = useState(initialAvailablePopcorn);
-  const [currentFeedingPopcorn, setCurrentFeedingPopcorn] = useState(0);
-
-  const remainingXP = maxXP - localXP;
-
+  const remainingXP = maxXP - currentXP;
   const levelUpAvailable = Boolean(remainingXP <= 0 && Cookies.get('token'));
+
+  useInterval(() => {
+    revalidateMashongStatus();
+  }, 2000);
 
   return (
     <div
@@ -97,7 +99,7 @@ export const PopcornXpTracker = ({
         </span>
       </div>
       <progress
-        value={localXP}
+        value={currentXP}
         max={maxXP}
         className={css({
           width: '100%',
@@ -126,17 +128,14 @@ export const PopcornXpTracker = ({
           if (availablePopcorn === 0) {
             router.push('/mashong/mission-board');
             Cookies.set('popcornAlertSeen', '1');
-          } else if (localXP < maxXP) {
+          } else if (currentXP < maxXP) {
             try {
               await feedPopcorn();
 
               toast.remove();
-              showPopcornToast(currentFeedingPopcorn + 1);
+              feedingPopcorn += 1;
+              showPopcornToast(feedingPopcorn);
 
-              // 애니메이션을 유지하기 위해 클라이언트 상태 관리
-              setCurrentFeedingPopcorn((prev) => prev + 1);
-              setLocalXP((prevXP) => Math.min(prevXP + 1, maxXP));
-              setAvailablePopcorn((prev) => prev - 1);
               onClick();
             } catch (error) {
               showErrorToast('팝콘 주기를 실패했어요..');
