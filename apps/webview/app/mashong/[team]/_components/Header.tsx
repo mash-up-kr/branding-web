@@ -1,4 +1,4 @@
-import { PlatformNameKey } from '@/../../packages/types';
+import { PlatformNameKey } from 'types';
 
 import { styled } from '@/styled-system/jsx';
 
