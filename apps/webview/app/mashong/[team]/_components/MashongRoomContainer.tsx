@@ -3,6 +3,7 @@
 import { levelName, PLATFORM_NAME_MAP } from 'constant';
 import { useState } from 'react';
 import { PlatformNameKey } from 'types';
+import { useDebounceCallback } from 'usehooks-ts';
 
 import { styled } from '@/styled-system/jsx';
 import { Toast } from '@/ui/Toast';
@@ -25,6 +26,14 @@ export const MashongRoomContainer = ({
 }) => {
   const [isFeeding, setIsFeeding] = useState(false);
 
+  const debouncedSetIsFeeding = useDebounceCallback(() => {
+    setIsFeeding(true);
+
+    setTimeout(() => {
+      setIsFeeding(false);
+    }, 1000);
+  }, 200);
+
   return (
     <div>
       <styled.div display="flex" justifyContent="center" mt="20px">
@@ -40,13 +49,7 @@ export const MashongRoomContainer = ({
         maxXP={maxXP}
         availablePopcorn={availablePopcorn}
         currentLevel={currentLevel}
-        onClick={() => {
-          setIsFeeding(true);
-
-          setTimeout(() => {
-            setIsFeeding(false);
-          }, 1000);
-        }}
+        onClick={debouncedSetIsFeeding}
       />
       <Toast />
     </div>
