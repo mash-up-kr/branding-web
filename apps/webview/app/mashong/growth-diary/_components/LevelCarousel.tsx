@@ -66,13 +66,5 @@ const LevelButton = ({ level, isActive = false, isLocked = false, onClick }: Lev
         </styled.span>
       )}
     </styled.div>
-    <styled.span
-      color={isActive ? 'brand.500' : 'gray.400'}
-      fontWeight={500}
-      fontSize={13}
-      marginTop={4}
-    >
-      Lv.{level}
-    </styled.span>
   </styled.button>
 );
