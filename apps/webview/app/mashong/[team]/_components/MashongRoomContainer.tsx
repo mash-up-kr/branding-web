@@ -1,7 +1,7 @@
 'use client';
 
 import { levelName, PLATFORM_NAME_MAP } from 'constant';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { PlatformNameKey } from 'types';
 import { useDebounceCallback } from 'usehooks-ts';
 
@@ -25,14 +25,25 @@ export const MashongRoomContainer = ({
   platformName: PlatformNameKey;
 }) => {
   const [isFeeding, setIsFeeding] = useState(false);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const debouncedSetIsFeeding = useDebounceCallback(() => {
-    setIsFeeding(true);
-
-    setTimeout(() => {
-      setIsFeeding(false);
-    }, 1000);
+  const debouncedSetFeeding = useDebounceCallback((feedingStatus) => {
+    setIsFeeding(feedingStatus);
   }, 200);
+
+  useEffect(() => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+  }, []);
+
+  const handleFeeding = () => {
+    debouncedSetFeeding(true);
+
+    timeoutRef.current = setTimeout(() => {
+      debouncedSetFeeding(false);
+    }, 1000);
+  };
 
   return (
     <div>
@@ -49,7 +60,7 @@ export const MashongRoomContainer = ({
         maxXP={maxXP}
         availablePopcorn={availablePopcorn}
         currentLevel={currentLevel}
-        onClick={debouncedSetIsFeeding}
+        onClick={handleFeeding}
       />
       <Toast />
     </div>
