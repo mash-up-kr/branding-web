@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import { assert, isKeyOfObject } from 'utils';
 
 import useCarouselSync from '@/hooks/useCarouselSync';
+import { styled } from '@/styled-system/jsx';
 
 import { DiaryCardImage } from './_components/DiaryCardImage';
 import { InfoBadges } from './_components/InfoBadge';
@@ -23,59 +24,43 @@ const Page = () => {
 
   return (
     <>
-      <div style={{ width: '100%', margin: '24px auto 0 auto' }}>
+      <styled.div width="100%" margin="24px auto 0 auto">
         {/** Main Carousel */}
-        <div ref={emblaMainRef}>
-          <div style={{ display: 'flex', touchAction: 'pan-y pinch-zoom' }}>
+        <styled.div ref={emblaMainRef}>
+          <styled.div display="flex" touchAction="pan-y pinch-zoom">
             {Array.from({ length: currentLevel }).map((_, index) => (
-              <div
+              <styled.div
                 key={`main-image-${index + 1}`}
-                style={{
-                  transform: 'translate3d(0, 0, 0)',
-                  flex: '0 0 100%',
-                  minWidth: 0,
-                  padding: '0 24px',
-                  display: 'flex',
-                  justifyContent: 'center',
-                }}
+                transform="translate3d(0, 0, 0)"
+                flex="0 0 100%"
+                padding="0 24px"
+                display="flex"
+                justifyContent="center"
               >
-                <div
-                  style={{
-                    position: 'relative',
-                  }}
-                >
+                <styled.div position="relative">
                   <InfoBadges level={index + 1} platform={currentPlatform} />
                   <DiaryCardImage level={index + 1} />
-                </div>
-              </div>
+                </styled.div>
+              </styled.div>
             ))}
-          </div>
-        </div>
-      </div>
+          </styled.div>
+        </styled.div>
+      </styled.div>
 
-      <div
-        style={{
-          position: 'fixed',
-          width: 'calc(100% - 48px)',
-          maxWidth: '700px',
-          bottom: '48px',
-        }}
-      >
-        <div
-          style={{
-            position: 'absolute',
-            top: '-40px',
-            left: 0,
-            width: '100%',
-            color: '#4a4a4a',
-            fontWeight: 700,
-            fontSize: '16px',
-            letterSpacing: '-1%',
-            boxSizing: 'border-box',
-          }}
+      <styled.div position="fixed" width="calc(100% - 48px)" maxWidth="700px" bottom="48px">
+        <styled.div
+          position="absolute"
+          top="-40px"
+          left={0}
+          width="100%"
+          color="#4a4a4a"
+          fontWeight={700}
+          fontSize="16px"
+          letterSpacing="-1%"
+          boxSizing="border-box"
         >
           내 일기
-        </div>
+        </styled.div>
 
         {/** Thumbnail Carousel */}
         <LevelCarousel
@@ -84,7 +69,7 @@ const Page = () => {
           forwardedRef={emblaThumbsRef}
           onClick={scrollToIndex}
         />
-      </div>
+      </styled.div>
     </>
   );
 };
