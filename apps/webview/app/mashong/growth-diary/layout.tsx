@@ -12,14 +12,13 @@ const Layout = ({ children }: { children: ReactNode }) => (
     flexDirection="column"
     mx="auto"
     minW="344px"
-    minH="calc(100dvh - env(safe-area-inset-top))"
+    minH="100dvh"
     pt="env(safe-area-inset-top)"
     bg="gray.50"
     maxW={768}
   >
     <Header />
     <styled.div
-      minH="100dvh"
       display="flex"
       flexDirection="column"
       justifyContent="space-between"

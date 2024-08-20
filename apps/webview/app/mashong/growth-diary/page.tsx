@@ -23,7 +23,7 @@ const Page = () => {
 
   return (
     <>
-      <div style={{ maxWidth: '100%', width: '100%', marginTop: '24px', margin: '0 auto' }}>
+      <div style={{ width: '100%', margin: '24px auto 0 auto' }}>
         {/** Main Carousel */}
         <div ref={emblaMainRef}>
           <div style={{ display: 'flex', touchAction: 'pan-y pinch-zoom' }}>
@@ -35,6 +35,8 @@ const Page = () => {
                   flex: '0 0 100%',
                   minWidth: 0,
                   padding: '0 24px',
+                  display: 'flex',
+                  justifyContent: 'center',
                 }}
               >
                 <div
@@ -42,7 +44,7 @@ const Page = () => {
                     position: 'relative',
                     width: '100%',
                     aspectRatio: '32 / 45',
-                    maxWidth: '700px',
+                    maxWidth: '430px',
                   }}
                 >
                   <InfoBadges level={index + 1} platform={currentPlatform} />
@@ -56,10 +58,9 @@ const Page = () => {
 
       <div
         style={{
-          position: 'relative',
+          position: 'fixed',
           width: 'calc(100% - 48px)',
           maxWidth: '700px',
-          margin: '100px auto 0',
           bottom: '48px',
         }}
       >
