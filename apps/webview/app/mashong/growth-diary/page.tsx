@@ -42,9 +42,6 @@ const Page = () => {
                 <div
                   style={{
                     position: 'relative',
-                    width: '100%',
-                    aspectRatio: '32 / 45',
-                    maxWidth: '430px',
                   }}
                 >
                   <InfoBadges level={index + 1} platform={currentPlatform} />

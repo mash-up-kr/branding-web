@@ -7,5 +7,5 @@ interface DiaryCardImageProps {
 }
 
 export const DiaryCardImage = ({ level }: DiaryCardImageProps) => (
-  <SvgImage path={`growth-diary/card/lv${level}`} fill priority />
+  <SvgImage path={`growth-diary/card/lv${level}`} width={320} height={450} priority />
 );
