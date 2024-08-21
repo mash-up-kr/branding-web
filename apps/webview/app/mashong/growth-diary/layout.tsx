@@ -12,13 +12,23 @@ const Layout = ({ children }: { children: ReactNode }) => (
     flexDirection="column"
     mx="auto"
     minW="344px"
-    minH="calc(100dvh - env(safe-area-inset-top))"
+    minH="100dvh"
     pt="env(safe-area-inset-top)"
     bg="gray.50"
     maxW={768}
   >
     <Header />
-    {children}
+    <styled.div
+      display="flex"
+      flexDirection="column"
+      justifyContent="space-between"
+      alignItems="center"
+      pt="56px"
+      overflow="hidden"
+      position="relative"
+    >
+      {children}
+    </styled.div>
   </styled.div>
 );
 

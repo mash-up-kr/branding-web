@@ -1,31 +1,28 @@
 'use client';
 
 import { PLATFORM_NAME_MAP } from 'constant';
-import { useSearchParams } from 'next/navigation';
 import { PropsWithChildren } from 'react';
-import { assert, isKeyOfObject } from 'utils';
+import { PlatformNameKey } from 'types';
 
 import { styled } from '@/styled-system/jsx';
 import SvgImage from '@/ui/svg-image';
 
-export const InfoBadges = () => {
-  const searchParams = useSearchParams();
-  const currentLevel = Number(searchParams.get('activeLevel'));
-  const currentPlatform = searchParams.get('platform')?.toUpperCase();
-  assert(isKeyOfObject(currentPlatform, PLATFORM_NAME_MAP));
+interface InfoBadgesProps {
+  level: number;
+  platform: PlatformNameKey;
+}
 
-  return (
-    <styled.div display="flex" gap={8} pos="absolute" top={20} left={20} zIndex={1}>
-      <InfoBadge bgColor="brand.400" color="white">
-        <SvgImage path="growth-diary/platform-prefix" width={12} height={12} />
-        {PLATFORM_NAME_MAP[currentPlatform]}
-      </InfoBadge>
-      <InfoBadge bgColor="gray.100" color="gray.600">
-        Lv.{currentLevel}
-      </InfoBadge>
-    </styled.div>
-  );
-};
+export const InfoBadges = ({ level, platform }: InfoBadgesProps) => (
+  <styled.div display="flex" gap={8} pos="absolute" top={20} left={20} zIndex={1}>
+    <InfoBadge bgColor="brand.400" color="white">
+      <SvgImage path="growth-diary/platform-prefix" width={12} height={12} />
+      {PLATFORM_NAME_MAP[platform]}
+    </InfoBadge>
+    <InfoBadge bgColor="gray.100" color="gray.600">
+      Lv.{level}
+    </InfoBadge>
+  </styled.div>
+);
 
 const InfoBadge = ({
   children,
