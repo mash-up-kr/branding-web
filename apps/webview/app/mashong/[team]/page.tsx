@@ -8,6 +8,8 @@ import Header from './_components/Header';
 import { MashongRoomContainer } from './_components/MashongRoomContainer';
 import { TopMenuButton } from './_components/TopMenuButton';
 
+export const revalidate = 1;
+
 async function getMashongStatus() {
   try {
     const authToken = cookies().get('token')?.value ?? headers().get('authorization');

@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { Lottie } from 'ui';
 import { assert, isKeyOfObject } from 'utils';
 
-import { levelUp } from '@/app/_actions/levelUp';
+import { levelUp } from '@/app/mashong/_actions/levelUp';
 import { useTypingAnimation } from '@/hooks/useTypingAnimation';
 import { css } from '@/styled-system/css';
 import { styled } from '@/styled-system/jsx';

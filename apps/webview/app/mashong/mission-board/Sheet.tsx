@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { ElementRef, useEffect, useRef, useState } from 'react';
 import { useEventListener } from 'usehooks-ts';
 
-import { compensatePopcorn } from '@/app/_actions/compensatePopcorn';
+import { compensatePopcorn } from '@/app/mashong/_actions/compensatePopcorn';
 import { MissionStatus } from '@/app/mashong/mission-board/page';
 import Popup from '@/app/mashong/mission-board/Popup';
 import { Square, styled } from '@/styled-system/jsx';
