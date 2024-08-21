@@ -1,4 +1,4 @@
-import { type ReactNode } from 'react';
+import { Suspense, type ReactNode } from 'react';
 
 import { styled } from '@/styled-system/jsx';
 
@@ -27,7 +27,7 @@ const Layout = ({ children }: { children: ReactNode }) => (
       overflow="hidden"
       position="relative"
     >
-      {children}
+      <Suspense>{children}</Suspense>
     </styled.div>
   </styled.div>
 );
