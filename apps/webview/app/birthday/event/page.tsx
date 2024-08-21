@@ -62,6 +62,7 @@ const Page = () => {
           display="flex"
           width="100%"
           height="calc(env(safe-area-inset-top) + 56px)"
+          minHeight="calc(env(safe-area-inset-top) + 56px)"
           position="sticky"
           top="0px"
           justifyContent="end"

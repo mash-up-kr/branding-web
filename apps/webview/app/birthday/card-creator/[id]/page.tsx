@@ -93,13 +93,7 @@ const Page = ({
   };
 
   return (
-    <styled.div
-      display="flex"
-      flexDirection="column"
-      height="100dvh"
-      position="relative"
-      pt="env(safe-area-inset-top)"
-    >
+    <styled.div display="flex" flexDirection="column" height="100dvh" position="relative">
       <styled.div
         display="flex"
         width="100%"
