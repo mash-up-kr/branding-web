@@ -121,3 +121,176 @@ export const ButtonImageRight = styled.img`
   width: 100%;
   height: 100%;
 `;
+
+export const SlideLayout = styled.div`
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 5rem;
+  align-items: start;
+  justify-content: start;
+  max-width: 100vw;
+  overflow-x: scroll;
+`;
+
+export const ProjectCard = styled.article<{ backgroundImageUrl: string }>`
+  ${({ theme, backgroundImageUrl }) => css`
+    position: relative;
+    min-width: 34.4rem;
+    height: 51.6rem;
+    overflow: hidden;
+    background: url(${backgroundImageUrl}) no-repeat center center / cover;
+    border-radius: 1rem;
+
+    &:first-of-type {
+      margin-left: calc((100vw - 144rem + 16rem) / 2);
+    }
+    &:last-of-type {
+      margin-right: calc((100vw - 144rem + 16rem) / 2);
+    }
+
+    @media (max-width: ${theme.breakPoint.media.notebook}) {
+      &:first-of-type {
+        margin-left: 8rem;
+      }
+      &:last-of-type {
+        margin-right: 8rem;
+      }
+    }
+
+    @media (max-width: ${theme.breakPoint.media.tabletL}) {
+      &:first-of-type {
+        margin-left: 6rem;
+      }
+      &:last-of-type {
+        margin-right: 6rem;
+      }
+    }
+
+    @media (max-width: ${theme.breakPoint.media.tabletS}) {
+      &:first-of-type {
+        margin-left: 3rem;
+      }
+      &:last-of-type {
+        margin-right: 3rem;
+      }
+    }
+
+    @media (max-width: ${theme.breakPoint.media.mobile}) {
+      &:first-of-type {
+        margin-left: 2rem;
+      }
+      &:last-of-type {
+        margin-right: 2rem;
+      }
+    }
+  `}
+`;
+
+export const ProjectInfo = styled.div`
+  ${({ theme }) => css`
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1.2rem;
+    align-items: start;
+    justify-content: start;
+    padding: 3rem;
+
+    @media (max-width: ${theme.breakPoint.media.notebook}) {
+      gap: 0.8rem;
+      padding: 2.4rem;
+    }
+
+    @media (max-width: ${theme.breakPoint.media.tabletL}) {
+      ${theme.fonts.kr.medium14};
+    }
+
+    @media (max-width: ${theme.breakPoint.media.tabletS}) {
+      ${theme.fonts.kr.medium13};
+    }
+  `}
+`;
+
+export const Generation = styled.div`
+  ${({ theme }) => css`
+    ${theme.fonts.en.extrabold18};
+    width: auto;
+    padding: 0.3rem 1.2rem;
+    border: 1px solid ${theme.colors.white};
+    border-radius: 3.5rem;
+
+    @media (max-width: ${theme.breakPoint.media.notebook}) {
+      ${theme.fonts.en.extrabold14};
+      padding: 0.2rem 0.8rem;
+    }
+
+    @media (max-width: ${theme.breakPoint.media.tabletL}) {
+      ${theme.fonts.kr.medium14};
+    }
+
+    @media (max-width: ${theme.breakPoint.media.tabletS}) {
+      ${theme.fonts.kr.medium13};
+    }
+  `}
+`;
+
+export const ProjectTitleArea = styled.div`
+  ${({ theme }) => css`
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 0.8rem;
+    align-items: start;
+    justify-content: start;
+
+    @media (max-width: ${theme.breakPoint.media.notebook}) {
+      gap: 0.6rem;
+    }
+
+    @media (max-width: ${theme.breakPoint.media.tabletL}) {
+      ${theme.fonts.kr.medium14};
+    }
+
+    @media (max-width: ${theme.breakPoint.media.tabletS}) {
+      ${theme.fonts.kr.medium13};
+    }
+  `}
+`;
+
+export const ProjectTitle = styled.h3`
+  ${({ theme }) => css`
+    ${theme.fonts.en.extrabold34};
+    white-space: pre-wrap;
+
+    @media (max-width: ${theme.breakPoint.media.notebook}) {
+      ${theme.fonts.en.extrabold26}
+    }
+
+    @media (max-width: ${theme.breakPoint.media.tabletL}) {
+      ${theme.fonts.kr.medium14};
+    }
+
+    @media (max-width: ${theme.breakPoint.media.tabletS}) {
+      ${theme.fonts.kr.medium13};
+    }
+  `}
+`;
+
+export const SubTitle = styled.div`
+  ${({ theme }) => css`
+    ${theme.fonts.en.bold20}
+
+    @media (max-width: ${theme.breakPoint.media.notebook}) {
+      ${theme.fonts.en.bold15}
+    }
+
+    @media (max-width: ${theme.breakPoint.media.tabletL}) {
+      ${theme.fonts.kr.medium14};
+    }
+
+    @media (max-width: ${theme.breakPoint.media.tabletS}) {
+      ${theme.fonts.kr.medium13};
+    }
+  `}
+`;
