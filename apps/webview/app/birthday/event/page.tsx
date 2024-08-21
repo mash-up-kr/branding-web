@@ -9,12 +9,13 @@ import { styled } from '@/styled-system/jsx';
 const Page = () => {
   const router = useRouter();
   const [isDark, setIsDark] = useState(false);
+  const [animation, setAnimation] = useState(false);
   const timerRef = useRef<any>(null);
 
   const handleTouchStart = () => {
     timerRef.current = setTimeout(() => {
       setIsDark(true);
-    }, 2000);
+    }, 500);
   };
 
   const handleTouchEnd = () => {
@@ -28,7 +29,7 @@ const Page = () => {
         setIsDark((prev) => {
           if (prev === true) {
             clearInterval(darkenInterval);
-            router.push('/birthday/event-loading');
+            router.replace('/birthday/event-loading');
             return true;
           }
           return true;
@@ -39,14 +40,16 @@ const Page = () => {
     }
   }, [isDark, router]);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setAnimation((prev) => !prev);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <styled.div
-      display="flex"
-      flexDirection="column"
-      height="100dvh"
-      position="relative"
-      pt="env(safe-area-inset-top)"
-    >
+    <styled.div display="flex" flexDirection="column" height="100dvh" position="relative">
       <styled.div
         bg="linear-gradient(#1E2122, #4A4C76)"
         width="100%"
@@ -55,7 +58,18 @@ const Page = () => {
         display="flex"
         flexDirection="column"
       >
-        <styled.div p="16px 20px" display="flex" justifyContent="end" zIndex={9999} height="56px">
+        <styled.div
+          display="flex"
+          width="100%"
+          height="calc(env(safe-area-inset-top) + 56px)"
+          position="sticky"
+          top="0px"
+          justifyContent="end"
+          alignItems="center"
+          pt="calc(env(safe-area-inset-top) + 16px)"
+          p="16px 20px"
+          zIndex={9999}
+        >
           {!isDark && (
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -122,28 +136,40 @@ const Page = () => {
             />
           </styled.div>
           <styled.div
-            bg={!isDark ? '#5421E6' : ''}
+            bg="#5421E6"
             opacity={0.6}
-            width="59px"
-            height="59px"
+            width={!isDark ? '59px' : '0px'}
+            height={!isDark ? '59px' : '0px'}
             position="absolute"
             left="50%"
-            transform="translate(-50%)"
-            bottom="167px"
+            transform={
+              isDark
+                ? 'translate(-50%)'
+                : animation
+                ? 'translate(-50%) scale(1.5)'
+                : 'translate(-50%) scale(1)'
+            }
+            bottom={!isDark ? '167px' : '195px'}
             borderRadius="100px"
-            transition="background-color 1s ease"
+            transition="all 1s ease"
           />
           <styled.div
-            bg={!isDark ? '#5421E6' : ''}
+            bg="#5421E6"
             opacity={0.3}
-            width="89px"
-            height="89px"
+            width={!isDark ? '89px' : '0px'}
+            height={!isDark ? '89px' : '0px'}
             position="absolute"
             left="50%"
-            transform="translate(-50%)"
-            bottom="152px"
+            transform={
+              isDark
+                ? 'translate(-50%)'
+                : animation
+                ? 'translate(-50%) scale(1.5)'
+                : 'translate(-50%) scale(1)'
+            }
+            bottom={!isDark ? '152px' : '192px'}
             borderRadius="100px"
-            transition="background-color 1s ease"
+            transition="all 1.5s ease"
           />
         </styled.div>
       </styled.div>

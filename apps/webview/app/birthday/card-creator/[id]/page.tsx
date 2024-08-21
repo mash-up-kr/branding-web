@@ -20,6 +20,7 @@ const Page = ({
   const router = useRouter();
   const [message, setMessage] = useState('');
   const [isSucceess, setIsSuccess] = useState(false);
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [selectedImageUrl, setSelectedImageUrl] = useState('');
   const { data: images } = useFetch<{ defaultImages: { imageUrl: string }[] }>(
     '/v1/birthday-cards/default-images',
@@ -101,23 +102,24 @@ const Page = ({
     >
       <styled.div
         display="flex"
+        width="100%"
         height="calc(env(safe-area-inset-top) + 56px)"
         position="sticky"
         top="0px"
         bgColor="gray.50"
         justifyContent="end"
         alignItems="center"
+        pt="calc(env(safe-area-inset-top) + 16px)"
         p="16px 20px"
-        onClick={() => {
-          router.replace('/birthday/crew-list');
-        }}
       >
         <SvgImage
           basePath="birthday"
           path="common/close"
           width={24}
           height={24}
-          onClick={goToCrewList}
+          onClick={() => {
+            setIsConfirmOpen(true);
+          }}
         />
       </styled.div>
       <styled.div bg="gray.50" width="100%" flex="3" display="flex" flexDirection="column">
@@ -281,7 +283,7 @@ const Page = ({
       </styled.div>
       {isSucceess && (
         <styled.div
-          position="absolute"
+          position="fixed"
           top={0}
           left={0}
           width="100%"
@@ -319,6 +321,57 @@ const Page = ({
           >
             확인
           </styled.button>
+        </styled.div>
+      )}
+      {isConfirmOpen && (
+        <styled.div
+          position="fixed"
+          top={0}
+          left={0}
+          width="100%"
+          height="100%"
+          bg="#00000080"
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          justifyContent="center"
+          textAlign="center"
+        >
+          <styled.div p="32px 20px 24px" bg="#fff" borderRadius="20px">
+            <styled.div fontSize="20px" fontWeight={700} color="#2C3037" lineHeight="23.87px">
+              생일 카드 작성을
+              <br />
+              종료하시겠어요?
+            </styled.div>
+            <styled.div mt="24px" display="flex" gap="8px">
+              <styled.button
+                width="120px"
+                fontSize="16px"
+                fontWeight={500}
+                height="48px"
+                color="#686F7E"
+                bg="#EBEFF9"
+                borderRadius="12px"
+                onClick={() => {
+                  setIsConfirmOpen(false);
+                }}
+              >
+                취소
+              </styled.button>
+              <styled.button
+                width="120px"
+                fontSize="16px"
+                fontWeight={500}
+                height="48px"
+                color="#fff"
+                bg="#6A36FF"
+                borderRadius="12px"
+                onClick={goToCrewList}
+              >
+                확인
+              </styled.button>
+            </styled.div>
+          </styled.div>
         </styled.div>
       )}
     </styled.div>
