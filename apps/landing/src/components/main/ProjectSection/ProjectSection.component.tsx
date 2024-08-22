@@ -1,4 +1,8 @@
 import { createPngUrl, createSvgUrl } from 'constant';
+import { useRef, useState } from 'react';
+
+import { TViewPortSize } from '@/constants';
+import { useDetectViewport } from '@/hooks';
 
 import * as Styled from './ProjectSection.styled';
 
@@ -33,55 +37,129 @@ const PROJECTS = [
     subTitle: 'Education app design',
     backgroundImageUrl: `${createPngUrl('landing/project')('landing-project-dummy-1-3x-min')}`,
   },
+  {
+    generation: '13th',
+    title: 'HUMAN\nDEVELOPMENT\nREPORTS',
+    subTitle: 'Education app design',
+    backgroundImageUrl: `${createPngUrl('landing/project')('landing-project-dummy-1-3x-min')}`,
+  },
+  {
+    generation: '13th',
+    title: 'HUMAN\nDEVELOPMENT\nREPORTS',
+    subTitle: 'Education app design',
+    backgroundImageUrl: `${createPngUrl('landing/project')('landing-project-dummy-1-3x-min')}`,
+  },
+  {
+    generation: '13th',
+    title: 'HUMAN\nDEVELOPMENT\nREPORTS',
+    subTitle: 'Education app design',
+    backgroundImageUrl: `${createPngUrl('landing/project')('landing-project-dummy-1-3x-min')}`,
+  },
+  {
+    generation: '13th',
+    title: 'HUMAN\nDEVELOPMENT\nREPORTS',
+    subTitle: 'Education app design',
+    backgroundImageUrl: `${createPngUrl('landing/project')('landing-project-dummy-1-3x-min')}`,
+  },
+  {
+    generation: '13th',
+    title: 'HUMAN\nDEVELOPMENT\nREPORTS',
+    subTitle: 'Education app design',
+    backgroundImageUrl: `${createPngUrl('landing/project')('landing-project-dummy-1-3x-min')}`,
+  },
+  {
+    generation: '13th',
+    title: 'HUMAN\nDEVELOPMENT\nREPORTS',
+    subTitle: 'Education app design',
+    backgroundImageUrl: `${createPngUrl('landing/project')('landing-project-dummy-1-3x-min')}`,
+  },
 ];
 
-const ProjectSection = () => (
-  <Styled.ProjectSection>
-    <Styled.HeaderLayout>
-      <Styled.Heading>
-        <Styled.Title>
-          <Styled.GradientText>MASH-UP</Styled.GradientText>
-          <span>PROJECT</span>
-        </Styled.Title>
+const NUMBER_OF_PROJECT_PER_PAGE: Record<TViewPortSize, number> = {
+  DESKTOP: 3,
+  NOTEBOOK: 3,
+  TABLET_L: 2,
+  TABLET_S: 2,
+  MOBILE: 1,
+};
 
-        <Styled.Description>
-          {
-            '삶을 더 좋은 방향으로 변화시킬 아이디어들을 앱 서비스로 구현해\n사용자들의 삶에 전달해요.'
-          }
-        </Styled.Description>
-      </Styled.Heading>
+const ProjectSection = () => {
+  const [currentSlidePage, setCurrentSlidePage] = useState(0);
+  const { viewportSize } = useDetectViewport();
 
-      <Styled.SlideController>
-        <Styled.SlideControlButton>
-          <Styled.ButtonImageLeft
-            src={`${createSvgUrl('landing/project')('slider-control-arrow')}`}
-            alt=""
-          />
-        </Styled.SlideControlButton>
+  const numberOfProjectPerPage = NUMBER_OF_PROJECT_PER_PAGE[viewportSize];
 
-        <Styled.SlideControlButton>
-          <Styled.ButtonImageRight
-            src={`${createSvgUrl('landing/project')('slider-control-arrow')}`}
-            alt=""
-          />
-        </Styled.SlideControlButton>
-      </Styled.SlideController>
-    </Styled.HeaderLayout>
+  const totalPageCount = Math.ceil(PROJECTS.length / numberOfProjectPerPage);
+  const slideLayoutRef = useRef<HTMLDivElement>(null);
+  const slideLayoutScrollWidth = slideLayoutRef.current?.scrollWidth ?? 0;
 
-    <Styled.SlideLayout>
-      {PROJECTS.map(({ generation, title, subTitle, backgroundImageUrl }, index) => (
-        <Styled.ProjectCard backgroundImageUrl={backgroundImageUrl} key={index}>
-          <Styled.ProjectInfo>
-            <Styled.Generation>{generation}</Styled.Generation>
-            <Styled.ProjectTitleArea>
-              <Styled.ProjectTitle>{title}</Styled.ProjectTitle>
-              <Styled.SubTitle>{subTitle}</Styled.SubTitle>
-            </Styled.ProjectTitleArea>
-          </Styled.ProjectInfo>
-        </Styled.ProjectCard>
-      ))}
-    </Styled.SlideLayout>
-  </Styled.ProjectSection>
-);
+  const onePageScrollWidth = -(slideLayoutScrollWidth / totalPageCount);
+
+  const handleIncreaseSlidePage = () => {
+    if (currentSlidePage < Math.ceil(PROJECTS.length / numberOfProjectPerPage) - 1) {
+      setCurrentSlidePage((prevSlidePage) => prevSlidePage + 1);
+    }
+  };
+
+  const handleDecreaseSlidePage = () => {
+    if (currentSlidePage > 0) {
+      setCurrentSlidePage((prevSlidePage) => prevSlidePage - 1);
+    }
+  };
+
+  return (
+    <Styled.ProjectSection>
+      <Styled.HeaderLayout>
+        <Styled.Heading>
+          <Styled.Title>
+            <Styled.GradientText>MASH-UP</Styled.GradientText>
+            <span>PROJECT</span>
+          </Styled.Title>
+
+          <Styled.Description>
+            {
+              '삶을 더 좋은 방향으로 변화시킬 아이디어들을 앱 서비스로 구현해\n사용자들의 삶에 전달해요.'
+            }
+          </Styled.Description>
+        </Styled.Heading>
+
+        <Styled.SlideController>
+          <Styled.SlideControlButton onClick={handleDecreaseSlidePage}>
+            <Styled.ButtonImageLeft
+              src={`${createSvgUrl('landing/project')('slider-control-arrow')}`}
+              alt=""
+            />
+          </Styled.SlideControlButton>
+
+          <Styled.SlideControlButton onClick={handleIncreaseSlidePage}>
+            <Styled.ButtonImageRight
+              src={`${createSvgUrl('landing/project')('slider-control-arrow')}`}
+              alt=""
+            />
+          </Styled.SlideControlButton>
+        </Styled.SlideController>
+      </Styled.HeaderLayout>
+
+      <Styled.SlideLayout
+        transform={`translate3d(${onePageScrollWidth * currentSlidePage}px, 0, 0)`}
+        ref={slideLayoutRef}
+      >
+        {PROJECTS.map(({ generation, title, subTitle, backgroundImageUrl }, index) => (
+          <Styled.ProjectCard key={index}>
+            <Styled.ProjectInfoWrapper backgroundImageUrl={backgroundImageUrl}>
+              <Styled.ProjectInfo>
+                <Styled.Generation>{generation}</Styled.Generation>
+                <Styled.ProjectTitleArea>
+                  <Styled.ProjectTitle>{title}</Styled.ProjectTitle>
+                  <Styled.SubTitle>{subTitle}</Styled.SubTitle>
+                </Styled.ProjectTitleArea>
+              </Styled.ProjectInfo>
+            </Styled.ProjectInfoWrapper>
+          </Styled.ProjectCard>
+        ))}
+      </Styled.SlideLayout>
+    </Styled.ProjectSection>
+  );
+};
 
 export default ProjectSection;

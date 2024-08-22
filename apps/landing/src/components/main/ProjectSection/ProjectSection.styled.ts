@@ -116,6 +116,10 @@ export const Description = styled.p`
     @media (max-width: ${theme.breakPoint.media.tabletS}) {
       ${theme.fonts.kr.medium13};
     }
+
+    @media (max-width: ${theme.breakPoint.media.mobile}) {
+      white-space: normal;
+    }
   `}
 `;
 
@@ -175,15 +179,16 @@ export const ButtonImageRight = styled.img`
   height: 100%;
 `;
 
-export const SlideLayout = styled.div`
-  ${({ theme }) => css`
+export const SlideLayout = styled.div<{ transform: string }>`
+  ${({ theme, transform }) => css`
     display: flex;
     flex-flow: row nowrap;
     gap: 5rem;
     align-items: start;
     justify-content: start;
     max-width: 100vw;
-    overflow-x: scroll;
+    transform: ${transform};
+    transition: transform 1s ease-in-out;
 
     @media (max-width: ${theme.breakPoint.media.notebook}) {
       gap: 3rem;
@@ -192,16 +197,25 @@ export const SlideLayout = styled.div`
     @media (max-width: ${theme.breakPoint.media.tabletS}) {
       gap: 2rem;
     }
+
+    @media (max-width: ${theme.breakPoint.media.mobile}) {
+      gap: 2rem;
+      overflow-x: scroll;
+      scrollbar-width: none;
+
+      &:-webkit-scrollbar {
+        display: none;
+      }
+    }
   `}
 `;
 
-export const ProjectCard = styled.article<{ backgroundImageUrl: string }>`
-  ${({ theme, backgroundImageUrl }) => css`
+export const ProjectCard = styled.div`
+  ${({ theme }) => css`
     position: relative;
     min-width: 34.4rem;
     height: 51.6rem;
     overflow: hidden;
-    background: url(${backgroundImageUrl}) no-repeat center center / cover;
     border-radius: 1rem;
 
     &:first-of-type {
@@ -265,17 +279,43 @@ export const ProjectCard = styled.article<{ backgroundImageUrl: string }>`
   `}
 `;
 
+export const ProjectInfoWrapper = styled.div<{ backgroundImageUrl: string }>`
+  ${({ backgroundImageUrl }) => css`
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: url(${backgroundImageUrl}) no-repeat center center / cover;
+    transition: transform 0.3s ease-in-out;
+
+    &:hover {
+      transform: scale(1.1);
+
+      & > div {
+        bottom: 0;
+      }
+    }
+  `}
+`;
+
 export const ProjectInfo = styled.div`
   ${({ theme }) => css`
     position: absolute;
-    bottom: 0;
+    bottom: -100%;
     left: 0;
     display: flex;
     flex-flow: column nowrap;
     gap: 1.2rem;
     align-items: start;
     justify-content: start;
+    width: 100%;
     padding: 3rem;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.59) 37%,
+      rgba(0, 0, 0, 0.9) 100%
+    );
+    transition: bottom 0.3s ease-in-out;
 
     @media (max-width: ${theme.breakPoint.media.notebook}) {
       gap: 0.8rem;
