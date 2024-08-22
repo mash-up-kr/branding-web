@@ -1,12 +1,14 @@
 'use client';
 
-import { STATIC_ORIGIN } from 'constant';
+import { motion } from 'framer-motion';
 import { PropsWithChildren } from 'react';
 
 import { css } from '@/styled-system/css';
 import { styled } from '@/styled-system/jsx';
 
-import { StyledMotionDiv } from './MashongRoom';
+export const StyledMotionDiv = styled(motion.div);
+
+const bubbleTailSvgUrl = `https://static.mash-up.kr/images/svg/mashong/main/bubble-tail.svg`;
 
 export const SpeechBubble = ({ children, isVisible }: PropsWithChildren<{ isVisible: boolean }>) =>
   isVisible ? (
@@ -37,7 +39,7 @@ export const SpeechBubble = ({ children, isVisible }: PropsWithChildren<{ isVisi
             bottom: -14,
             width: '18px',
             height: '18px',
-            backgroundImage: `url('${STATIC_ORIGIN}/images/svg/mashong/main/bubble-tail.svg')`,
+            backgroundImage: `url('${bubbleTailSvgUrl}')`,
             backgroundRepeat: 'no-repeat',
             zIndex: 1000,
           },

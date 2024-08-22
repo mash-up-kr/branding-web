@@ -17,4 +17,4 @@ export const speechBubbleTexts = [
   '찌릿! 아이디어가 떠오른다!',
   '오늘 무슨 일을 볼까나?',
   '핫! 어디서 고소한 냄새가?!',
-];
+] as const;

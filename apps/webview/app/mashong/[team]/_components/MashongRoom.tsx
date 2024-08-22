@@ -1,7 +1,6 @@
 'use client';
 
 import { speechBubbleTexts } from 'constant';
-import { motion } from 'framer-motion';
 import { NumericRange, PlatformNameValue } from 'types';
 
 import { useRandomArrayElement } from '@/hooks/useRandomArrayElement';
@@ -11,8 +10,6 @@ import { styled } from '@/styled-system/jsx';
 import SvgImage from '@/ui/svg-image';
 
 import { SpeechBubble } from './SpeechBubble';
-
-export const StyledMotionDiv = styled(motion.div);
 
 interface MashongRoomProps {
   platformName: PlatformNameValue;
@@ -25,7 +22,7 @@ export const MashongRoom = ({ platformName, mashongLevel, isFeeding }: MashongRo
 
   const { isToggled, triggerToggle } = useTimedToggle({
     debounceDelay: 200,
-    activeDuration: 2000,
+    activeDuration: 20000000,
   });
 
   const speechBubbleText = useRandomArrayElement({
@@ -38,12 +35,7 @@ export const MashongRoom = ({ platformName, mashongLevel, isFeeding }: MashongRo
       <SpeechBubble isVisible={isFeeding || isToggled}>
         {isFeeding ? '냠냠 고마워!' : speechBubbleText}
       </SpeechBubble>
-      <div
-        onClick={() => {
-          triggerToggle();
-        }}
-        aria-hidden="true"
-      >
+      <div onClick={triggerToggle} aria-hidden="true">
         <SvgImage
           path={`main/interior-${teamNameSlug}`}
           width={360}

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 interface RandomArrayElementOptions {
   isActive: boolean;
-  array: any[];
+  array: readonly any[];
 }
 
 export const useRandomArrayElement = ({ isActive, array }: RandomArrayElementOptions) => {

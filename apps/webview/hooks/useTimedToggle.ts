@@ -4,12 +4,12 @@ import { useDebounceCallback, useTimeout } from 'usehooks-ts';
 export const useTimedToggle = ({ debounceDelay = 200, activeDuration = 2000 }) => {
   const [isToggled, setIsToggled] = useState(false);
 
-  const debouncedSetActive = useDebounceCallback((value) => {
-    setIsToggled(value);
+  const debouncedSetIsToggled = useDebounceCallback((_isToggled) => {
+    setIsToggled(_isToggled);
   }, debounceDelay);
 
   const triggerToggle = () => {
-    debouncedSetActive(true);
+    debouncedSetIsToggled(true);
     setTimeout(() => setIsToggled(false), activeDuration);
   };
 
