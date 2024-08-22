@@ -223,6 +223,12 @@ export const fonts = {
       font-family: Gilroy;
       line-height: normal;
     `,
+    extrabold34: css`
+      font-weight: 800;
+      font-size: 3.4rem;
+      font-family: Gilroy;
+      line-height: normal;
+    `,
     extrabold32: css`
       font-weight: 800;
       font-size: 3.201rem;
@@ -256,6 +262,24 @@ export const fonts = {
     extrabold15: css`
       font-weight: 800;
       font-size: 1.5rem;
+      font-family: Gilroy;
+      line-height: normal;
+    `,
+    extrabold14: css`
+      font-weight: 800;
+      font-size: 1.4rem;
+      font-family: Gilroy;
+      line-height: normal;
+    `,
+    extrabold12: css`
+      font-weight: 800;
+      font-size: 1.2rem;
+      font-family: Gilroy;
+      line-height: normal;
+    `,
+    bold20: css`
+      font-weight: 700;
+      font-size: 2rem;
       font-family: Gilroy;
       line-height: normal;
     `,
