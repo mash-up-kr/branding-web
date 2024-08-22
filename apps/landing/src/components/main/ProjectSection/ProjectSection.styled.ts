@@ -2,18 +2,32 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 export const ProjectSection = styled.section`
-  position: relative;
-  display: flex;
-  flex-flow: column nowrap;
-  gap: 5rem;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100vh;
-  max-height: 100vh;
-  overflow: hidden;
-  scroll-snap-align: center;
-  scroll-snap-stop: always;
+  ${({ theme }) => css`
+    position: relative;
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 5rem;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+    max-height: 100vh;
+    overflow: hidden;
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+
+    @media (max-width: ${theme.breakPoint.media.notebook}) {
+      gap: 5rem;
+    }
+
+    @media (max-width: ${theme.breakPoint.media.tabletL}) {
+      gap: 4rem;
+    }
+
+    @media (max-width: ${theme.breakPoint.media.tabletS}) {
+      gap: 4rem;
+    }
+  `}
 `;
 
 export const HeaderLayout = styled.div`
@@ -39,17 +53,25 @@ export const HeaderLayout = styled.div`
     }
 
     @media (max-width: ${theme.breakPoint.media.mobile}) {
-      width: 37.5rem;
-      margin: 0 auto;
       padding: 0 2rem;
     }
   `}
 `;
 
 export const Heading = styled.div`
-  display: flex;
-  flex-flow: column nowrap;
-  gap: 1.6rem;
+  ${({ theme }) => css`
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1.6rem;
+
+    @media (max-width: ${theme.breakPoint.media.notebook}) {
+      gap: 1.2rem;
+    }
+
+    @media (max-width: ${theme.breakPoint.media.mobile}) {
+      gap: 1rem;
+    }
+  `}
 `;
 
 export const Title = styled.div`
@@ -98,18 +120,49 @@ export const Description = styled.p`
 `;
 
 export const SlideController = styled.div`
-  display: flex;
-  flex-flow: row nowrap;
-  gap: 4rem;
+  ${({ theme }) => css`
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 4rem;
+
+    @media (max-width: ${theme.breakPoint.media.notebook}) {
+      gap: 3rem;
+    }
+
+    @media (max-width: ${theme.breakPoint.media.tabletS}) {
+      gap: 2rem;
+    }
+
+    @media (max-width: ${theme.breakPoint.media.mobile}) {
+      display: none;
+    }
+  `}
 `;
 
 export const SlideControlButton = styled.button`
-  width: 5rem;
-  height: 5rem;
-  margin: 0;
-  padding: 0;
-  background: none;
-  border: 0;
+  ${({ theme }) => css`
+    width: 5rem;
+    height: 5rem;
+    margin: 0;
+    padding: 0;
+    background: none;
+    border: 0;
+
+    @media (max-width: ${theme.breakPoint.media.notebook}) {
+      width: 4.2rem;
+      height: 4.2rem;
+    }
+
+    @media (max-width: ${theme.breakPoint.media.tabletL}) {
+      width: 4rem;
+      height: 4rem;
+    }
+
+    @media (max-width: ${theme.breakPoint.media.tabletS}) {
+      width: 3.2rem;
+      height: 3.2rem;
+    }
+  `}
 `;
 
 export const ButtonImageLeft = styled.img`
@@ -123,13 +176,23 @@ export const ButtonImageRight = styled.img`
 `;
 
 export const SlideLayout = styled.div`
-  display: flex;
-  flex-flow: row nowrap;
-  gap: 5rem;
-  align-items: start;
-  justify-content: start;
-  max-width: 100vw;
-  overflow-x: scroll;
+  ${({ theme }) => css`
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 5rem;
+    align-items: start;
+    justify-content: start;
+    max-width: 100vw;
+    overflow-x: scroll;
+
+    @media (max-width: ${theme.breakPoint.media.notebook}) {
+      gap: 3rem;
+    }
+
+    @media (max-width: ${theme.breakPoint.media.tabletS}) {
+      gap: 2rem;
+    }
+  `}
 `;
 
 export const ProjectCard = styled.article<{ backgroundImageUrl: string }>`
@@ -149,6 +212,10 @@ export const ProjectCard = styled.article<{ backgroundImageUrl: string }>`
     }
 
     @media (max-width: ${theme.breakPoint.media.notebook}) {
+      min-width: 26rem;
+      height: 39rem;
+      border-radius: 0.75rem;
+
       &:first-of-type {
         margin-left: 8rem;
       }
@@ -158,6 +225,10 @@ export const ProjectCard = styled.article<{ backgroundImageUrl: string }>`
     }
 
     @media (max-width: ${theme.breakPoint.media.tabletL}) {
+      min-width: 26rem;
+      height: 39rem;
+      border-radius: 0.75rem;
+
       &:first-of-type {
         margin-left: 6rem;
       }
@@ -167,6 +238,10 @@ export const ProjectCard = styled.article<{ backgroundImageUrl: string }>`
     }
 
     @media (max-width: ${theme.breakPoint.media.tabletS}) {
+      min-width: 20.8rem;
+      height: 31.3rem;
+      border-radius: 2rem;
+
       &:first-of-type {
         margin-left: 3rem;
       }
@@ -176,6 +251,10 @@ export const ProjectCard = styled.article<{ backgroundImageUrl: string }>`
     }
 
     @media (max-width: ${theme.breakPoint.media.mobile}) {
+      min-width: 20.8rem;
+      height: 31.3rem;
+      border-radius: 2rem;
+
       &:first-of-type {
         margin-left: 2rem;
       }
@@ -203,12 +282,9 @@ export const ProjectInfo = styled.div`
       padding: 2.4rem;
     }
 
-    @media (max-width: ${theme.breakPoint.media.tabletL}) {
-      ${theme.fonts.kr.medium14};
-    }
-
     @media (max-width: ${theme.breakPoint.media.tabletS}) {
-      ${theme.fonts.kr.medium13};
+      gap: 0.6rem;
+      padding: 2.4rem;
     }
   `}
 `;
@@ -226,12 +302,9 @@ export const Generation = styled.div`
       padding: 0.2rem 0.8rem;
     }
 
-    @media (max-width: ${theme.breakPoint.media.tabletL}) {
-      ${theme.fonts.kr.medium14};
-    }
-
     @media (max-width: ${theme.breakPoint.media.tabletS}) {
-      ${theme.fonts.kr.medium13};
+      ${theme.fonts.en.extrabold12};
+      padding: 0.2rem 0.7rem;
     }
   `}
 `;
@@ -248,12 +321,8 @@ export const ProjectTitleArea = styled.div`
       gap: 0.6rem;
     }
 
-    @media (max-width: ${theme.breakPoint.media.tabletL}) {
-      ${theme.fonts.kr.medium14};
-    }
-
     @media (max-width: ${theme.breakPoint.media.tabletS}) {
-      ${theme.fonts.kr.medium13};
+      gap: 0.4rem;
     }
   `}
 `;
@@ -267,12 +336,8 @@ export const ProjectTitle = styled.h3`
       ${theme.fonts.en.extrabold26}
     }
 
-    @media (max-width: ${theme.breakPoint.media.tabletL}) {
-      ${theme.fonts.kr.medium14};
-    }
-
     @media (max-width: ${theme.breakPoint.media.tabletS}) {
-      ${theme.fonts.kr.medium13};
+      ${theme.fonts.en.extrabold20}
     }
   `}
 `;
@@ -285,12 +350,8 @@ export const SubTitle = styled.div`
       ${theme.fonts.en.bold15}
     }
 
-    @media (max-width: ${theme.breakPoint.media.tabletL}) {
-      ${theme.fonts.kr.medium14};
-    }
-
     @media (max-width: ${theme.breakPoint.media.tabletS}) {
-      ${theme.fonts.kr.medium13};
+      ${theme.fonts.en.bold13}
     }
   `}
 `;
