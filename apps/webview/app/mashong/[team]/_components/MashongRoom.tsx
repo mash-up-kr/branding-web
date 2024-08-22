@@ -22,7 +22,7 @@ export const MashongRoom = ({ platformName, mashongLevel, isFeeding }: MashongRo
 
   const { isToggled, triggerToggle } = useTimedToggle({
     debounceDelay: 200,
-    activeDuration: 20000000,
+    activeDuration: 2000,
   });
 
   const speechBubbleText = useRandomArrayElement({
