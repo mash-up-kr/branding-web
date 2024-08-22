@@ -151,6 +151,12 @@ export const fonts = {
       font-family: Gilroy;
       line-height: 36.8rem;
     `,
+    extrabold230: css`
+      font-weight: 800;
+      font-size: 23rem;
+      font-family: Gilroy;
+      line-height: 23rem;
+    `,
     extrabold200: css`
       font-weight: 800;
       font-size: 20rem;
