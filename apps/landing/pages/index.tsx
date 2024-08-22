@@ -1,9 +1,10 @@
-import { Header, Main } from '@/components/common';
+import { Footer, Header, Main } from '@/components/common';
 
 const Home = () => (
   <>
     <Header />
     <Main />
+    <Footer />
   </>
 );
 
