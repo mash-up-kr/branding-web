@@ -118,20 +118,28 @@ const ProjectSection = () => {
 
           <Styled.Description>
             {
-              '삶을 더 좋은 방향으로 변화시킬 아이디어들을 앱 서비스로 구현해\n사용자들의 삶에 전달해요.'
+              '삶을 더 좋은 방향으로 변화시킬 아이디어들을 서비스로 구현해\n사용자들의 삶에 전달해요.'
             }
           </Styled.Description>
         </Styled.Heading>
 
         <Styled.SlideController>
-          <Styled.SlideControlButton onClick={handleDecreaseSlidePage}>
+          <Styled.SlideControlButton
+            onClick={handleDecreaseSlidePage}
+            isDisabled={currentSlidePage === 0}
+          >
             <Styled.ButtonImageLeft
               src={`${createSvgUrl('landing/project')('slider-control-arrow')}`}
               alt=""
             />
           </Styled.SlideControlButton>
 
-          <Styled.SlideControlButton onClick={handleIncreaseSlidePage}>
+          <Styled.SlideControlButton
+            onClick={handleIncreaseSlidePage}
+            isDisabled={
+              currentSlidePage === Math.ceil(PROJECTS.length / numberOfProjectPerPage) - 1
+            }
+          >
             <Styled.ButtonImageRight
               src={`${createSvgUrl('landing/project')('slider-control-arrow')}`}
               alt=""

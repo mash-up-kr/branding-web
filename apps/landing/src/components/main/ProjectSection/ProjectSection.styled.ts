@@ -143,14 +143,16 @@ export const SlideController = styled.div`
   `}
 `;
 
-export const SlideControlButton = styled.button`
-  ${({ theme }) => css`
+export const SlideControlButton = styled.button<{ isDisabled: boolean }>`
+  ${({ theme, isDisabled }) => css`
     width: 5rem;
     height: 5rem;
     margin: 0;
     padding: 0;
     background: none;
     border: 0;
+    opacity: ${isDisabled ? 0.7 : 1};
+    transition: opacity 0.2s ease-in-out;
 
     @media (max-width: ${theme.breakPoint.media.notebook}) {
       width: 4.2rem;
