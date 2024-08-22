@@ -37,8 +37,10 @@ export const PopcornXpTracker = ({
   const router = useRouter();
   assert(isKeyOfObject(currentLevel, levelName));
 
+  const isMaxLevel = currentLevel === 10;
+
   const remainingXP = maxXP - currentXP;
-  const levelUpAvailable = Boolean(remainingXP <= 0 && Cookies.get('token'));
+  const levelUpAvailable = !isMaxLevel && remainingXP <= 0;
 
   useInterval(() => {
     revalidateMashongStatus();
@@ -95,11 +97,11 @@ export const PopcornXpTracker = ({
             color: 'gray.500',
           })}
         >
-          {remainingXP >= 0 ? remainingXP : 0}점 남음
+          {isMaxLevel ? '최고 레벨에 도달!' : `${Math.max(remainingXP, 0)}점 남음`}
         </span>
       </div>
       <progress
-        value={currentXP}
+        value={isMaxLevel ? maxXP : currentXP}
         max={maxXP}
         className={css({
           width: '100%',
