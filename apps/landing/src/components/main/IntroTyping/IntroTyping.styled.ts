@@ -48,9 +48,15 @@ interface fillWidthProps {
   duration: number;
   delay?: number;
   timingFunction?: string;
+  isInView?: boolean;
 }
 
-const fillWidth = ({ duration, delay = 0, timingFunction = 'linear' }: fillWidthProps) => {
+const fillWidth = ({
+  duration,
+  delay = 0,
+  timingFunction = 'linear',
+  isInView = true,
+}: fillWidthProps) => {
   const fillWidthAnimation = keyframes`
   from {
     width: 100%;
@@ -61,51 +67,53 @@ const fillWidth = ({ duration, delay = 0, timingFunction = 'linear' }: fillWidth
 `;
 
   return css`
-    animation: ${fillWidthAnimation} ${duration}s ${delay}s ${timingFunction} forwards;
+    width: 100%;
+    animation: ${isInView ? fillWidthAnimation : null} ${duration}s ${delay}s ${timingFunction}
+      forwards;
   `;
 };
 
 interface TextRelativeProps {
-  isIntersect: boolean;
+  isInView: boolean;
 }
 
 export const TextRelative = styled.div<TextRelativeProps>`
-  ${({ theme, isIntersect }) => css`
+  ${({ theme, isInView }) => css`
     position: relative;
 
     &:first-of-type {
-      ${isIntersect ? theme.animation.fadeUp({ duration: 0.8, delay: 0.01, move: '3rem' }) : null};
+      ${theme.animation.fadeUp({ duration: 0.8, delay: 0.01, move: '3rem', isInView })};
 
       & > div {
-        ${isIntersect ? fillWidth({ duration: 2, delay: 0.01 }) : null};
+        ${fillWidth({ duration: 2, delay: 0.01, isInView })};
       }
     }
     &:nth-of-type(2) {
-      ${isIntersect ? theme.animation.fadeUp({ duration: 0.8, delay: 0.4, move: '3rem' }) : null};
+      ${theme.animation.fadeUp({ duration: 0.8, delay: 0.4, move: '3rem', isInView })};
 
       & > div {
-        ${isIntersect ? fillWidth({ duration: 2, delay: 0.4 }) : null};
+        ${fillWidth({ duration: 2, delay: 0.4, isInView })};
       }
     }
     &:nth-of-type(3) {
-      ${isIntersect ? theme.animation.fadeUp({ duration: 0.8, delay: 0.8, move: '3rem' }) : null};
+      ${theme.animation.fadeUp({ duration: 0.8, delay: 0.8, move: '3rem', isInView })};
 
       & > div {
-        ${isIntersect ? fillWidth({ duration: 2, delay: 0.8 }) : null};
+        ${fillWidth({ duration: 2, delay: 0.8, isInView })};
       }
     }
     &:nth-of-type(4) {
-      ${isIntersect ? theme.animation.fadeUp({ duration: 0.8, delay: 1.2, move: '3rem' }) : null};
+      ${theme.animation.fadeUp({ duration: 0.8, delay: 1.2, move: '3rem', isInView })};
 
       & > div {
-        ${isIntersect ? fillWidth({ duration: 2, delay: 1.2 }) : null};
+        ${fillWidth({ duration: 2, delay: 1.2, isInView })};
       }
     }
     &:nth-of-type(5) {
-      ${isIntersect ? theme.animation.fadeUp({ duration: 0.8, delay: 1.6, move: '3rem' }) : null};
+      ${theme.animation.fadeUp({ duration: 0.8, delay: 1.6, move: '3rem', isInView })};
 
       & > div {
-        ${isIntersect ? fillWidth({ duration: 2, delay: 1.6 }) : null};
+        ${fillWidth({ duration: 2, delay: 1.6, isInView })};
       }
     }
   `}

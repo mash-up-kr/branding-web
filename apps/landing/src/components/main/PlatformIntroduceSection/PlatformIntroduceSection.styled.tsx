@@ -19,7 +19,7 @@ export const PlatformIntroduceSection = styled.section`
 export const PlatformIntroduceLayout = styled.div<{ isInView: boolean }>`
   ${({ theme, isInView }) => css`
     ${theme.fonts.kr.medium16};
-    ${isInView ? theme.animation.fadeUp({ duration: 0.8, delay: 0.01, move: '3rem' }) : null}
+    ${theme.animation.fadeUp({ duration: 0.8, delay: 0.01, move: '3rem', isInView })}
     display: flex;
     flex-flow: column nowrap;
     gap: 1.6rem;
@@ -94,7 +94,7 @@ export const Description = styled.p`
 
 export const PlatformSlideLayout = styled.div<{ isInView: boolean }>`
   ${({ theme, isInView }) => css`
-    ${isInView ? theme.animation.fadeUp({ duration: 0.8, delay: 0.01, move: '3rem' }) : null}
+    ${theme.animation.fadeUp({ duration: 0.8, delay: 0.01, move: '3rem', isInView })}
   `}
   display: flex;
   flex-flow: column nowrap;
