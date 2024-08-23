@@ -32,7 +32,6 @@ export const MashongImage = styled.img`
 
 export const MashongSectionScrollArea = styled.div`
   width: 100%;
-  min-height: 400vh;
 `;
 
 export const BackgroundTextWrapper = styled.div`
