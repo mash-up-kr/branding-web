@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+import { createCard } from '@/app/birthday/_actions/createCard';
 import useFetch from '@/hooks/useFetch';
 import { styled } from '@/styled-system/jsx';
 import SvgImage from '@/ui/svg-image';
@@ -59,28 +60,14 @@ const Page = ({
     }
   };
 
-  const createCard = async () => {
+  const save = async () => {
     try {
-      const authToken = Cookies.get('token');
-
-      if (!authToken) {
-        throw new Error(`유효한 인증 토큰이 필요합니다.`);
-      }
-
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_PATH}/v1/birthday-cards`, {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          recipientMemberId: Number(params.id),
-          imageUrl: selectedImageUrl,
-          message,
-        }),
+      const data = await createCard({
+        recipientMemberId: Number(params.id),
+        imageUrl: selectedImageUrl,
+        message,
       });
-      const { code } = await response.json();
-      if (code === 'SUCCESS') {
+      if (data === 'SUCCESS') {
         setIsSuccess(true);
       }
     } catch (error) {
@@ -91,6 +78,17 @@ const Page = ({
   const goToCrewList = () => {
     router.replace('/birthday/crew-list');
   };
+
+  // 안드로이드 대응
+  useEffect(() => {
+    window.addEventListener('resize', () => {
+      if (window.innerHeight < 500) {
+        window.scrollTo(0, document.body.scrollHeight);
+      } else {
+        window.scrollTo(0, 0);
+      }
+    });
+  }, []);
 
   return (
     <styled.div display="flex" flexDirection="column" height="100dvh" position="relative">
@@ -270,7 +268,7 @@ const Page = ({
           disabled={message.length === 0}
           bg={message.length > 0 ? '#6A36FF' : '#CDBFF6'}
           borderRadius="12px"
-          onClick={createCard}
+          onClick={save}
         >
           다 썼어요.
         </styled.button>

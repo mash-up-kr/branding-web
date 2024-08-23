@@ -41,6 +41,7 @@ const Page = () => {
   }, [isDark, router]);
 
   useEffect(() => {
+    setAnimation(true);
     const interval = setInterval(() => {
       setAnimation((prev) => !prev);
     }, 1000);
