@@ -1,20 +1,33 @@
 import { createPngUrl } from 'constant';
-import { useRef } from 'react';
+import { useInView } from 'react-intersection-observer';
 
 import * as Styled from './MashongSection.styled';
 
 const MashongSection = () => {
-  const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const { ref: fixedTriggerElementElementRef, inView: isFixedTriggerElementInView } = useInView();
+  const { ref: bottomTriggerElementElementRef, inView: isBottomTriggerElementInView } = useInView();
 
   return (
     <Styled.MashongSection>
-      <Styled.MashongSectionScrollArea ref={scrollAreaRef}>
+      <Styled.ViewPortHeightElement isBottom={isBottomTriggerElementInView}>
         <Styled.BackgroundTextWrapper>
-          <Styled.GradientText>MASH-UP CREW</Styled.GradientText>
-          <Styled.BorderText>MASH-UP CREW</Styled.BorderText>
+          <Styled.GradientText isInteractionTrigger={isFixedTriggerElementInView}>
+            MASH-UP CREW
+          </Styled.GradientText>
+          <Styled.BorderText isInteractionTrigger={isFixedTriggerElementInView}>
+            MASH-UP CREW
+          </Styled.BorderText>
         </Styled.BackgroundTextWrapper>
-      </Styled.MashongSectionScrollArea>
-      <Styled.MashongImage src={createPngUrl('landing/mashong')('mashong-mashup-3x-min')} alt="" />
+
+        <Styled.MashongImage
+          src={createPngUrl('landing/mashong')('mashong-mashup-3x-min')}
+          alt=""
+          isFixed={isFixedTriggerElementInView}
+        />
+      </Styled.ViewPortHeightElement>
+
+      <Styled.FixedTriggerElement ref={fixedTriggerElementElementRef} />
+      <Styled.BottomTriggerElement ref={bottomTriggerElementElementRef} />
     </Styled.MashongSection>
   );
 };
