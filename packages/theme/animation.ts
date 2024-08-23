@@ -19,6 +19,7 @@ const fadeUp = ({ duration, delay = 0, move = '100px' }: fadeProps) => {
 `;
 
   return css`
+    opacity: 0;
     animation: ${fadeUpAnimation} ${duration}s ${delay}s ease-in-out forwards;
   `;
 };
@@ -34,6 +35,7 @@ const fadeIn = ({ duration, delay = 0 }: fadeProps) => {
 `;
 
   return css`
+    opacity: 0;
     animation: ${fadeUpAnimation} ${duration}s ${delay}s ease-in-out forwards;
   `;
 };

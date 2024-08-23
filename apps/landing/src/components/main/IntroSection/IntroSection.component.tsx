@@ -1,5 +1,3 @@
-import { LinearGradientSphere } from 'ui';
-
 import { DefaultLayout } from '@/components/common';
 import { TViewPortSize } from '@/constants';
 import { useDetectViewport } from '@/hooks';
@@ -57,7 +55,7 @@ const IntroSection = () => {
               <Styled.GradientLine />
             </Styled.GradientLineWrapper>
           </Styled.Growth>
-          <LinearGradientSphere
+          <Styled.FadeUpLinearGradientSphere
             diameter={LINEAR_GRADIENT_SPHERE_DIAMETER[viewportSize]}
             position="absolute"
             top={LINEAR_GRADIENT_SPHERE_POSITION_TOP[viewportSize]}
