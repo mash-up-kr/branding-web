@@ -13,16 +13,21 @@ export const CurrentInformationSection = styled.section`
   scroll-snap-stop: always;
 `;
 
-export const CurrentInfoWrapper = styled.div`
-  ${({ theme }) => css`
-    position: absolute;
-    top: 50%;
-    left: 0;
+export const CurrentInfoIntersectionContainer = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  transform: translate3d(0, -50%, 0);
+`;
+
+export const CurrentInfoWrapper = styled.div<{ isInView: boolean }>`
+  ${({ theme, isInView }) => css`
+    ${theme.animation.fadeDown({ duration: 1, delay: 0.01, move: '4rem', isInView })};
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     width: 100%;
     padding: 0 8rem 0 8rem;
-    transform: translate3d(0, -50%, 0);
 
     @media (max-width: ${theme.breakPoint.media.notebook}) {
       padding: 0 8rem 0 8rem;
@@ -86,5 +91,17 @@ export const CurrentInfoDescription = styled.p`
     @media (max-width: ${theme.breakPoint.media.tabletS}) {
       ${theme.fonts.en.extrabold32};
     }
+  `}
+`;
+
+export const LinearGradientSphereWrapper = styled.div<{ isInView: boolean }>`
+  ${({ theme, isInView }) => css`
+    ${theme.animation.fadeUp({ duration: 1, delay: 0.01, move: '5rem', isInView })};
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: ${theme.globalZIndex.background};
+    width: 100%;
+    height: 100%;
   `}
 `;

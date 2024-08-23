@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { fonts } from 'theme';
+import { LinearGradientSphere } from 'ui';
 
 import { breakPoint } from '@/styles/breakPoint';
 
@@ -56,12 +57,16 @@ const infoTextWrapperStyle = css`
 `;
 
 export const MashUp = styled.div`
-  ${infoTextWrapperStyle};
+  ${({ theme }) => css`
+    ${infoTextWrapperStyle};
+    ${theme.animation.fadeUp({ duration: 0.8, delay: 0.01, move: '3rem' })};
+  `}
 `;
 
 export const Seeking = styled.div`
   ${({ theme }) => css`
     ${infoTextWrapperStyle};
+    ${theme.animation.fadeUp({ duration: 0.8, delay: 0.4, move: '3rem' })};
 
     @media (max-width: ${theme.breakPoint.media.notebook}) {
       ${theme.fonts.en.extrabold80};
@@ -88,6 +93,7 @@ export const Seeking = styled.div`
 export const ValueForGrowth = styled.div`
   ${({ theme }) => css`
     ${infoTextWrapperStyle};
+    ${theme.animation.fadeUp({ duration: 0.8, delay: 0.8, move: '3rem' })};
 
     @media (max-width: ${theme.breakPoint.media.mobile}) {
       display: none;
@@ -149,6 +155,12 @@ export const GradientLine = styled.div`
     @media (max-width: ${theme.breakPoint.media.tabletS}) {
       height: 0.1rem;
     }
+  `}
+`;
+
+export const FadeUpLinearGradientSphere = styled(LinearGradientSphere)`
+  ${({ theme }) => css`
+    ${theme.animation.fadeUp({ duration: 0.8, delay: 1.2, move: '3rem' })};
   `}
 `;
 
