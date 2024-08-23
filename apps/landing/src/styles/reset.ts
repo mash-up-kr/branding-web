@@ -4,6 +4,12 @@ export const resetCss = css`
   html {
     /* 1rem = 10px */
     font-size: 62.5%;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   html,

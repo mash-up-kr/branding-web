@@ -79,9 +79,23 @@ export const fonts = {
       line-height: 1.5;
       letter-spacing: -0.05em;
     `,
+    bold13: css`
+      font-weight: 700;
+      font-size: 1.3rem;
+      font-family: SpoqaHanSansNeo;
+      line-height: 1.5;
+      letter-spacing: -0.05em;
+    `,
     medium22: css`
       font-weight: 500;
       font-size: 2.2rem;
+      font-family: SpoqaHanSansNeo;
+      line-height: 1.5;
+      letter-spacing: -0.05em;
+    `,
+    medium20: css`
+      font-weight: 500;
+      font-size: 2rem;
       font-family: SpoqaHanSansNeo;
       line-height: 1.5;
       letter-spacing: -0.05em;
@@ -169,17 +183,36 @@ export const fonts = {
       font-family: Gilroy;
       line-height: 22.1rem;
     `,
+    extrabold150: css`
+      font-weight: 800;
+      font-size: 15rem;
+      font-family: Gilroy;
+      line-height: 15rem;
+    `,
     extrabold146: css`
       font-weight: 800;
       font-size: 14.6rem;
       font-family: Gilroy;
       line-height: 17.9rem;
     `,
+    extrabold130: css`
+      font-weight: 800;
+      font-size: 13rem;
+      font-family: Gilroy;
+      line-height: 13rem;
+    `,
     extrabold110: css`
       font-weight: 800;
       font-size: 11rem;
       font-family: Gilroy;
       line-height: 13.5rem;
+    `,
+    // 디자인단에서 line-height 조정되면 100으로 대체하며 제거 할 예정
+    extrabold101: css`
+      font-weight: 800;
+      font-size: 10.1rem;
+      font-family: Gilroy;
+      line-height: 10.1rem;
     `,
     extrabold100: css`
       font-weight: 800;
