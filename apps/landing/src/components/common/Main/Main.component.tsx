@@ -3,6 +3,7 @@ import {
   CurrentInformationSection,
   IntroSection,
   IntroTypingSection,
+  MashongSection,
   PlatformIntroduceSection,
   ProjectSection,
 } from '@/components/main';
@@ -15,6 +16,7 @@ const Main = () => (
     <PlatformIntroduceSection />
     <CurrentInformationSection />
     <ProjectSection />
+    <MashongSection />
   </main>
 );
 

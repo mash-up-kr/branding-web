@@ -32,5 +32,6 @@
     }
   },
   "stylelint.enable": true,
-  "stylelint.validate": ["css", "scss", "typescript", "typescriptreact"]
+  "stylelint.validate": ["css", "scss", "typescript", "typescriptreact"],
+  "cSpell.words": ["Mashong"]
 }
