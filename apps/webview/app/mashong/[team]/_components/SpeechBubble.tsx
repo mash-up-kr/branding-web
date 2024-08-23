@@ -8,7 +8,7 @@ import { styled } from '@/styled-system/jsx';
 
 export const StyledMotionDiv = styled(motion.div);
 
-const bubbleTailSvgUrl = `https://static.mash-up.kr/images/svg/mashong/main/bubble-tail.svg`;
+const bubbleTailSvgUrl = `https://static.mash-up.kr/images/svg/mashong/main/speech-bubble_tail.svg`;
 
 export const SpeechBubble = ({ children, isVisible }: PropsWithChildren<{ isVisible: boolean }>) =>
   isVisible ? (
@@ -36,12 +36,11 @@ export const SpeechBubble = ({ children, isVisible }: PropsWithChildren<{ isVisi
             position: 'absolute',
             left: '50%',
             transform: 'translate(-50%)',
-            bottom: -14,
+            bottom: -18,
             width: '18px',
             height: '18px',
             backgroundImage: `url('${bubbleTailSvgUrl}')`,
             backgroundRepeat: 'no-repeat',
-            zIndex: 1000,
           },
         })}
       >
