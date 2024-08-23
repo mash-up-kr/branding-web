@@ -1,4 +1,4 @@
-import { css } from '@emotion/react';
+import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 
 export const TypingContainer = styled.div`
@@ -42,23 +42,81 @@ export const TypingContainer = styled.div`
   `}
 `;
 
-export const TextRelative = styled.div`
-  position: relative;
-`;
+export const TextWrapper = styled.div``;
 
-interface MaskLineProps {
-  isMaskLineIntersect: boolean;
+interface fillWidthProps {
+  duration: number;
+  delay?: number;
+  timingFunction?: string;
 }
 
-export const MaskLine = styled.div<MaskLineProps>`
-  ${({ isMaskLineIntersect }) => css`
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: ${isMaskLineIntersect ? '0%' : '100%'};
-    height: 100%;
-    background: #000000;
-    opacity: 0.9;
-    transition: ${isMaskLineIntersect ? '2s linear' : 'none'};
+const fillWidth = ({ duration, delay = 0, timingFunction = 'linear' }: fillWidthProps) => {
+  const fillWidthAnimation = keyframes`
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
+`;
+
+  return css`
+    animation: ${fillWidthAnimation} ${duration}s ${delay}s ${timingFunction} forwards;
+  `;
+};
+
+interface TextRelativeProps {
+  isIntersect: boolean;
+}
+
+export const TextRelative = styled.div<TextRelativeProps>`
+  ${({ theme, isIntersect }) => css`
+    position: relative;
+
+    &:first-of-type {
+      ${isIntersect ? theme.animation.fadeUp({ duration: 0.8, delay: 0.01, move: '3rem' }) : null};
+
+      & > div {
+        ${isIntersect ? fillWidth({ duration: 2, delay: 0.01 }) : null};
+      }
+    }
+    &:nth-of-type(2) {
+      ${isIntersect ? theme.animation.fadeUp({ duration: 0.8, delay: 0.4, move: '3rem' }) : null};
+
+      & > div {
+        ${isIntersect ? fillWidth({ duration: 2, delay: 0.4 }) : null};
+      }
+    }
+    &:nth-of-type(3) {
+      ${isIntersect ? theme.animation.fadeUp({ duration: 0.8, delay: 0.8, move: '3rem' }) : null};
+
+      & > div {
+        ${isIntersect ? fillWidth({ duration: 2, delay: 0.8 }) : null};
+      }
+    }
+    &:nth-of-type(4) {
+      ${isIntersect ? theme.animation.fadeUp({ duration: 0.8, delay: 1.2, move: '3rem' }) : null};
+
+      & > div {
+        ${isIntersect ? fillWidth({ duration: 2, delay: 1.2 }) : null};
+      }
+    }
+    &:nth-of-type(5) {
+      ${isIntersect ? theme.animation.fadeUp({ duration: 0.8, delay: 1.6, move: '3rem' }) : null};
+
+      & > div {
+        ${isIntersect ? fillWidth({ duration: 2, delay: 1.6 }) : null};
+      }
+    }
   `}
+`;
+
+export const MaskLine = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: #000000;
+  opacity: 0.9;
 `;
