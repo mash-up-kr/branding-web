@@ -79,6 +79,17 @@ const Page = ({
     router.replace('/birthday/crew-list');
   };
 
+  // 안드로이드 대응
+  useEffect(() => {
+    window.addEventListener('resize', () => {
+      if (window.innerHeight < 500) {
+        window.scrollTo(0, document.body.scrollHeight);
+      } else {
+        window.scrollTo(0, 0);
+      }
+    });
+  }, []);
+
   return (
     <styled.div display="flex" flexDirection="column" height="100dvh" position="relative">
       <styled.div
