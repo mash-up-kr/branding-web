@@ -79,9 +79,23 @@ export const fonts = {
       line-height: 1.5;
       letter-spacing: -0.05em;
     `,
+    bold13: css`
+      font-weight: 700;
+      font-size: 1.3rem;
+      font-family: SpoqaHanSansNeo;
+      line-height: 1.5;
+      letter-spacing: -0.05em;
+    `,
     medium22: css`
       font-weight: 500;
       font-size: 2.2rem;
+      font-family: SpoqaHanSansNeo;
+      line-height: 1.5;
+      letter-spacing: -0.05em;
+    `,
+    medium20: css`
+      font-weight: 500;
+      font-size: 2rem;
       font-family: SpoqaHanSansNeo;
       line-height: 1.5;
       letter-spacing: -0.05em;
