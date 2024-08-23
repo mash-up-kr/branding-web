@@ -147,6 +147,7 @@ export const resetCss = css`
   body *::before,
   body *::after {
     box-sizing: border-box;
+    user-select: none;
   }
 
   a {
@@ -156,6 +157,10 @@ export const resetCss = css`
 
   img {
     vertical-align: middle;
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
   }
 
   button {

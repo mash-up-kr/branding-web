@@ -93,7 +93,7 @@ export const Description = styled.p`
 export const PlatformSlideLayout = styled.div`
   display: flex;
   flex-flow: column nowrap;
-  gap: 24px;
+  gap: 2.4rem;
   align-items: start;
   justify-content: start;
   max-width: 100vw;

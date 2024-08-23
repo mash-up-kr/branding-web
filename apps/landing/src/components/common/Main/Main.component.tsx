@@ -7,6 +7,7 @@ import {
   IntroSection,
   IntroTypingSection,
   PlatformIntroduceSection,
+  ProjectSection,
 } from '@/components/main';
 
 const Main = () => {
@@ -20,6 +21,7 @@ const Main = () => {
         <ActivitySection ref={ref} />
         <PlatformIntroduceSection />
         <CurrentInformationSection />
+        <ProjectSection />
       </SnapParent>
     </main>
   );

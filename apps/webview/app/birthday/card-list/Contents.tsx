@@ -205,7 +205,7 @@ const Contents = ({ birthdayCards }: ContentsProps) => {
           justifyContent="center"
           alignItems="center"
           onClick={() => {
-            router.push('/birthday/crew-list');
+            router.replace('/birthday/crew-list');
           }}
         >
           <styled.span
