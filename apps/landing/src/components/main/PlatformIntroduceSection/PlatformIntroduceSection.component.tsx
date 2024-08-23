@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useInView } from 'react-intersection-observer';
 import { Lottie } from 'ui';
 
 import { JoinRecruitCard } from '@/components/main';
@@ -10,6 +11,9 @@ const PlatformIntroduceSection = () => {
   const [isAnimationPause, setIsAnimationPause] = useState(false);
   const [currentSelectedPlatform, setCurrentSelectedPlatform] =
     useState<TPlatformName>('productDesign');
+
+  const { ref: platformIntroduceSectionRef, inView: isPlatformIntroduceSectionInView } =
+    useInView();
 
   const handleSelectPlatform = (platform: TPlatformName) => {
     setCurrentSelectedPlatform(platform);
@@ -47,8 +51,8 @@ const PlatformIntroduceSection = () => {
   ];
 
   return (
-    <Styled.PlatformIntroduceSection>
-      <Styled.PlatformIntroduceLayout>
+    <Styled.PlatformIntroduceSection ref={platformIntroduceSectionRef}>
+      <Styled.PlatformIntroduceLayout isInView={isPlatformIntroduceSectionInView}>
         <Styled.Title>
           <span>WE’RE</span>
           <Styled.GradientText>MASH-UP</Styled.GradientText>
@@ -60,7 +64,7 @@ const PlatformIntroduceSection = () => {
         </Styled.Description>
       </Styled.PlatformIntroduceLayout>
 
-      <Styled.PlatformSlideLayout>
+      <Styled.PlatformSlideLayout isInView={isPlatformIntroduceSectionInView}>
         <Styled.PlatformList>
           {PLATFORM_RADIO_ITEMS.map(({ displayName, name }) => (
             <Styled.Platform

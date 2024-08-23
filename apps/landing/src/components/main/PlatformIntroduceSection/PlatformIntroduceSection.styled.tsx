@@ -16,8 +16,10 @@ export const PlatformIntroduceSection = styled.section`
   scroll-snap-stop: always;
 `;
 
-export const PlatformIntroduceLayout = styled.div`
-  ${({ theme }) => css`
+export const PlatformIntroduceLayout = styled.div<{ isInView: boolean }>`
+  ${({ theme, isInView }) => css`
+    ${theme.fonts.kr.medium16};
+    ${isInView ? theme.animation.fadeUp({ duration: 0.8, delay: 0.01, move: '3rem' }) : null}
     display: flex;
     flex-flow: column nowrap;
     gap: 1.6rem;
@@ -90,7 +92,10 @@ export const Description = styled.p`
   `}
 `;
 
-export const PlatformSlideLayout = styled.div`
+export const PlatformSlideLayout = styled.div<{ isInView: boolean }>`
+  ${({ theme, isInView }) => css`
+    ${isInView ? theme.animation.fadeUp({ duration: 0.8, delay: 0.01, move: '3rem' }) : null}
+  `}
   display: flex;
   flex-flow: column nowrap;
   gap: 2.4rem;
