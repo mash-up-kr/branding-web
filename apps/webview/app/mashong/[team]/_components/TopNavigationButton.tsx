@@ -20,7 +20,11 @@ export const TopNavigationButton = ({ actionType }: TopNavigationButtonProps) =>
         webviewHandler.step('back');
         break;
       case 'routerBack':
-        router.back();
+        try {
+          router.back();
+        } catch (error) {
+          webviewHandler.step('back');
+        }
         break;
       default:
         console.warn(`Unknown action type: ${actionType}`);
