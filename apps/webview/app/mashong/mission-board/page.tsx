@@ -51,10 +51,11 @@ const Page = async () => {
   });
 
   if (!missionStatusListUsingGETData) {
+    console.error('missionStatusListUsingGETData is undefined');
     notFound();
   }
 
-  const popcornCountRemainingToObtain = missionStatusListUsingGETData.data.reduce(
+  const popcornCountRemainingToObtain = missionStatusListUsingGETData.data?.reduce(
     (acc, { isCompensated, compensation }) => (isCompensated ? acc : acc + compensation),
     0,
   );
