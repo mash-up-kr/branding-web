@@ -1,3 +1,4 @@
+import { useInView } from 'react-intersection-observer';
 import { LinearGradientSphere } from 'ui';
 
 import { TViewPortSize } from '@/constants';
@@ -24,7 +25,7 @@ const CURRENT_INFO = [
   },
   {
     title: '현재 활동중인 크루',
-    description: '86명',
+    description: '81명',
   },
   {
     title: '최근 경쟁률',
@@ -34,24 +35,34 @@ const CURRENT_INFO = [
 
 const CurrentInformationSection = () => {
   const { viewportSize } = useDetectViewport();
+  const { ref: linearGradientSphereWrapperRef, inView: isLinearGradientSphereWrapperInView } =
+    useInView();
 
   return (
     <Styled.CurrentInformationSection>
-      <Styled.CurrentInfoWrapper>
-        {CURRENT_INFO.map(({ title, description }) => (
-          <Styled.CurrentInfo key={title}>
-            <Styled.CurrentInfoTitle>{title}</Styled.CurrentInfoTitle>
-            <Styled.CurrentInfoDescription>{description}</Styled.CurrentInfoDescription>
-          </Styled.CurrentInfo>
-        ))}
-      </Styled.CurrentInfoWrapper>
-      <LinearGradientSphere
-        diameter={LINEAR_GRADIENT_SPHERE_DIAMETER[viewportSize]}
-        position="absolute"
-        top="50%"
-        left="0"
-        transform="translate3d(0, -50%, 0)"
-      />
+      <Styled.CurrentInfoIntersectionContainer>
+        <Styled.CurrentInfoWrapper isInView={isLinearGradientSphereWrapperInView}>
+          {CURRENT_INFO.map(({ title, description }) => (
+            <Styled.CurrentInfo key={title}>
+              <Styled.CurrentInfoTitle>{title}</Styled.CurrentInfoTitle>
+              <Styled.CurrentInfoDescription>{description}</Styled.CurrentInfoDescription>
+            </Styled.CurrentInfo>
+          ))}
+        </Styled.CurrentInfoWrapper>
+      </Styled.CurrentInfoIntersectionContainer>
+
+      <Styled.LinearGradientSphereWrapper
+        isInView={isLinearGradientSphereWrapperInView}
+        ref={linearGradientSphereWrapperRef}
+      >
+        <LinearGradientSphere
+          diameter={LINEAR_GRADIENT_SPHERE_DIAMETER[viewportSize]}
+          position="absolute"
+          top="50%"
+          left="0"
+          transform="translate3d(0, -50%, 0)"
+        />
+      </Styled.LinearGradientSphereWrapper>
     </Styled.CurrentInformationSection>
   );
 };
