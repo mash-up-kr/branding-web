@@ -35,7 +35,7 @@ const Header = () => {
           height={24}
           fill={false}
           onClick={() => {
-            router.push('/birthday/crew-list');
+            router.replace('/birthday/crew-list');
           }}
         />
       </styled.div>
