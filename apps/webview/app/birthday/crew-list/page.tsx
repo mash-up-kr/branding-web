@@ -35,6 +35,7 @@ async function getCrewList() {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
+        next: { tags: ['birthday-list'] },
       },
     );
     const { data } = await response.json();
