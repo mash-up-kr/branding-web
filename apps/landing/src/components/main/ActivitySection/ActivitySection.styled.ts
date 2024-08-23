@@ -103,7 +103,7 @@ export const FirstGradientLine = styled.div`
     z-index: ${theme.globalZIndex.background};
     width: 100vw;
     height: 0.1rem;
-    background: linear-gradient(91deg, #ff3b5e 0%, #6046ff 100%);
+    background: linear-gradient(90deg, rgba(255, 59, 94, 0) 0%, #6046ff 100%);
 
     @media (max-width: ${theme.breakPoint.media.notebook}) {
       top: 3.3rem;
@@ -127,7 +127,7 @@ export const SecondGradientLine = styled.div`
     z-index: ${theme.globalZIndex.background};
     width: 100vw;
     height: 0.1rem;
-    background: linear-gradient(91deg, #6046ff 0%, #ff3b5e 100%);
+    background: linear-gradient(90deg, #6046ff 0%, rgba(255, 59, 94, 0) 100%);
 
     @media (max-width: ${theme.breakPoint.media.notebook}) {
       top: 11.7rem;
