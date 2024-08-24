@@ -5,9 +5,10 @@
 import { motion, useMotionValue, useMotionValueEvent, useScroll } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { ElementRef, useEffect, useRef, useState } from 'react';
-import { useEventListener } from 'usehooks-ts';
+import { useInterval } from 'usehooks-ts';
 
 import { compensatePopcorn } from '@/app/mashong/_actions/compensatePopcorn';
+import { revalidateMashongMissionStatus } from '@/app/mashong/_actions/revalidateMashongMissionStatus';
 import { MissionStatus } from '@/app/mashong/mission-board/page';
 import Popup from '@/app/mashong/mission-board/Popup';
 import { Square, styled } from '@/styled-system/jsx';
@@ -322,22 +323,10 @@ const IndividualMissions = ({
 );
 
 const Sheet = ({ missions }: { missions: MissionStatus[] }) => {
-  const router = useRouter();
+  useInterval(() => {
+    revalidateMashongMissionStatus();
+  }, 2000);
 
-  const documentRef = useRef<Document | null>(null);
-
-  useEffect(() => {
-    documentRef.current = document;
-  }, []);
-
-  useEventListener(
-    'visibilitychange',
-    () => {
-      if (document.hidden) return;
-      router.refresh();
-    },
-    documentRef,
-  );
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [popupData, setPopupData] = useState(0);
   const y = useMotionValue(0);
