@@ -13,7 +13,6 @@ const Layout = ({ children }: { children: ReactNode }) => (
     mx="auto"
     minH="100dvh"
     pt="env(safe-area-inset-top)"
-    pb="env(safe-area-inset-bottom)"
   >
     {children}
   </styled.div>
