@@ -139,6 +139,7 @@ export const MashongDescriptionContainer = styled.article<{ isFixed: boolean; is
     bottom: 50%;
     left: 50%;
     gap: 2rem;
+    width: 50.4rem;
     padding: 3rem;
     background: linear-gradient(113deg, rgba(33, 37, 41, 0.8) 0%, rgba(33, 37, 41, 0) 142.22%);
     border: 0.1rem solid rgba(255, 255, 255, 0.7);
@@ -148,8 +149,17 @@ export const MashongDescriptionContainer = styled.article<{ isFixed: boolean; is
     backdrop-filter: blur(2.6rem);
     transition: opacity 0.8s ease;
 
+    @media (max-width: ${theme.breakPoint.media.notebook}) {
+      width: 36.4rem;
+    }
+
     @media (max-width: ${theme.breakPoint.media.tabletL}) {
+      width: 35.2rem;
       padding: 2.4rem;
+    }
+
+    @media (max-width: ${theme.breakPoint.media.mobile}) {
+      width: 31.5rem;
     }
   `}
 `;
