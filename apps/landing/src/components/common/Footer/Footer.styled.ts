@@ -23,11 +23,17 @@ export const Footer = styled.footer`
 `;
 
 export const MashUpHeading = styled.h2`
-  display: flex;
-  flex-flow: row nowrap;
-  gap: 0.8rem;
-  align-items: center;
-  justify-content: start;
+  ${({ theme }) => css`
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 0.8rem;
+    align-items: center;
+    justify-content: start;
+
+    @media (max-width: ${theme.breakPoint.media.tabletL}) {
+      display: none;
+    }
+  `}
 `;
 
 export const MashUpText = styled.span`
@@ -37,11 +43,18 @@ export const MashUpText = styled.span`
 `;
 
 export const EtcItemsWrapper = styled.div`
-  display: flex;
-  flex-flow: column nowrap;
-  gap: 3rem;
-  align-items: end;
-  justify-content: start;
+  ${({ theme }) => css`
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 3rem;
+    align-items: end;
+    justify-content: start;
+
+    @media (max-width: ${theme.breakPoint.media.tabletL}) {
+      gap: 2rem;
+      align-items: center;
+    }
+  `}
 `;
 
 export const ExternalLinkWrapper = styled.div`
