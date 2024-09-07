@@ -107,6 +107,7 @@ export const ValueFor = styled.div`
     display: none;
 
     @media (max-width: ${theme.breakPoint.media.mobile}) {
+      ${theme.animation.fadeUp({ duration: 0.8, delay: 0.8, move: '3rem' })};
       display: flex;
       margin-top: 0.5rem;
     }
@@ -119,6 +120,7 @@ export const Growth = styled.div`
     display: none;
 
     @media (max-width: ${theme.breakPoint.media.mobile}) {
+      ${theme.animation.fadeUp({ duration: 0.8, delay: 1.2, move: '3rem' })};
       display: flex;
     }
   `}
@@ -161,6 +163,10 @@ export const GradientLine = styled.div`
 export const FadeUpLinearGradientSphere = styled(LinearGradientSphere)`
   ${({ theme }) => css`
     ${theme.animation.fadeUp({ duration: 0.8, delay: 1.2, move: '3rem' })};
+
+    @media (max-width: ${theme.breakPoint.media.mobile}) {
+      ${theme.animation.fadeUp({ duration: 0.8, delay: 1.6, move: '3rem' })};
+    }
   `}
 `;
 

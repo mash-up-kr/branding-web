@@ -42,7 +42,7 @@ async function getCrewList() {
     return data;
   } catch (error) {
     console.error(error);
-    return { isBirthdayToday: false, todayBirthday: false, upcomingBirthdays: [] };
+    return { isBirthdayToday: false, todayBirthday: null, upcomingBirthdays: [] };
   }
 }
 
@@ -112,6 +112,29 @@ const Page = async () => {
           <GoBirthdayEventButton />
         </styled.div>
       )}
+      {!data?.isBirthdayToday && (data?.todayBirthday || data?.upcomingBirthdays.length > 0) && (
+        <styled.div
+          position="sticky"
+          top="calc(56px + env(safe-area-inset-top))"
+          width="100vw"
+          p="0 20px 20px"
+          bgColor="gray.50"
+        >
+          <styled.div
+            display="flex"
+            justifyContent="space-between"
+            fontSize="24px"
+            fontWeight={600}
+            lineHeight="28.64px"
+            letterSpacing="-0.01em"
+          >
+            <styled.div>
+              매숑이들의
+              <br /> 생일이 다가오고 있어요.
+            </styled.div>
+          </styled.div>
+        </styled.div>
+      )}
       <styled.div
         p="0 20px 20px"
         bgColor="gray.50"
@@ -119,7 +142,7 @@ const Page = async () => {
         height={
           data?.isBirthdayToday
             ? 'calc(100dvh - 179px - env(safe-area-inset-top))'
-            : 'calc(100dvh - 56px - env(safe-area-inset-top))'
+            : 'calc(100dvh - 134px - env(safe-area-inset-top))'
         }
       >
         <styled.div display="flex" gap="32px" flexDirection="column">
