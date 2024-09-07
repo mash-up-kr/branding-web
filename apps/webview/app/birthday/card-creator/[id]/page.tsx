@@ -76,7 +76,7 @@ const Page = ({
   };
 
   const goToCrewList = () => {
-    router.replace('/birthday/crew-list');
+    router.back();
   };
 
   // 안드로이드 대응
