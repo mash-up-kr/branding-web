@@ -80,7 +80,7 @@ const Page = () => {
               viewBox="0 0 24 24"
               fill="none"
               onClick={() => {
-                router.replace('/birthday/crew-list');
+                router.back();
               }}
             >
               <path
