@@ -89,7 +89,7 @@ const Page = async ({ params }: { params: { team: string } }) => {
           <TopMenuButton variant="mission">미션</TopMenuButton>
         </styled.div>
         <MashongRoomContainer
-          availablePopcorn={lastPopcornValue}
+          remainingPopcorn={lastPopcornValue}
           currentLevel={currentLevel}
           currentXP={accumulatedPopcornValue}
           maxXP={goalPopcornValue}

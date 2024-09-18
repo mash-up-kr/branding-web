@@ -3,6 +3,7 @@
 import { levelName } from 'constant';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { toast } from 'react-hot-toast/headless';
 import { useInterval } from 'usehooks-ts';
 import { assert, isKeyOfObject } from 'utils';
@@ -19,27 +20,33 @@ interface PopcornXpTrackerProps {
   isButtonDisabled: boolean;
   currentXP: number;
   maxXP: number;
-  availablePopcorn: number;
+  remainingPopcorn: number;
   currentLevel: keyof typeof levelName;
   onClick: () => void;
 }
-
-let feedingPopcorn = 0;
 
 export const PopcornXpTracker = ({
   isButtonDisabled,
   currentXP,
   maxXP,
-  availablePopcorn,
+  remainingPopcorn,
   currentLevel,
   onClick,
 }: PopcornXpTrackerProps) => {
   const router = useRouter();
   assert(isKeyOfObject(currentLevel, levelName));
 
-  const isMaxLevel = currentLevel === 10;
+  const [xpProgress, setXpProgress] = useState({
+    currentXP,
+    maxXP,
+    availablePopcorn: remainingPopcorn,
+    currentLevel,
+    popcornConsumed: 0,
+  });
 
-  const remainingXP = maxXP - currentXP;
+  const isMaxLevel = xpProgress.currentLevel === 10;
+  const remainingXP = xpProgress.maxXP - xpProgress.currentXP;
+
   const levelUpAvailable = !isMaxLevel && remainingXP <= 0;
 
   useInterval(() => {
@@ -101,8 +108,8 @@ export const PopcornXpTracker = ({
         </span>
       </div>
       <progress
-        value={isMaxLevel ? maxXP : currentXP}
-        max={maxXP}
+        value={isMaxLevel ? xpProgress.maxXP : xpProgress.currentXP}
+        max={xpProgress.maxXP}
         className={css({
           width: '100%',
           height: 12,
@@ -123,25 +130,32 @@ export const PopcornXpTracker = ({
         disabled={isButtonDisabled}
         onClick={async () => {
           if (levelUpAvailable) {
-            router.push(`/mashong/evolution/${currentLevel + 1}`);
+            router.push(`/mashong/evolution/${xpProgress.currentLevel + 1}`);
             return;
           }
 
-          if (availablePopcorn === 0) {
+          if (remainingPopcorn === 0) {
             router.push('/mashong/mission-board');
             Cookies.set('popcornAlertSeen', '1');
-          } else if (currentXP < maxXP) {
-            try {
-              await feedPopcorn();
+            return;
+          }
 
-              toast.remove();
-              feedingPopcorn += 1;
-              showPopcornToast(feedingPopcorn);
+          try {
+            await feedPopcorn();
 
-              onClick();
-            } catch (error) {
-              showErrorToast('팝콘 주기를 실패했어요..');
-            }
+            toast.remove();
+
+            setXpProgress((prev) => ({
+              ...prev,
+              currentXP: prev.currentXP + 1,
+              popcornConsumed: prev.popcornConsumed + 1,
+            }));
+
+            showPopcornToast(xpProgress.popcornConsumed + 1);
+
+            onClick();
+          } catch (error) {
+            showErrorToast('팝콘 주기를 실패했어요..');
           }
         }}
         className={css({
@@ -204,7 +218,7 @@ export const PopcornXpTracker = ({
                 letterSpacing: '-1%',
               })}
             >
-              {availablePopcorn}개 보유
+              {xpProgress.availablePopcorn}개 보유
             </span>
           </>
         )}
