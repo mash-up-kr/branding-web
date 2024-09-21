@@ -23,7 +23,13 @@ export const feedPopcorn = async () => {
 
     const { data } = await res.json();
 
-    return data;
+    return {
+      remainingPopcorn: data.lastPopcornValue,
+      currentLevel: data.currentLevel,
+      currentXP: data.accumulatedPopcornValue,
+      maxXP: data.currentLevelGoalPopcorn,
+      fed: data.fed,
+    };
   } catch (error) {
     console.error(error);
     return {

@@ -26,14 +26,22 @@ async function getMashongStatus() {
     });
 
     const { data } = await res.json();
-    return data;
+
+    return {
+      remainingPopcorn: data.lastPopcornValue,
+      currentLevel: data.currentLevel,
+      currentXP: data.accumulatedPopcornValue,
+      maxXP: data.goalPopcornValue,
+      platformName: data.platformName,
+    };
   } catch (error) {
     console.error(error);
     return {
-      accumulatedPopcornValue: 0,
+      remainingPopcorn: 10,
       currentLevel: 1,
-      goalPopcornValue: 0,
-      lastPopcornValue: 0,
+      currentXP: 80,
+      maxXP: 100,
+      platformName: 'Android',
     };
   }
 }
@@ -62,8 +70,7 @@ async function checkAttendance() {
 }
 
 const Page = async ({ params }: { params: { team: string } }) => {
-  const { accumulatedPopcornValue, currentLevel, goalPopcornValue, lastPopcornValue } =
-    await getMashongStatus();
+  const { currentXP, maxXP, remainingPopcorn, currentLevel } = await getMashongStatus();
 
   const platformName: string = params.team.toUpperCase();
   assert(isKeyOfObject(platformName, PLATFORM_NAME_MAP));
@@ -89,10 +96,10 @@ const Page = async ({ params }: { params: { team: string } }) => {
           <TopMenuButton variant="mission">미션</TopMenuButton>
         </styled.div>
         <MashongRoomContainer
-          remainingPopcorn={lastPopcornValue}
+          remainingPopcorn={remainingPopcorn}
           currentLevel={currentLevel}
-          currentXP={accumulatedPopcornValue}
-          maxXP={goalPopcornValue}
+          currentXP={currentXP}
+          maxXP={maxXP}
           platformName={platformName}
         />
       </styled.div>

@@ -37,7 +37,7 @@ export const MashongRoomContainer = ({
     }
   }, []);
 
-  const handleFeeding = () => {
+  const showFeedMotion = () => {
     debouncedSetFeeding(true);
 
     timeoutRef.current = setTimeout(() => {
@@ -60,7 +60,7 @@ export const MashongRoomContainer = ({
         maxXP={maxXP}
         remainingPopcorn={remainingPopcorn}
         currentLevel={currentLevel}
-        onClick={handleFeeding}
+        showFeedMotion={showFeedMotion}
       />
       <Toast />
     </div>
