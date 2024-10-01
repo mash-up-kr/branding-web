@@ -36,13 +36,7 @@ async function getMashongStatus() {
     };
   } catch (error) {
     console.error(error);
-    return {
-      remainingPopcorn: 10,
-      currentLevel: 1,
-      currentXP: 80,
-      maxXP: 100,
-      platformName: 'Android',
-    };
+    return null;
   }
 }
 
