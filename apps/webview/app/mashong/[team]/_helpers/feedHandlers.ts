@@ -1,8 +1,5 @@
 import React from 'react';
 
-import { showErrorToast } from '@/app/_components/ErrorToast';
-import { showPopcornToast } from '@/app/mashong/[team]/_components/PopcornToast';
-
 import { FeedActionTypes, FeedState, FeedAction } from './useFeedProgress';
 
 export const handleOptimisticUpdate = (dispatch: React.Dispatch<FeedAction>) => {
@@ -42,7 +39,6 @@ export const handleFeedFailure = (dispatch: React.Dispatch<FeedAction>, prevStat
     type: FeedActionTypes.UPDATE_FAILURE,
     payload: { prevState },
   });
-  showErrorToast('팝콘 주기를 실패했어요..');
 };
 
 const updateFeedState = (
@@ -71,6 +67,5 @@ const updateFeedState = (
     throw new Error();
   }
 
-  showPopcornToast(prevState.popcornConsumed + 1);
   onSuccess?.();
 };

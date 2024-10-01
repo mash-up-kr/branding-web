@@ -1,23 +1,26 @@
 'use client';
 
 import { levelName } from 'constant';
-import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
-import { useInterval } from 'usehooks-ts';
+import { useCallback, useState } from 'react';
+import { useDebounceCallback } from 'usehooks-ts';
 import { assert, isKeyOfObject } from 'utils';
 
-import { feedPopcorn } from '@/app/mashong/_actions/feedPopcorn';
+import { showErrorToast } from '@/app/_components/ErrorToast';
 import { css } from '@/styled-system/css';
 import SvgImage from '@/ui/svg-image';
 
+import { showPopcornToast } from './PopcornToast';
 import {
   handleOptimisticUpdate,
   handleFeedFailure,
   handleFeedSuccess,
-  handleFeedUpdate,
 } from '../_helpers/feedHandlers';
 import { handleLevelUp, handleNoPopcorn } from '../_helpers/levelHandlers';
+import { useFeedLongPress } from '../_helpers/useFeedLongPress';
 import { useFeedProgress } from '../_helpers/useFeedProgress';
+import { useFeedStatusPolling } from '../_helpers/useFeedStatusPolling';
+import { postPopcornFeed } from '../_services/postPopcornFeed';
 
 interface PopcornXpTrackerProps {
   isButtonDisabled: boolean;
@@ -30,57 +33,80 @@ interface PopcornXpTrackerProps {
 
 export const PopcornXpTracker = ({
   isButtonDisabled,
-  currentXP,
-  maxXP,
-  remainingPopcorn,
-  currentLevel,
+  currentXP: initialCurrentXP,
+  maxXP: initialMaxXP,
+  remainingPopcorn: initialRemainingPopcorn,
+  currentLevel: initialCurrentLevel,
   showFeedMotion,
 }: PopcornXpTrackerProps) => {
   const router = useRouter();
-  assert(isKeyOfObject(currentLevel, levelName));
+  assert(isKeyOfObject(initialCurrentLevel, levelName));
+
+  const [popcornConsumed, setPopcornConsumed] = useState(0);
   const [feedProgress, dispatch] = useFeedProgress({
-    currentXP,
-    maxXP,
-    remainingPopcorn,
-    currentLevel,
-    popcornConsumed: 0,
+    currentXP: initialCurrentXP,
+    maxXP: initialMaxXP,
+    remainingPopcorn: initialRemainingPopcorn,
+    currentLevel: initialCurrentLevel,
   });
+
   const isMaxLevel = feedProgress.currentLevel === 10;
   const remainingXP = feedProgress.maxXP - feedProgress.currentXP;
-
   const levelUpAvailable = !isMaxLevel && remainingXP <= 0;
 
-  useInterval(async () => {
-    const response = await getMashongStatus();
-    if (response) {
-      // @ts-expect-error; response type
-      handleFeedUpdate(dispatch, response);
+  const updateFeedFromResponse = useCallback(async (popcornCount: number) => {
+    try {
+      const response = await postPopcornFeed(popcornCount);
+      handleFeedSuccess(dispatch, response, feedProgress, showFeedMotion);
+    } catch (error) {
+      handleFeedFailure(dispatch, feedProgress);
+      showErrorToast('팝콘 주기를 실패했어요..');
+    } finally {
+      setPopcornConsumed(0);
     }
-  }, 2000);
+  }, []);
 
-  const handleFeedButtonClick = async () => {
+  const debouncedUpdateFeed = useDebounceCallback(updateFeedFromResponse, 1000);
+
+  const handleFeedButtonAction = () => {
     if (levelUpAvailable) {
-      handleLevelUp(router)(currentLevel + 1);
-      return;
+      handleLevelUp(router)(feedProgress.currentLevel + 1);
+      return false;
     }
 
     if (feedProgress.remainingPopcorn === 0) {
       handleNoPopcorn(router)();
-      return;
+      return false;
     }
-
-    const prevState = { ...feedProgress } as const;
 
     handleOptimisticUpdate(dispatch);
+    setPopcornConsumed((prev) => {
+      requestAnimationFrame(() => {
+        showPopcornToast(prev + 1);
+      });
+      return prev + 1;
+    });
 
-    try {
-      const response = await feedPopcorn();
-      // @ts-expect-error; response type
-      handleFeedSuccess(dispatch, response, prevState, showFeedMotion);
-    } catch (error) {
-      handleFeedFailure(dispatch, prevState);
-    }
+    return true;
   };
+
+  const handleFeedButtonClick = (): void => {
+    if (longPressActive) return;
+    const shouldFeedActionProceed = handleFeedButtonAction();
+    if (!shouldFeedActionProceed) return;
+    const newPopcornConsumed = popcornConsumed + 1;
+    debouncedUpdateFeed(newPopcornConsumed);
+  };
+
+  const { longPressActive, longPressAttrs } = useFeedLongPress({
+    onStart: handleFeedButtonAction,
+    onFinish: () => {
+      updateFeedFromResponse(popcornConsumed);
+      setPopcornConsumed(0);
+    },
+  });
+
+  useFeedStatusPolling(dispatch, popcornConsumed > 0 ? null : 2000);
 
   return (
     <div
@@ -110,7 +136,7 @@ export const PopcornXpTracker = ({
               borderRadius: 4,
             })}
           >
-            Lv.{currentLevel}
+            Lv.{feedProgress.currentLevel}
           </span>
           <span
             className={css({
@@ -121,7 +147,7 @@ export const PopcornXpTracker = ({
               color: 'gray.800',
             })}
           >
-            {levelName[currentLevel]}
+            {levelName[feedProgress.currentLevel as keyof typeof levelName]}
           </span>
         </div>
         <span
@@ -158,6 +184,7 @@ export const PopcornXpTracker = ({
         type="button"
         disabled={isButtonDisabled}
         onClick={handleFeedButtonClick}
+        {...longPressAttrs}
         className={css({
           background: levelUpAvailable ? '#6A36FF' : '#F5F1FF',
           padding: levelUpAvailable ? '16px 0 15px 0' : '8px 0px 7px 0',
@@ -226,33 +253,3 @@ export const PopcornXpTracker = ({
     </div>
   );
 };
-
-// TODO: Temp
-async function getMashongStatus() {
-  try {
-    const authToken = Cookies.get('token');
-
-    if (!authToken) {
-      throw new Error(`유효한 인증 토큰이 필요합니다.`);
-    }
-
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_PATH}/v1/mashong/status`, {
-      headers: {
-        Authorization: `Bearer ${authToken}`,
-      },
-    });
-
-    const { data } = await res.json();
-
-    return {
-      remainingPopcorn: data.lastPopcornValue,
-      currentLevel: data.currentLevel,
-      currentXP: data.accumulatedPopcornValue,
-      maxXP: data.goalPopcornValue,
-      platformName: data.platformName,
-    };
-  } catch (error) {
-    console.error(error);
-    return null;
-  }
-}

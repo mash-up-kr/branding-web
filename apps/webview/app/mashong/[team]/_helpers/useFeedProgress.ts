@@ -8,7 +8,6 @@ export const FeedActionTypes = {
 
 export interface FeedState {
   currentXP: number;
-  popcornConsumed: number;
   remainingPopcorn: number;
   maxXP: number;
   currentLevel: number;
@@ -25,7 +24,6 @@ const feedReducer = (state: FeedState, action: FeedAction): FeedState => {
       return {
         ...state,
         currentXP: state.currentXP + 1,
-        popcornConsumed: state.popcornConsumed + 1,
         remainingPopcorn: state.remainingPopcorn - 1,
       };
     case FeedActionTypes.UPDATE_SUCCESS:
