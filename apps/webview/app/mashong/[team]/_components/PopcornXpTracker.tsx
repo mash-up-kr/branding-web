@@ -185,6 +185,9 @@ export const PopcornXpTracker = ({
         disabled={isButtonDisabled}
         onClick={handleFeedButtonClick}
         {...longPressAttrs}
+        onContextMenu={(e) => {
+          e.preventDefault();
+        }}
         className={css({
           background: levelUpAvailable ? '#6A36FF' : '#F5F1FF',
           padding: levelUpAvailable ? '16px 0 15px 0' : '8px 0px 7px 0',
@@ -197,6 +200,7 @@ export const PopcornXpTracker = ({
           height: 48,
           position: 'relative',
           overflow: 'hidden',
+          userSelect: 'none',
         })}
       >
         {levelUpAvailable ? (
