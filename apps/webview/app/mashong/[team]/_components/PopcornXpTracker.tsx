@@ -1,50 +1,112 @@
 'use client';
 
 import { levelName } from 'constant';
-import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
-import { toast } from 'react-hot-toast/headless';
-import { useInterval } from 'usehooks-ts';
+import { useCallback, useState } from 'react';
+import { useDebounceCallback } from 'usehooks-ts';
 import { assert, isKeyOfObject } from 'utils';
 
 import { showErrorToast } from '@/app/_components/ErrorToast';
-import { feedPopcorn } from '@/app/mashong/_actions/feedPopcorn';
-import { revalidateMashongStatus } from '@/app/mashong/_actions/revalidateMashongStatus';
 import { css } from '@/styled-system/css';
 import SvgImage from '@/ui/svg-image';
 
 import { showPopcornToast } from './PopcornToast';
+import {
+  handleOptimisticUpdate,
+  handleFeedFailure,
+  handleFeedSuccess,
+} from '../_helpers/feedHandlers';
+import { handleLevelUp, handleNoPopcorn } from '../_helpers/levelHandlers';
+import { useFeedLongPress } from '../_helpers/useFeedLongPress';
+import { useFeedProgress } from '../_helpers/useFeedProgress';
+import { useFeedStatusPolling } from '../_helpers/useFeedStatusPolling';
+import { postPopcornFeed } from '../_services/postPopcornFeed';
 
 interface PopcornXpTrackerProps {
   isButtonDisabled: boolean;
   currentXP: number;
   maxXP: number;
-  availablePopcorn: number;
+  remainingPopcorn: number;
   currentLevel: keyof typeof levelName;
-  onClick: () => void;
+  showFeedMotion: () => void;
 }
-
-let feedingPopcorn = 0;
 
 export const PopcornXpTracker = ({
   isButtonDisabled,
-  currentXP,
-  maxXP,
-  availablePopcorn,
-  currentLevel,
-  onClick,
+  currentXP: initialCurrentXP,
+  maxXP: initialMaxXP,
+  remainingPopcorn: initialRemainingPopcorn,
+  currentLevel: initialCurrentLevel,
+  showFeedMotion,
 }: PopcornXpTrackerProps) => {
   const router = useRouter();
-  assert(isKeyOfObject(currentLevel, levelName));
+  assert(isKeyOfObject(initialCurrentLevel, levelName));
 
-  const isMaxLevel = currentLevel === 10;
+  const [popcornConsumed, setPopcornConsumed] = useState(0);
+  const [feedProgress, dispatch] = useFeedProgress({
+    currentXP: initialCurrentXP,
+    maxXP: initialMaxXP,
+    remainingPopcorn: initialRemainingPopcorn,
+    currentLevel: initialCurrentLevel,
+  });
 
-  const remainingXP = maxXP - currentXP;
+  const isMaxLevel = feedProgress.currentLevel === 10;
+  const remainingXP = feedProgress.maxXP - feedProgress.currentXP;
   const levelUpAvailable = !isMaxLevel && remainingXP <= 0;
 
-  useInterval(() => {
-    revalidateMashongStatus();
-  }, 2000);
+  const updateFeedFromResponse = useCallback(async (popcornCount: number) => {
+    try {
+      const response = await postPopcornFeed(popcornCount);
+      handleFeedSuccess(dispatch, response, feedProgress, showFeedMotion);
+    } catch (error) {
+      handleFeedFailure(dispatch, feedProgress);
+      showErrorToast('팝콘 주기를 실패했어요..');
+    } finally {
+      setPopcornConsumed(0);
+    }
+  }, []);
+
+  const debouncedUpdateFeed = useDebounceCallback(updateFeedFromResponse, 1000);
+
+  const handleFeedButtonAction = () => {
+    if (levelUpAvailable) {
+      handleLevelUp(router)(feedProgress.currentLevel + 1);
+      return false;
+    }
+
+    if (feedProgress.remainingPopcorn === 0) {
+      handleNoPopcorn(router)();
+      return false;
+    }
+
+    handleOptimisticUpdate(dispatch);
+    setPopcornConsumed((prev) => {
+      requestAnimationFrame(() => {
+        showPopcornToast(prev + 1);
+      });
+      return prev + 1;
+    });
+
+    return true;
+  };
+
+  const handleFeedButtonClick = (): void => {
+    if (longPressActive) return;
+    const shouldFeedActionProceed = handleFeedButtonAction();
+    if (!shouldFeedActionProceed) return;
+    const newPopcornConsumed = popcornConsumed + 1;
+    debouncedUpdateFeed(newPopcornConsumed);
+  };
+
+  const { longPressActive, longPressAttrs } = useFeedLongPress({
+    onStart: handleFeedButtonAction,
+    onFinish: () => {
+      updateFeedFromResponse(popcornConsumed);
+      setPopcornConsumed(0);
+    },
+  });
+
+  useFeedStatusPolling(dispatch, popcornConsumed > 0 ? null : 2000);
 
   return (
     <div
@@ -74,7 +136,7 @@ export const PopcornXpTracker = ({
               borderRadius: 4,
             })}
           >
-            Lv.{currentLevel}
+            Lv.{feedProgress.currentLevel}
           </span>
           <span
             className={css({
@@ -85,7 +147,7 @@ export const PopcornXpTracker = ({
               color: 'gray.800',
             })}
           >
-            {levelName[currentLevel]}
+            {levelName[feedProgress.currentLevel as keyof typeof levelName]}
           </span>
         </div>
         <span
@@ -101,8 +163,8 @@ export const PopcornXpTracker = ({
         </span>
       </div>
       <progress
-        value={isMaxLevel ? maxXP : currentXP}
-        max={maxXP}
+        value={isMaxLevel ? feedProgress.maxXP : feedProgress.currentXP}
+        max={feedProgress.maxXP}
         className={css({
           width: '100%',
           height: 12,
@@ -121,28 +183,10 @@ export const PopcornXpTracker = ({
       <button
         type="button"
         disabled={isButtonDisabled}
-        onClick={async () => {
-          if (levelUpAvailable) {
-            router.push(`/mashong/evolution/${currentLevel + 1}`);
-            return;
-          }
-
-          if (availablePopcorn === 0) {
-            router.push('/mashong/mission-board');
-            Cookies.set('popcornAlertSeen', '1');
-          } else if (currentXP < maxXP) {
-            try {
-              await feedPopcorn();
-
-              toast.remove();
-              feedingPopcorn += 1;
-              showPopcornToast(feedingPopcorn);
-
-              onClick();
-            } catch (error) {
-              showErrorToast('팝콘 주기를 실패했어요..');
-            }
-          }
+        onClick={handleFeedButtonClick}
+        {...longPressAttrs}
+        onContextMenu={(e) => {
+          e.preventDefault();
         }}
         className={css({
           background: levelUpAvailable ? '#6A36FF' : '#F5F1FF',
@@ -156,6 +200,7 @@ export const PopcornXpTracker = ({
           height: 48,
           position: 'relative',
           overflow: 'hidden',
+          userSelect: 'none',
         })}
       >
         {levelUpAvailable ? (
@@ -204,7 +249,7 @@ export const PopcornXpTracker = ({
                 letterSpacing: '-1%',
               })}
             >
-              {availablePopcorn}개 보유
+              {feedProgress.remainingPopcorn}개 보유
             </span>
           </>
         )}

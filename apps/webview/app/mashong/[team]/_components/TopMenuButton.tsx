@@ -3,6 +3,8 @@
 import { useRouter } from 'next/navigation';
 import { PropsWithChildren, useState } from 'react';
 
+import { revalidateMashongMissionStatus } from '@/app/mashong/_actions/revalidateMashongMissionStatus';
+import { revalidateMashongStatus } from '@/app/mashong/_actions/revalidateMashongStatus';
 import { css } from '@/styled-system/css';
 import { styled } from '@/styled-system/jsx';
 import SvgImage from '@/ui/svg-image';
@@ -21,6 +23,8 @@ export const TopMenuButton = ({
     if (variant === 'checkin') {
       setIsSheetOpen(true);
     } else {
+      revalidateMashongStatus();
+      revalidateMashongMissionStatus();
       router.push('/mashong/mission-board');
     }
   };

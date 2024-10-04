@@ -12,13 +12,13 @@ import { MashongRoom } from './MashongRoom';
 import { PopcornXpTracker } from './PopcornXpTracker';
 
 export const MashongRoomContainer = ({
-  availablePopcorn,
+  remainingPopcorn,
   currentLevel,
   currentXP,
   maxXP,
   platformName,
 }: {
-  availablePopcorn: number;
+  remainingPopcorn: number;
   currentLevel: keyof typeof levelName;
   currentXP: number;
   maxXP: number;
@@ -37,7 +37,7 @@ export const MashongRoomContainer = ({
     }
   }, []);
 
-  const handleFeeding = () => {
+  const showFeedMotion = () => {
     debouncedSetFeeding(true);
 
     timeoutRef.current = setTimeout(() => {
@@ -58,9 +58,9 @@ export const MashongRoomContainer = ({
         isButtonDisabled={isFeeding}
         currentXP={currentXP}
         maxXP={maxXP}
-        availablePopcorn={availablePopcorn}
+        remainingPopcorn={remainingPopcorn}
         currentLevel={currentLevel}
-        onClick={handleFeeding}
+        showFeedMotion={showFeedMotion}
       />
       <Toast />
     </div>
