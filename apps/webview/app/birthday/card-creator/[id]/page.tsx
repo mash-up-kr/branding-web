@@ -23,7 +23,7 @@ import SvgImage from '@/ui/svg-image';
 
 import 'react-image-crop/dist/ReactCrop.css';
 
-export function useDebounceEffect(fn: () => void, waitTime: number, deps: any = []) {
+function useDebounceEffect(fn: () => void, waitTime: number, deps: any = []) {
   useEffect(() => {
     const t = setTimeout(() => {
       // eslint-disable-next-line prefer-spread
@@ -39,7 +39,7 @@ export function useDebounceEffect(fn: () => void, waitTime: number, deps: any = 
 
 const TO_RADIANS = Math.PI / 180;
 
-export async function canvasPreview(
+async function canvasPreview(
   image: HTMLImageElement,
   canvas: HTMLCanvasElement,
   crop: PixelCrop,
