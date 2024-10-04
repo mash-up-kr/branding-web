@@ -68,6 +68,9 @@ const Page = ({
     }
   };
 
+  const [show1, setShow1] = useState(false);
+  const [show2, setShow2] = useState(false);
+
   const save = async () => {
     if (cardType === 'image') {
       try {
@@ -86,10 +89,10 @@ const Page = ({
     }
 
     const { imageUrl } = await createPresignedUrl();
-
-    alert(`imageUrl:${imageUrl}`);
+    setShow1(true);
 
     if (!imageUrl) {
+      setShow1(false);
       console.error('iamge url 없음');
       return;
     }
@@ -111,7 +114,7 @@ const Page = ({
     });
 
     if (uploadResponse.ok) {
-      alert(`uploadResponse.ok`);
+      setShow2(true);
       try {
         const data = await createCard({
           recipientMemberId: Number(params.id),
@@ -125,6 +128,7 @@ const Page = ({
         console.error(error);
       }
     } else {
+      setShow2(false);
       console.error('파일 업로드 실패!');
     }
   };
@@ -403,6 +407,8 @@ const Page = ({
 
         <styled.div p="16px 20px">
           <styled.div mb="8px" display="flex" justifyContent="space-between" alignItems="center">
+            {show1 && <div>presigned url 완료</div>}
+            {show2 && <div>s3 업로드 완료</div>}
             <styled.div fontSize="16px" fontWeight={600} color="#2C3037">
               보낼 메세지
             </styled.div>
