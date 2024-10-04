@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 
 import { styled } from '@/styled-system/jsx';
+import SvgImage from '@/ui/svg-image';
 
 const Page = () => {
   const router = useRouter();
@@ -137,6 +138,40 @@ const Page = () => {
               src="https://static.mash-up.kr/images/png/birthday/cake.png"
             />
           </styled.div>
+          {!isDark && (
+            <>
+              <styled.div
+                height="37px"
+                width="135px"
+                bg="#00000099"
+                borderRadius="8px"
+                color="#fff"
+                fontWeight={500}
+                fontSize="14px"
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                position="absolute"
+                left="50%"
+                transform="translate(-50%)"
+                bottom="250px"
+              >
+                촛불을 3초간 눌러봐!
+              </styled.div>
+              <styled.div
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                position="absolute"
+                left="51%"
+                transform="translate(-50%)"
+                bottom="167px"
+                zIndex={1}
+              >
+                <SvgImage basePath="birthday" path="common/hand-click" width={47} height={47} />
+              </styled.div>
+            </>
+          )}
           <styled.div
             bg="#5421E6"
             opacity={0.6}
