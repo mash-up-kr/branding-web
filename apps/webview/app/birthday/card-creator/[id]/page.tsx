@@ -35,6 +35,15 @@ const Page = ({
     '/v1/birthday-cards/default-images',
   );
 
+  const [crop, setCrop] = useState({ x: 0, y: 0 });
+  const [rotation, setRotation] = useState(0);
+  const [zoom, setZoom] = useState(1);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+  const [croppedImage, setCroppedImage] = useState(null);
+  const [s3Url, setS3Url] = useState();
+  const [isSuccessS3, setIsSuccessS3] = useState(false);
+  const [imageSrc, setImageSrc] = useState<any>(null);
+
   useEffect(() => {
     if (!images) {
       return;
@@ -68,9 +77,6 @@ const Page = ({
     }
   };
 
-  const [show1, setShow1] = useState(false);
-  const [show2, setShow2] = useState(false);
-
   const save = async () => {
     if (cardType === 'image') {
       try {
@@ -88,37 +94,11 @@ const Page = ({
       return;
     }
 
-    const { imageUrl } = await createPresignedUrl();
-    setShow1(true);
-
-    if (!imageUrl) {
-      setShow1(false);
-      console.error('iamge url 없음');
-      return;
-    }
-
-    if (!croppedImage) {
-      return;
-    }
-
-    const response = await fetch(croppedImage);
-    const blob = await response.blob();
-
-    // pre-signed URL을 사용하여 S3에 파일 업로드
-    const uploadResponse = await fetch(imageUrl, {
-      method: 'PUT',
-      body: blob,
-      headers: {
-        'Content-Type': 'image/jpeg',
-      },
-    });
-
-    if (uploadResponse.ok) {
-      setShow2(true);
+    if (isSuccessS3 && s3Url) {
       try {
         const data = await createCard({
           recipientMemberId: Number(params.id),
-          imageUrl, // selectedImageUrl,
+          imageUrl: s3Url,
           message,
         });
         if (data === 'SUCCESS') {
@@ -128,7 +108,6 @@ const Page = ({
         console.error(error);
       }
     } else {
-      setShow2(false);
       console.error('파일 업로드 실패!');
     }
   };
@@ -157,21 +136,34 @@ const Page = ({
     fileInputRef.current.click();
   };
 
-  const [crop, setCrop] = useState({ x: 0, y: 0 });
-  const [rotation, setRotation] = useState(0);
-  const [zoom, setZoom] = useState(1);
-  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
-  const [croppedImage, setCroppedImage] = useState(null);
-  const [imageSrc, setImageSrc] = useState<any>(null);
-
   const onCropComplete = (croppedArea: any, croppedAreaPixels2: any) => {
     setCroppedAreaPixels(croppedAreaPixels2);
   };
 
   const showCroppedImage = async () => {
     try {
-      const croppedImage2: any = await getCroppedImg(imageSrc, croppedAreaPixels, rotation);
-      setCroppedImage(croppedImage2);
+      const croppedImg: any = await getCroppedImg(imageSrc, croppedAreaPixels, rotation);
+      setCroppedImage(croppedImg);
+
+      const { imageUrl } = await createPresignedUrl();
+
+      if (!imageUrl) {
+        console.error('iamge url 없음');
+        return;
+      }
+      setS3Url(imageUrl);
+
+      const response = await fetch(croppedImg);
+      const blob = await response.blob();
+
+      const uploadResponse = await fetch(imageUrl, {
+        method: 'PUT',
+        body: blob,
+        headers: {
+          'Content-Type': 'image/jpeg',
+        },
+      });
+      setIsSuccessS3(uploadResponse.ok);
     } catch (e) {
       console.error(e);
     }
@@ -407,8 +399,6 @@ const Page = ({
 
         <styled.div p="16px 20px">
           <styled.div mb="8px" display="flex" justifyContent="space-between" alignItems="center">
-            {show1 && <div>presigned url 완료</div>}
-            {show2 && <div>s3 업로드 완료</div>}
             <styled.div fontSize="16px" fontWeight={600} color="#2C3037">
               보낼 메세지
             </styled.div>

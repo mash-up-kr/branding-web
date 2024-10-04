@@ -68,9 +68,32 @@ async function getMyProfile() {
   }
 }
 
+async function getMyBirthDate() {
+  try {
+    const authToken = cookies().get('token')?.value ?? headers().get('authorization');
+
+    if (!authToken) {
+      throw new Error(`유효한 인증 토큰이 필요합니다.`);
+    }
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_PATH}/v1/member-profiles/my`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+    const { data } = await response.json();
+    return data.birthDate;
+  } catch (error) {
+    console.error(error);
+    return { name: '' };
+  }
+}
+
 const Page = async () => {
   const data = await getCrewList();
   const myProfile = await getMyProfile();
+  const myBirthDate = await getMyBirthDate();
 
   const formatDate = (input: string) => {
     const [month, day] = input.split('-');
@@ -79,7 +102,7 @@ const Page = async () => {
 
   return (
     <styled.div pt="env(safe-area-inset-top)">
-      <TopNavigationButton />
+      <TopNavigationButton birthDate={myBirthDate} />
       {data?.isBirthdayToday && (
         <styled.div
           position="sticky"
