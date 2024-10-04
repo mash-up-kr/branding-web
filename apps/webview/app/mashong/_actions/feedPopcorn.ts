@@ -1,6 +1,5 @@
 'use server';
 
-import { revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
 
 export const feedPopcorn = async () => {
@@ -24,9 +23,13 @@ export const feedPopcorn = async () => {
 
     const { data } = await res.json();
 
-    revalidateTag('mashong-status');
-
-    return data;
+    return {
+      remainingPopcorn: data.lastPopcornValue,
+      currentLevel: data.currentLevel,
+      currentXP: data.accumulatedPopcornValue,
+      maxXP: data.currentLevelGoalPopcorn,
+      fed: data.fed,
+    };
   } catch (error) {
     console.error(error);
     return {

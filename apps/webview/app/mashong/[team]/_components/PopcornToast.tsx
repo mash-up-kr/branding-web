@@ -23,6 +23,7 @@ const PopcornToast = ({ value }: { value: number }) => (
 );
 
 export const showPopcornToast = (value: number) => {
+  toast.remove();
   toast.custom(<PopcornToast value={value} />, {
     duration: 3000,
   });

@@ -1,7 +1,8 @@
 'use server';
 
-import { revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
+
+import { revalidateMashongStatus } from './revalidateMashongStatus';
 
 export const levelUp = async (goalLevel: number) => {
   try {
@@ -24,7 +25,7 @@ export const levelUp = async (goalLevel: number) => {
 
     const { data } = await res.json();
 
-    revalidateTag('mashong-status');
+    revalidateMashongStatus();
 
     return data;
   } catch (error) {

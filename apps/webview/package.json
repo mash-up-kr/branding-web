@@ -10,6 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@uidotdev/usehooks": "^2.4.1",
     "constant": "*",
     "embla-carousel-react": "^8.1.6",
     "framer-motion": "11.2.10",
