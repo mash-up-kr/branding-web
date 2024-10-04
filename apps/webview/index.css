@@ -1,1 +1,13 @@
 @layer reset, base, tokens, recipes, utilities;
+
+.reactEasyCrop_CropArea {
+  border: 2px solid #6A36FF !important;
+  border-radius: 16px;
+}
+
+.reactEasyCrop_CropAreaGrid::before {
+  display: none;
+}
+.reactEasyCrop_CropAreaGrid::after {
+  display: none;
+}
