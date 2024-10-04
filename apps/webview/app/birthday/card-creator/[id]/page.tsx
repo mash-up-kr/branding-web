@@ -87,6 +87,8 @@ const Page = ({
 
     const { imageUrl } = await createPresignedUrl();
 
+    alert(`imageUrl:${imageUrl}`);
+
     if (!imageUrl) {
       console.error('iamge url 없음');
       return;
@@ -109,6 +111,7 @@ const Page = ({
     });
 
     if (uploadResponse.ok) {
+      alert(`uploadResponse.ok`);
       try {
         const data = await createCard({
           recipientMemberId: Number(params.id),
