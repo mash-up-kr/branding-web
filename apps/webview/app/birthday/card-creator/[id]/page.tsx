@@ -92,10 +92,17 @@ const Page = ({
       return;
     }
 
+    if (!croppedImage) {
+      return;
+    }
+
+    const response = await fetch(croppedImage);
+    const blob = await response.blob();
+
     // pre-signed URL을 사용하여 S3에 파일 업로드
     const uploadResponse = await fetch(imageUrl, {
       method: 'PUT',
-      body: croppedImage,
+      body: blob,
       headers: {
         'Content-Type': 'image/jpeg',
       },
