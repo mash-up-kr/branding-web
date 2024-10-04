@@ -2,7 +2,7 @@
 
 import { levelName } from 'constant';
 import { useRouter } from 'next/navigation';
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { useDebounceCallback } from 'usehooks-ts';
 import { assert, isKeyOfObject } from 'utils';
 
@@ -10,7 +10,6 @@ import { showErrorToast } from '@/app/_components/ErrorToast';
 import { css } from '@/styled-system/css';
 import SvgImage from '@/ui/svg-image';
 
-import { showPopcornToast } from './PopcornToast';
 import {
   handleOptimisticUpdate,
   handleFeedFailure,
@@ -42,12 +41,12 @@ export const PopcornXpTracker = ({
   const router = useRouter();
   assert(isKeyOfObject(initialCurrentLevel, levelName));
 
-  const [popcornConsumed, setPopcornConsumed] = useState(0);
   const [feedProgress, dispatch] = useFeedProgress({
     currentXP: initialCurrentXP,
     maxXP: initialMaxXP,
     remainingPopcorn: initialRemainingPopcorn,
     currentLevel: initialCurrentLevel,
+    popcornConsumed: 0,
   });
 
   const isMaxLevel = feedProgress.currentLevel === 10;
@@ -61,8 +60,6 @@ export const PopcornXpTracker = ({
     } catch (error) {
       handleFeedFailure(dispatch, feedProgress);
       showErrorToast('팝콘 주기를 실패했어요..');
-    } finally {
-      setPopcornConsumed(0);
     }
   }, []);
 
@@ -74,19 +71,12 @@ export const PopcornXpTracker = ({
       return false;
     }
 
-    if (feedProgress.remainingPopcorn === 0) {
+    if (feedProgress.remainingPopcorn <= 0) {
       handleNoPopcorn(router)();
       return false;
     }
 
     handleOptimisticUpdate(dispatch);
-    setPopcornConsumed((prev) => {
-      requestAnimationFrame(() => {
-        showPopcornToast(prev + 1);
-      });
-      return prev + 1;
-    });
-
     return true;
   };
 
@@ -94,19 +84,18 @@ export const PopcornXpTracker = ({
     if (longPressActive) return;
     const shouldFeedActionProceed = handleFeedButtonAction();
     if (!shouldFeedActionProceed) return;
-    const newPopcornConsumed = popcornConsumed + 1;
+    const newPopcornConsumed = feedProgress.popcornConsumed + 1;
     debouncedUpdateFeed(newPopcornConsumed);
   };
 
   const { longPressActive, longPressAttrs } = useFeedLongPress({
     onStart: handleFeedButtonAction,
     onFinish: () => {
-      updateFeedFromResponse(popcornConsumed);
-      setPopcornConsumed(0);
+      updateFeedFromResponse(feedProgress.popcornConsumed);
     },
   });
 
-  useFeedStatusPolling(dispatch, popcornConsumed > 0 ? null : 2000);
+  useFeedStatusPolling(dispatch, feedProgress.popcornConsumed > 0 ? null : 2000);
 
   return (
     <div

@@ -1,5 +1,7 @@
 import { useReducer } from 'react';
 
+import { showPopcornToast } from '../_components/PopcornToast';
+
 export const FeedActionTypes = {
   OPTIMISTIC_UPDATE: 'FEED_POPCORN_OPTIMISTIC',
   UPDATE_SUCCESS: 'FEED_POPCORN_SUCCESS',
@@ -11,6 +13,7 @@ export interface FeedState {
   remainingPopcorn: number;
   maxXP: number;
   currentLevel: number;
+  popcornConsumed: number;
 }
 
 export type FeedAction =
@@ -21,18 +24,22 @@ export type FeedAction =
 const feedReducer = (state: FeedState, action: FeedAction): FeedState => {
   switch (action.type) {
     case FeedActionTypes.OPTIMISTIC_UPDATE:
+      if (state.remainingPopcorn <= 0) return { ...state };
+      showPopcornToast(state.popcornConsumed + 1);
       return {
         ...state,
         currentXP: state.currentXP + 1,
         remainingPopcorn: state.remainingPopcorn - 1,
+        popcornConsumed: state.popcornConsumed + 1,
       };
     case FeedActionTypes.UPDATE_SUCCESS:
       return {
         ...state,
         ...action.payload,
+        popcornConsumed: 0,
       };
     case FeedActionTypes.UPDATE_FAILURE:
-      return action.payload.prevState;
+      return { ...action.payload.prevState, popcornConsumed: 0 };
     default:
       return state;
   }
