@@ -6,14 +6,9 @@ import useEmblaCarousel from 'embla-carousel-react';
 import Cookies from 'js-cookie';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { ChangeEvent, SyntheticEvent, useEffect, useRef, useState } from 'react';
-import ReactCrop, {
-  centerCrop,
-  makeAspectCrop,
-  Crop,
-  PixelCrop,
-  // convertToPixelCrop,
-} from 'react-image-crop';
+import { useEffect, useRef, useState } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import Cropper from 'react-easy-crop';
 
 import { createCard } from '@/app/birthday/_actions/createCard';
 import { createPresignedUrl } from '@/app/birthday/_actions/createPresignedUrl';
@@ -21,103 +16,7 @@ import useFetch from '@/hooks/useFetch';
 import { styled } from '@/styled-system/jsx';
 import SvgImage from '@/ui/svg-image';
 
-import 'react-image-crop/dist/ReactCrop.css';
-
-function useDebounceEffect(fn: () => void, waitTime: number, deps: any = []) {
-  useEffect(() => {
-    const t = setTimeout(() => {
-      // eslint-disable-next-line prefer-spread
-      fn.apply(undefined, deps);
-      // fn.apply(undefined, deps);
-    }, waitTime);
-
-    return () => {
-      clearTimeout(t);
-    };
-  }, [deps, fn, waitTime]);
-}
-
-const TO_RADIANS = Math.PI / 180;
-
-async function canvasPreview(
-  image: HTMLImageElement,
-  canvas: HTMLCanvasElement,
-  crop: PixelCrop,
-  scale = 1,
-  rotate = 0,
-) {
-  const ctx = canvas.getContext('2d');
-
-  if (!ctx) {
-    throw new Error('No 2d context');
-  }
-
-  const scaleX = image.naturalWidth / image.width;
-  const scaleY = image.naturalHeight / image.height;
-  // devicePixelRatio slightly increases sharpness on retina devices
-  // at the expense of slightly slower render times and needing to
-  // size the image back down if you want to download/upload and be
-  // true to the images natural size.
-  const pixelRatio = window.devicePixelRatio;
-  // const pixelRatio = 1
-
-  // eslint-disable-next-line no-param-reassign
-  canvas.width = Math.floor(crop.width * scaleX * pixelRatio);
-  // eslint-disable-next-line no-param-reassign
-  canvas.height = Math.floor(crop.height * scaleY * pixelRatio);
-
-  ctx.scale(pixelRatio, pixelRatio);
-  ctx.imageSmoothingQuality = 'high';
-
-  const cropX = crop.x * scaleX;
-  const cropY = crop.y * scaleY;
-
-  const rotateRads = rotate * TO_RADIANS;
-  const centerX = image.naturalWidth / 2;
-  const centerY = image.naturalHeight / 2;
-
-  ctx.save();
-
-  // 5) Move the crop origin to the canvas origin (0,0)
-  ctx.translate(-cropX, -cropY);
-  // 4) Move the origin to the center of the original position
-  ctx.translate(centerX, centerY);
-  // 3) Rotate around the origin
-  ctx.rotate(rotateRads);
-  // 2) Scale the image
-  ctx.scale(scale, scale);
-  // 1) Move the center of the image to the origin (0,0)
-  ctx.translate(-centerX, -centerY);
-  ctx.drawImage(
-    image,
-    0,
-    0,
-    image.naturalWidth,
-    image.naturalHeight,
-    0,
-    0,
-    image.naturalWidth,
-    image.naturalHeight,
-  );
-
-  ctx.restore();
-}
-
-function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: number) {
-  return centerCrop(
-    makeAspectCrop(
-      {
-        unit: '%',
-        width: 90,
-      },
-      aspect,
-      mediaWidth,
-      mediaHeight,
-    ),
-    mediaWidth,
-    mediaHeight,
-  );
-}
+import { getCroppedImg } from './canvasUtils';
 
 const Page = ({
   params,
@@ -170,17 +69,23 @@ const Page = ({
   };
 
   const save = async () => {
-    if (!previewCanvasRef || !previewCanvasRef.current) {
+    if (cardType === 'image') {
+      try {
+        const data = await createCard({
+          recipientMemberId: Number(params.id),
+          imageUrl: selectedImageUrl,
+          message,
+        });
+        if (data === 'SUCCESS') {
+          setIsSuccess(true);
+        }
+      } catch (error) {
+        console.error(error);
+      }
       return;
     }
-    const croppedImageUrl = previewCanvasRef.current.toDataURL('image/jpeg');
-    // console.log('croppedImageUrl', croppedImageUrl);
-    const blob = await fetch(croppedImageUrl).then((res) => res.blob());
 
     const { imageUrl } = await createPresignedUrl();
-    // const response = await fetch(`${imageUrl}?fileName=cropped-image.jpg`);
-    // const { url } = await response.json();
-    // console.log('imageUrl', imageUrl);
 
     if (!imageUrl) {
       console.error('iamge url 없음');
@@ -190,14 +95,13 @@ const Page = ({
     // pre-signed URL을 사용하여 S3에 파일 업로드
     const uploadResponse = await fetch(imageUrl, {
       method: 'PUT',
-      body: blob,
+      body: croppedImage,
       headers: {
         'Content-Type': 'image/jpeg',
       },
     });
 
     if (uploadResponse.ok) {
-      alert('파일 업로드 성공!');
       try {
         const data = await createCard({
           recipientMemberId: Number(params.id),
@@ -211,7 +115,7 @@ const Page = ({
         console.error(error);
       }
     } else {
-      alert('파일 업로드 실패!');
+      console.error('파일 업로드 실패!');
     }
   };
 
@@ -230,50 +134,7 @@ const Page = ({
     });
   }, []);
 
-  const [imgSrc, setImgSrc] = useState('');
-  const previewCanvasRef = useRef<HTMLCanvasElement>(null);
-  const imgRef = useRef<HTMLImageElement>(null);
-  // const hiddenAnchorRef = useRef<HTMLAnchorElement>(null);
-  // const blobUrlRef = useRef('');
-  const [crop, setCrop] = useState<Crop>();
-  const [completedCrop, setCompletedCrop] = useState<PixelCrop>();
-  const [scale] = useState(1);
-  const [rotate] = useState(0);
-  const [aspect] = useState<number | undefined>(16 / 9);
-
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-
-  function onSelectFile(e: ChangeEvent<HTMLInputElement>) {
-    if (e.target.files && e.target.files.length > 0) {
-      setCrop(undefined); // Makes crop preview update between images.
-      const reader = new FileReader();
-      reader.addEventListener('load', () => setImgSrc(reader.result?.toString() || ''));
-      reader.readAsDataURL(e.target.files[0]);
-    }
-  }
-
-  function onImageLoad(e: SyntheticEvent<HTMLImageElement>) {
-    if (aspect) {
-      const { width, height } = e.currentTarget;
-      setCrop(centerAspectCrop(width, height, aspect));
-    }
-  }
-
-  useDebounceEffect(
-    async () => {
-      if (
-        completedCrop?.width &&
-        completedCrop?.height &&
-        imgRef.current &&
-        previewCanvasRef.current
-      ) {
-        // We use canvasPreview as it's much faster than imgPreview.
-        canvasPreview(imgRef.current, previewCanvasRef.current, completedCrop, scale, rotate);
-      }
-    },
-    100,
-    [completedCrop, scale, rotate],
-  );
 
   const handleButtonClick = () => {
     if (!fileInputRef.current) {
@@ -281,6 +142,45 @@ const Page = ({
     }
     fileInputRef.current.click();
   };
+
+  const [crop, setCrop] = useState({ x: 0, y: 0 });
+  const [rotation, setRotation] = useState(0);
+  const [zoom, setZoom] = useState(1);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+  const [croppedImage, setCroppedImage] = useState(null);
+  const [imageSrc, setImageSrc] = useState<any>(null);
+
+  const onCropComplete = (croppedArea: any, croppedAreaPixels2: any) => {
+    setCroppedAreaPixels(croppedAreaPixels2);
+  };
+
+  const showCroppedImage = async () => {
+    try {
+      const croppedImage2: any = await getCroppedImg(imageSrc, croppedAreaPixels, rotation);
+      setCroppedImage(croppedImage2);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const onClose = () => {
+    setCroppedImage(null);
+  };
+
+  const onFileChange = async (e: any) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+      const imageDataUrl = await readFile(file);
+      setImageSrc(imageDataUrl);
+    }
+  };
+
+  const readFile = (file: any) =>
+    new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.addEventListener('load', () => resolve(reader.result), false);
+      reader.readAsDataURL(file);
+    });
 
   return (
     <styled.div display="flex" flexDirection="column" height="100dvh" position="relative">
@@ -429,7 +329,7 @@ const Page = ({
                 ref={fileInputRef}
                 type="file"
                 accept="image/*"
-                onChange={onSelectFile}
+                onChange={onFileChange}
                 style={{ display: 'none' }}
               />
               <styled.div
@@ -440,19 +340,12 @@ const Page = ({
                 borderRadius="16px"
                 overflow="hidden"
               >
-                {completedCrop ? (
+                {croppedImage ? (
                   <>
-                    <canvas
-                      ref={previewCanvasRef}
-                      style={{
-                        objectFit: 'contain',
-                        width: completedCrop.width,
-                        height: completedCrop.height,
-                      }}
-                    />
+                    <img width="100%" height="180px" src={croppedImage ?? ''} alt="" />
                     <styled.button
                       type="button"
-                      onClick={() => setCompletedCrop(undefined)}
+                      onClick={() => setCroppedImage(null)}
                       position="absolute"
                       width="32px"
                       height="32px"
@@ -611,7 +504,7 @@ const Page = ({
         </styled.div>
       )}
       {/* 파일 선택하면 보이는 화면 */}
-      {!!imgSrc && (
+      {!!imageSrc && (
         <styled.div
           position="fixed"
           top={0}
@@ -645,8 +538,8 @@ const Page = ({
               viewBox="0 0 24 24"
               fill="none"
               onClick={() => {
-                // TODO:
-                setImgSrc('');
+                setImageSrc('');
+                onClose();
               }}
             >
               <path
@@ -667,26 +560,22 @@ const Page = ({
             display="flex"
             flexDirection="column"
             justifyContent="center"
-            height="calc(100vh - 112px)"
+            height="100vh"
+            position="absolute"
+            top="0"
+            width="100%"
           >
-            <ReactCrop
+            <Cropper
+              image={imageSrc}
               crop={crop}
-              onChange={(_, percentCrop) => setCrop(percentCrop)}
-              onComplete={(c) => setCompletedCrop(c)}
-              aspect={aspect}
-              // minWidth={400}
-              minHeight={100}
-              // circularCrop
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                ref={imgRef}
-                alt="Crop me"
-                src={imgSrc}
-                style={{ transform: `scale(${scale}) rotate(${rotate}deg)` }}
-                onLoad={onImageLoad}
-              />
-            </ReactCrop>
+              rotation={rotation}
+              zoom={zoom}
+              aspect={16 / 9}
+              onCropChange={setCrop}
+              onRotationChange={setRotation}
+              onCropComplete={onCropComplete}
+              onZoomChange={setZoom}
+            />
           </styled.div>
           <styled.div
             position="absolute"
@@ -720,7 +609,8 @@ const Page = ({
               bg="#6A36FF"
               borderRadius="12px"
               onClick={() => {
-                setImgSrc('');
+                showCroppedImage();
+                setImageSrc('');
               }}
             >
               완료
