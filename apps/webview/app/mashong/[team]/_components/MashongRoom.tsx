@@ -42,6 +42,7 @@ export const MashongRoom = ({ platformName, mashongLevel, isFeeding }: MashongRo
           width={360}
           height={381}
           className={css({ position: 'absolute', bottom: -45, zIndex: 0 })}
+          priority
         />
         {/* `isFeeding` 상태에 따라 `opacity`를 변경해 리플로우와 플리커링 방지 */}
         <Lottie
