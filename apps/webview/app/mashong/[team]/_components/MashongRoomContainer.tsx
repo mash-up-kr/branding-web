@@ -42,7 +42,7 @@ export const MashongRoomContainer = ({
 
     timeoutRef.current = setTimeout(() => {
       debouncedSetFeeding(false);
-    }, 1000);
+    }, 1500);
   };
 
   return (

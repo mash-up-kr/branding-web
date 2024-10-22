@@ -2,6 +2,7 @@
 
 import { speechBubbleTexts } from 'constant';
 import { NumericRange, PlatformNameValue } from 'types';
+import Lottie from 'ui/Lottie/Lottie';
 
 import { useRandomArrayElement } from '@/hooks/useRandomArrayElement';
 import { useTimedToggle } from '@/hooks/useTimedToggle';
@@ -41,9 +42,11 @@ export const MashongRoom = ({ platformName, mashongLevel, isFeeding }: MashongRo
           width={360}
           height={381}
           className={css({ position: 'absolute', bottom: -45, zIndex: 0 })}
+          priority
         />
-        <SvgImage
-          path={`main/mashong-${isFeeding ? 'feed-' : ''}lv${mashongLevel}`}
+        {/* `isFeeding` 상태에 따라 `opacity`를 변경해 리플로우와 플리커링 방지 */}
+        <Lottie
+          path={`/lottie/mashong/default/lv${mashongLevel}.json`}
           width={182}
           height={140}
           className={css({
@@ -51,6 +54,18 @@ export const MashongRoom = ({ platformName, mashongLevel, isFeeding }: MashongRo
             left: 89,
             top: 215,
             cursor: 'pointer',
+            opacity: isFeeding ? 0 : 1,
+          })}
+        />
+        <Lottie
+          path={`/lottie/mashong/feed/lv${mashongLevel}.json`}
+          width={182}
+          height={140}
+          className={css({
+            position: 'absolute',
+            left: 89,
+            top: 215,
+            opacity: isFeeding ? 1 : 0,
           })}
         />
       </div>
