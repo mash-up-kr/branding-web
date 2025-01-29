@@ -193,7 +193,7 @@ export const IntroduceSlide = styled.ul<IntroduceSlideProps>`
     gap: 22px;
     padding-right: 22px;
     overflow-x: visible;
-    animation: ${infiniteSlideAnimation} 20s infinite linear;
+    animation: ${infiniteSlideAnimation} 40s infinite linear;
     animation-play-state: ${isAnimationPause ? 'paused' : 'running'};
   `}
 `;
