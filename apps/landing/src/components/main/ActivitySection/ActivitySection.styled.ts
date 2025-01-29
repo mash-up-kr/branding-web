@@ -39,11 +39,16 @@ export const ActivitySectionWrapper = styled.div`
 
 export const InViewTriggerElement = styled.div`
   position: absolute;
-  top: 43%;
+  top: 55%;
   left: 0;
   width: 100%;
-  height: 67%;
+  height: 55%;
   transform: translate3d(0, -50%, 0);
+
+  @media (max-height: 1000px) {
+    top: 40%;
+    height: 65%;
+  }
 `;
 
 interface ActivitySectionHeadingProps {
