@@ -6,7 +6,6 @@ export const PlatformIntroduceSection = styled.section`
   display: flex;
   flex-flow: column nowrap;
   gap: 5rem;
-  align-items: center;
   justify-content: center;
   width: 100%;
   height: 100vh;
@@ -29,6 +28,7 @@ export const PlatformIntroduceLayout = styled.div<{ isInView: boolean }>`
 
     @media (max-width: ${theme.breakPoint.media.notebook}) {
       width: 100%;
+      margin: initial;
     }
 
     @media (max-width: ${theme.breakPoint.media.tabletL}) {
@@ -41,7 +41,6 @@ export const PlatformIntroduceLayout = styled.div<{ isInView: boolean }>`
 
     @media (max-width: ${theme.breakPoint.media.mobile}) {
       width: 37.5rem;
-      margin: 0 auto;
       padding: 0 2rem;
     }
   `}
@@ -111,6 +110,7 @@ export const PlatformList = styled.ul`
     flex-flow: row nowrap;
     gap: 1.6rem;
     width: 144rem;
+    margin: 0 auto;
     padding: 0 8rem;
     overflow-x: scroll;
     -ms-overflow-style: none;
