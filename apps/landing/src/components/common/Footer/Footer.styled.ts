@@ -10,7 +10,7 @@ export const Footer = styled.footer`
     width: 100%;
     max-width: 144rem;
     margin: 0 auto;
-    padding: 6rem 8rem 14rem;
+    padding: 6rem 8rem 8rem;
 
     @media (max-width: ${theme.breakPoint.media.tabletL}) {
       flex-flow: column nowrap;
