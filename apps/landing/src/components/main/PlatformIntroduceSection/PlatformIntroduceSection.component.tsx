@@ -84,6 +84,8 @@ const PlatformIntroduceSection = () => {
         >
           {introduceSlideArray}
           {introduceSlideArray}
+          {introduceSlideArray}
+          {introduceSlideArray}
         </Styled.IntroduceSlide>
       </Styled.PlatformSlideLayout>
     </Styled.PlatformIntroduceSection>

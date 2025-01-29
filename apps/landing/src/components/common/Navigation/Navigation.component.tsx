@@ -16,7 +16,13 @@ const Navigation = () => (
         </li>
       ))}
     </Styled.NavigationList> */}
-    <Styled.JoinUsAnchor href="https://recruit.mash-up.kr">Join Us!</Styled.JoinUsAnchor>
+    <Styled.JoinUsAnchor
+      href="https://recruit.mash-up.kr"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Join Us!
+    </Styled.JoinUsAnchor>
   </Styled.Navigation>
 );
 
