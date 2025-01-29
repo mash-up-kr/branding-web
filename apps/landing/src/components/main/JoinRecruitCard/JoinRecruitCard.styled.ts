@@ -8,7 +8,6 @@ export const JoinRecruitCard = styled.li`
     position: relative;
     min-width: 33.3rem;
     height: 30.3rem;
-    padding: 2.4rem;
     white-space: pre-wrap;
     background: linear-gradient(90deg, #ff3b5e 0.11%, #6046ff 99.8%);
     border-radius: 1rem;
@@ -28,14 +27,23 @@ export const JoinRecruitCard = styled.li`
     @media (max-width: ${theme.breakPoint.media.tabletS}) {
       min-width: 27.5rem;
       height: 25rem;
-      padding: 20px;
     }
   `}
 `;
 
 export const GoToRecruitLink = styled.a`
   ${({ theme }) => css`
+    position: relative;
+    z-index: ${theme.zIndex.content};
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    padding: 2.4rem;
     color: ${theme.colors.white};
+
+    @media (max-width: ${theme.breakPoint.media.tabletS}) {
+      padding: 2rem;
+    }
   `}
 `;
 
