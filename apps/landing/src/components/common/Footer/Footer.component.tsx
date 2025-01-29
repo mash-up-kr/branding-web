@@ -57,7 +57,7 @@ const Footer = () => (
           <Image src={createSvgUrl('common')('tistory-dark')} alt="" width={32} height={32} />
         </a>
       </Styled.ExternalLinkWrapper>
-      <Styled.CopyRight>© Mash-Up 2024. Made in Seoul.</Styled.CopyRight>
+      <Styled.CopyRight>© Mash-Up 2025. Made in Seoul.</Styled.CopyRight>
     </Styled.EtcItemsWrapper>
   </Styled.Footer>
 );
