@@ -95,16 +95,14 @@ const ACTIVITY_ITEMS: Array<{
 ];
 
 const ActivitySection = forwardRef<HTMLElement>((_, ref) => {
-  const { ref: activitySectionWrapperRef, inView: isInViewActivitySectionWrapper } = useInView({
-    threshold: 0.1,
-  });
-
   const { viewportSize } = useDetectViewport();
+
+  const { ref: inViewTriggerElementRef, inView: isInViewTriggerElementRef } = useInView({});
 
   return (
     <Styled.ActivitySection ref={ref}>
-      <Styled.ActivitySectionWrapper ref={activitySectionWrapperRef}>
-        <Styled.ActivitySectionHeading isInView={isInViewActivitySectionWrapper}>
+      <Styled.ActivitySectionWrapper>
+        <Styled.ActivitySectionHeading isInView={isInViewTriggerElementRef}>
           <Styled.HeadingFirstLine>MASH-UP</Styled.HeadingFirstLine>
           <Styled.HeadingSecondLine>ACTIVITY</Styled.HeadingSecondLine>
 
@@ -121,6 +119,8 @@ const ActivitySection = forwardRef<HTMLElement>((_, ref) => {
             key={index}
           />
         ))}
+
+        <Styled.InViewTriggerElement ref={inViewTriggerElementRef} />
       </Styled.ActivitySectionWrapper>
     </Styled.ActivitySection>
   );
