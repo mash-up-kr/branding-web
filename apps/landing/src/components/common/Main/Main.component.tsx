@@ -5,7 +5,6 @@ import {
   IntroTypingSection,
   MashongSection,
   PlatformIntroduceSection,
-  ProjectSection,
 } from '@/components/main';
 
 const Main = () => (
@@ -15,7 +14,7 @@ const Main = () => (
     <ActivitySection />
     <PlatformIntroduceSection />
     <CurrentInformationSection />
-    <ProjectSection />
+    {/* <ProjectSection /> */}
     <MashongSection />
   </main>
 );

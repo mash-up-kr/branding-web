@@ -1,6 +1,6 @@
+import Lottie from 'lottie-react';
 import { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { Lottie } from 'ui';
 
 import { JoinRecruitCard } from '@/components/main';
 import { PLATFORM_INTRODUCE, PLATFORM_RADIO_ITEMS, TPlatformName } from '@/constants';
