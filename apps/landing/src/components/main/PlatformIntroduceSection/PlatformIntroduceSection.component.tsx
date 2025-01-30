@@ -11,11 +11,19 @@ const PlatformIntroduceSection = () => {
   const [isAnimationPause, setIsAnimationPause] = useState(false);
   const [currentSelectedPlatform, setCurrentSelectedPlatform] =
     useState<TPlatformName>('productDesign');
+  const [currentRenderSlide, setCurrentRenderSlide] = useState<'A' | 'B'>('A');
 
   const { ref: platformIntroduceSectionRef, inView: isPlatformIntroduceSectionInView } =
     useInView();
 
+  const refreshPlatformIntroduceSlideAnimation = () => {
+    setCurrentRenderSlide((prevRenderSlide) => (prevRenderSlide === 'A' ? 'B' : 'A'));
+  };
+
   const handleSelectPlatform = (platform: TPlatformName) => {
+    if (platform === currentSelectedPlatform) return;
+
+    refreshPlatformIntroduceSlideAnimation();
     setCurrentSelectedPlatform(platform);
   };
 
@@ -77,16 +85,29 @@ const PlatformIntroduceSection = () => {
           ))}
         </Styled.PlatformList>
 
-        <Styled.IntroduceSlide
-          onMouseOver={handlePauseSlideAnimation}
-          onMouseOut={handleRunSlideAnimation}
-          isAnimationPause={isAnimationPause}
-        >
-          {introduceSlideArray}
-          {introduceSlideArray}
-          {introduceSlideArray}
-          {introduceSlideArray}
-        </Styled.IntroduceSlide>
+        {currentRenderSlide === 'A' ? (
+          <Styled.IntroduceSlideA
+            onMouseOver={handlePauseSlideAnimation}
+            onMouseOut={handleRunSlideAnimation}
+            isAnimationPause={isAnimationPause}
+          >
+            {introduceSlideArray}
+            {introduceSlideArray}
+            {introduceSlideArray}
+            {introduceSlideArray}
+          </Styled.IntroduceSlideA>
+        ) : (
+          <Styled.IntroduceSlideB
+            onMouseOver={handlePauseSlideAnimation}
+            onMouseOut={handleRunSlideAnimation}
+            isAnimationPause={isAnimationPause}
+          >
+            {introduceSlideArray}
+            {introduceSlideArray}
+            {introduceSlideArray}
+            {introduceSlideArray}
+          </Styled.IntroduceSlideB>
+        )}
       </Styled.PlatformSlideLayout>
     </Styled.PlatformIntroduceSection>
   );
