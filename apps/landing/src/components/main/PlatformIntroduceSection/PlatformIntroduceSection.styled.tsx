@@ -217,6 +217,7 @@ export const IntroduceSlideB = styled.ul<IntroduceSlideProps>`
     display: flex;
     gap: 2.2rem;
     padding-right: 2.2rem;
+    padding-left: 8rem;
     overflow-x: visible;
     animation: ${infiniteSlideAnimation} 40s 0.3s infinite linear;
     animation-play-state: ${isAnimationPause ? 'paused' : 'running'};
