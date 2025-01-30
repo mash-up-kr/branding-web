@@ -95,14 +95,14 @@ export const Description = styled.p`
 export const PlatformSlideLayout = styled.div<{ isInView: boolean }>`
   ${({ theme, isInView }) => css`
     ${theme.animation.fadeUp({ duration: 0.8, delay: 0.01, move: '3rem', isInView })}
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 2.4rem;
+    align-items: start;
+    justify-content: start;
+    max-width: 100vw;
+    overflow: hidden;
   `}
-  display: flex;
-  flex-flow: column nowrap;
-  gap: 2.4rem;
-  align-items: start;
-  justify-content: start;
-  max-width: 100vw;
-  overflow: hidden;
 `;
 
 export const PlatformList = styled.ul`
@@ -117,7 +117,7 @@ export const PlatformList = styled.ul`
     -ms-overflow-style: none;
     scrollbar-width: none;
 
-    &:-webkit-scrollbar {
+    &::-webkit-scrollbar {
       display: none;
     }
 
@@ -148,29 +148,29 @@ interface PlatformProps {
 export const Platform = styled.li<PlatformProps>`
   ${({ theme, isSelected }) => css`
     ${isSelected ? theme.fonts.en.extrabold18 : theme.fonts.en.bold18};
-    padding: 9px 20px;
+    padding: 0.9rem 2rem;
     white-space: nowrap;
     background: ${isSelected
       ? 'linear-gradient(90deg, #FF3B5E 0.11%, #6046FF 99.8%)'
       : 'transparent'};
     background-origin: border-box;
-    border: 1px solid ${isSelected ? 'transparent' : theme.colors.white};
-    border-radius: 50px;
+    border: 0.1rem solid ${isSelected ? 'transparent' : theme.colors.white};
+    border-radius: 5rem;
     cursor: pointer;
 
     @media (max-width: ${theme.breakPoint.media.notebook}) {
       ${theme.fonts.en.bold16};
-      padding: 8px 16px;
+      padding: 0.8rem 1.6rem;
     }
 
     @media (max-width: ${theme.breakPoint.media.tabletL}) {
       ${theme.fonts.en.bold14};
-      padding: 8px 14px;
+      padding: 0.8rem 14rem;
     }
 
     @media (max-width: ${theme.breakPoint.media.tabletS}) {
       ${theme.fonts.en.bold13};
-      padding: 8px 12px;
+      padding: 0.8rem 1.2rem;
     }
   `}
 `;
@@ -188,14 +188,50 @@ interface IntroduceSlideProps {
   isAnimationPause: boolean;
 }
 
-export const IntroduceSlide = styled.ul<IntroduceSlideProps>`
-  ${({ isAnimationPause }) => css`
+export const IntroduceSlideA = styled.ul<IntroduceSlideProps>`
+  ${({ theme, isAnimationPause }) => css`
     display: flex;
-    gap: 22px;
-    padding-right: 22px;
+    gap: 2.2rem;
+    padding-right: 2.2rem;
+    padding-left: 8rem;
     overflow-x: visible;
-    animation: ${infiniteSlideAnimation} 40s infinite linear;
+    animation: ${infiniteSlideAnimation} 40s 0.3s infinite linear;
     animation-play-state: ${isAnimationPause ? 'paused' : 'running'};
+
+    @media (max-width: ${theme.breakPoint.media.tabletL}) {
+      padding-left: 6rem;
+    }
+
+    @media (max-width: ${theme.breakPoint.media.tabletS}) {
+      padding-left: 3rem;
+    }
+
+    @media (max-width: ${theme.breakPoint.media.mobile}) {
+      padding-left: 2rem;
+    }
+  `}
+`;
+
+export const IntroduceSlideB = styled.ul<IntroduceSlideProps>`
+  ${({ theme, isAnimationPause }) => css`
+    display: flex;
+    gap: 2.2rem;
+    padding-right: 2.2rem;
+    overflow-x: visible;
+    animation: ${infiniteSlideAnimation} 40s 0.3s infinite linear;
+    animation-play-state: ${isAnimationPause ? 'paused' : 'running'};
+
+    @media (max-width: ${theme.breakPoint.media.tabletL}) {
+      padding-left: 6rem;
+    }
+
+    @media (max-width: ${theme.breakPoint.media.tabletS}) {
+      padding-left: 3rem;
+    }
+
+    @media (max-width: ${theme.breakPoint.media.mobile}) {
+      padding-left: 2rem;
+    }
   `}
 `;
 
@@ -241,7 +277,7 @@ export const IntroduceTextCard = styled(IntroduceCard)`
     }
 
     @media (max-width: ${theme.breakPoint.media.tabletS}) {
-      padding: 20px;
+      padding: 2rem;
     }
   `}
 `;
