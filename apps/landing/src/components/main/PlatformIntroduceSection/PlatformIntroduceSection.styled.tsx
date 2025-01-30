@@ -51,6 +51,7 @@ export const Title = styled.div`
     ${theme.fonts.en.extrabold70};
     display: flex;
     flex-flow: column nowrap;
+    align-items: start;
 
     @media (max-width: ${theme.breakPoint.media.notebook}) {
       ${theme.fonts.en.extrabold54};
