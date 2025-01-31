@@ -8,28 +8,28 @@ import * as Styled from './ProjectSection.styled';
 
 const PROJECTS = [
   {
-    generation: '13th',
-    title: 'HUMAN\nDEVELOPMENT\nREPORTS',
-    subTitle: 'Education app design',
-    backgroundImageUrl: `${createPngUrl('landing/project')('landing-project-dummy-1-3x-min')}`,
+    generation: '14th',
+    title: 'Linkit',
+    subTitle: '흩어진 링크를 한 곳에서 관리해 줄 AI 기반 링크 보관 서비스',
+    backgroundImageUrl: `${createPngUrl('landing/project')('linkit-3x-min')}`,
   },
   {
-    generation: '13th',
-    title: 'HUMAN\nDEVELOPMENT\nREPORTS',
-    subTitle: 'Education app design',
-    backgroundImageUrl: `${createPngUrl('landing/project')('landing-project-dummy-1-3x-min')}`,
+    generation: '14th',
+    title: 'Korrk',
+    subTitle: '우리가 만드는 미슐랭 가이드,\n꼬르륵',
+    backgroundImageUrl: `${createPngUrl('landing/project')('korrk-3x-min')}`,
   },
   {
-    generation: '13th',
-    title: 'HUMAN\nDEVELOPMENT\nREPORTS',
-    subTitle: 'Education app design',
-    backgroundImageUrl: `${createPngUrl('landing/project')('landing-project-dummy-1-3x-min')}`,
+    generation: '14th',
+    title: 'PIC',
+    subTitle: '우리만의 기억, 네컷에 담아요',
+    backgroundImageUrl: `${createPngUrl('landing/project')('pic-3x-min')}`,
   },
   {
-    generation: '13th',
-    title: 'HUMAN\nDEVELOPMENT\nREPORTS',
-    subTitle: 'Education app design',
-    backgroundImageUrl: `${createPngUrl('landing/project')('landing-project-dummy-1-3x-min')}`,
+    generation: '14th',
+    title: 'Maship',
+    subTitle: 'Mash-Up 구성원간 투표서비스',
+    backgroundImageUrl: `${createPngUrl('landing/project')('maship-3x-min')}`,
   },
   {
     generation: '13th',
@@ -154,15 +154,14 @@ const ProjectSection = () => {
       >
         {PROJECTS.map(({ generation, title, subTitle, backgroundImageUrl }, index) => (
           <Styled.ProjectCard key={index}>
-            <Styled.ProjectInfoWrapper backgroundImageUrl={backgroundImageUrl}>
-              <Styled.ProjectInfo>
-                <Styled.Generation>{generation}</Styled.Generation>
-                <Styled.ProjectTitleArea>
-                  <Styled.ProjectTitle>{title}</Styled.ProjectTitle>
-                  <Styled.SubTitle>{subTitle}</Styled.SubTitle>
-                </Styled.ProjectTitleArea>
-              </Styled.ProjectInfo>
-            </Styled.ProjectInfoWrapper>
+            <Styled.ProjectInfoWrapper backgroundImageUrl={backgroundImageUrl} />
+            <Styled.ProjectInfo>
+              <Styled.Generation>{generation}</Styled.Generation>
+              <Styled.ProjectTitleArea>
+                <Styled.ProjectTitle>{title}</Styled.ProjectTitle>
+                <Styled.SubTitle>{subTitle}</Styled.SubTitle>
+              </Styled.ProjectTitleArea>
+            </Styled.ProjectInfo>
           </Styled.ProjectCard>
         ))}
       </Styled.SlideLayout>

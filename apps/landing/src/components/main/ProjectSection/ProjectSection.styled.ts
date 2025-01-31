@@ -220,6 +220,17 @@ export const ProjectCard = styled.div`
     overflow: hidden;
     border-radius: 1rem;
 
+    &:hover {
+      & > div {
+        &:first-of-type {
+          transform: scale(1.1);
+        }
+        &:last-of-type {
+          bottom: 0;
+        }
+      }
+    }
+
     &:first-of-type {
       margin-left: calc((100vw - 144rem + 16rem) / 2);
     }
@@ -283,19 +294,10 @@ export const ProjectCard = styled.div`
 
 export const ProjectInfoWrapper = styled.div<{ backgroundImageUrl: string }>`
   ${({ backgroundImageUrl }) => css`
-    position: relative;
     width: 100%;
     height: 100%;
     background: url(${backgroundImageUrl}) no-repeat center center / cover;
     transition: transform 0.3s ease-in-out;
-
-    &:hover {
-      transform: scale(1.1);
-
-      & > div {
-        bottom: 0;
-      }
-    }
   `}
 `;
 
@@ -310,7 +312,7 @@ export const ProjectInfo = styled.div`
     align-items: start;
     justify-content: start;
     width: 100%;
-    padding: 3rem;
+    padding: 2.4rem;
     background: linear-gradient(
       180deg,
       rgba(0, 0, 0, 0) 0%,
@@ -321,12 +323,10 @@ export const ProjectInfo = styled.div`
 
     @media (max-width: ${theme.breakPoint.media.notebook}) {
       gap: 0.8rem;
-      padding: 2.4rem;
     }
 
     @media (max-width: ${theme.breakPoint.media.tabletS}) {
       gap: 0.6rem;
-      padding: 2.4rem;
     }
   `}
 `;
@@ -387,6 +387,7 @@ export const ProjectTitle = styled.h3`
 export const SubTitle = styled.div`
   ${({ theme }) => css`
     ${theme.fonts.en.bold20}
+    white-space: pre-wrap;
 
     @media (max-width: ${theme.breakPoint.media.notebook}) {
       ${theme.fonts.en.bold15}
