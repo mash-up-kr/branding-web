@@ -10,7 +10,7 @@ const PROJECTS = [
   {
     generation: '14th',
     title: 'Linkit',
-    subTitle: '흩어진 링크를 한 곳에서 관리해 줄 AI 기반 링크 보관 서비스',
+    subTitle: '흩어진 링크를 한 곳에서 관리해 줄\nAI 기반 링크 보관 서비스',
     backgroundImageUrl: `${createPngUrl('landing/project')('linkit-3x-min')}`,
   },
   {
