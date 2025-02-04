@@ -292,11 +292,11 @@ export const ProjectCard = styled.div`
   `}
 `;
 
-export const ProjectInfoWrapper = styled.div<{ backgroundImageUrl: string }>`
-  ${({ backgroundImageUrl }) => css`
+export const ProjectThumbnail = styled.div<{ thumbnailUrl: string }>`
+  ${({ thumbnailUrl }) => css`
     width: 100%;
     height: 100%;
-    background: url(${backgroundImageUrl}) no-repeat center center / cover;
+    background: url(${thumbnailUrl}) no-repeat center center / cover;
     transition: transform 0.3s ease-in-out;
   `}
 `;
