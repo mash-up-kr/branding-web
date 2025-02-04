@@ -58,6 +58,13 @@ export const fonts = {
       line-height: 1.5;
       letter-spacing: -0.05em;
     `,
+    bold19: css`
+      font-weight: 700;
+      font-size: 1.9rem;
+      font-family: SpoqaHanSansNeo;
+      line-height: 1.5;
+      letter-spacing: -0.05em;
+    `,
     bold18: css`
       font-weight: 700;
       font-size: 1.8rem;
