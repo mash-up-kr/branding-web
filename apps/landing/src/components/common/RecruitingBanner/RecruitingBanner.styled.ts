@@ -18,6 +18,9 @@ export const RecruitingBanner = styled.div`
     width: 100%;
     background: linear-gradient(90deg, #1b64ff 0%, #7632ff 100%);
 
+    @media (max-height: 1000px) {
+      bottom: -7rem;
+    }
     @media (max-width: ${theme.breakPoint.media.notebook}) {
       bottom: -8rem;
     }
@@ -35,11 +38,15 @@ export const RecruitingBannerInner = styled.div`
     gap: 2.4rem;
     align-items: center;
     justify-content: center;
-    padding: 2.4rem;
+    padding: 2.7rem;
 
+    @media (max-height: 1000px) {
+      gap: 1.6rem;
+      padding: 1.9rem;
+    }
     @media (max-width: ${theme.breakPoint.media.notebook}) {
       gap: 1.6rem;
-      padding: 1.8rem;
+      padding: 2.4rem;
     }
     @media (max-width: ${theme.breakPoint.media.tabletS}) {
       padding: 1.25rem;
@@ -47,7 +54,7 @@ export const RecruitingBannerInner = styled.div`
   `}
 `;
 
-export const RecruitBannerTextWrapperContainer = styled.div`
+export const RecruitBannerTextContainer = styled.div`
   ${({ theme }) => css`
     display: flex;
     flex-flow: row nowrap;
@@ -55,6 +62,9 @@ export const RecruitBannerTextWrapperContainer = styled.div`
     align-items: center;
     justify-content: center;
 
+    @media (max-height: 1000px) {
+      gap: 0.8rem;
+    }
     @media (max-width: ${theme.breakPoint.media.notebook}) {
       gap: 0.8rem;
     }
@@ -74,6 +84,9 @@ export const RecruitBannerTextWrapper = styled.div`
     align-items: center;
     justify-content: center;
 
+    @media (max-height: 1000px) {
+      gap: 0.8rem;
+    }
     @media (max-width: ${theme.breakPoint.media.notebook}) {
       gap: 0.8rem;
     }
@@ -88,6 +101,9 @@ export const RecruitingBannerEnText = styled.p`
     ${theme.fonts.en.extrabold32};
     color: ${theme.colors.white};
 
+    @media (max-height: 1000px) {
+      ${theme.fonts.en.extrabold20};
+    }
     @media (max-width: ${theme.breakPoint.media.notebook}) {
       ${theme.fonts.en.extrabold20};
     }
@@ -103,6 +119,9 @@ export const RecruitingBannerKrText = styled.p`
     ${theme.fonts.kr.bold30};
     color: ${theme.colors.white};
 
+    @media (max-height: 1000px) {
+      ${theme.fonts.kr.bold19};
+    }
     @media (max-width: ${theme.breakPoint.media.notebook}) {
       ${theme.fonts.kr.bold19};
     }
@@ -121,20 +140,31 @@ export const MoveToRecruitingPageButton = styled.div`
     align-items: center;
     padding: 0.8rem 2.4rem;
     color: ${theme.colors.purple70};
+    line-height: 3rem;
     background: ${theme.colors.white};
     border-radius: 2.3rem;
 
+    @media (max-height: 1000px) {
+      ${theme.fonts.kr.bold13};
+      gap: 0.7rem;
+      padding: 0.8rem 1.6rem;
+      line-height: 1.6rem;
+    }
     @media (max-width: ${theme.breakPoint.media.notebook}) {
       ${theme.fonts.kr.bold13};
       gap: 0.7rem;
       padding: 0.8rem 1.6rem;
-      line-height: 1.2;
+      line-height: 1.6rem;
     }
   `}
 `;
 
 export const MashUpLogo = styled(MashUpLogoIcon)`
   ${({ theme }) => css`
+    @media (max-height: 1000px) {
+      width: 2.4rem;
+      height: 2.4rem;
+    }
     @media (max-width: ${theme.breakPoint.media.notebook}) {
       width: 2.4rem;
       height: 2.4rem;
@@ -142,6 +172,7 @@ export const MashUpLogo = styled(MashUpLogoIcon)`
     @media (max-width: ${theme.breakPoint.media.tabletS}) {
       width: 1.6rem;
       height: 1.6rem;
+      margin-bottom: 3px;
     }
   `}
 `;
@@ -149,6 +180,10 @@ export const MashUpLogo = styled(MashUpLogoIcon)`
 export const RightArrow = styled(RightArrowIcon)`
   ${({ theme }) =>
     css`
+      @media (max-height: 1000px) {
+        width: 1.6rem;
+        height: 0.74rem;
+      }
       @media (max-width: ${theme.breakPoint.media.notebook}) {
         width: 1.6rem;
         height: 0.74rem;
@@ -164,6 +199,11 @@ export const RecruitingBannerLeftVector = styled(RecruitingBannerLeftVectorIcon)
       left: -16.8rem;
       transform: translate3d(0, -50%, 0);
 
+      @media (max-height: 1000px) {
+        left: -9.7rem;
+        width: 6.95rem;
+        height: 3.1rem;
+      }
       @media (max-width: ${theme.breakPoint.media.notebook}) {
         left: -10.7rem;
         width: 6.95rem;
@@ -186,6 +226,12 @@ export const RecruitingBannerRightVector = styled(RecruitingBannerRightVectorIco
     top: 2.52rem;
     right: -13rem;
 
+    @media (max-height: 1000px) {
+      top: 2.6rem;
+      right: -6.1rem;
+      width: 3.75rem;
+      height: 1.8rem;
+    }
     @media (max-width: ${theme.breakPoint.media.notebook}) {
       top: 2.6rem;
       right: -7.1rem;
