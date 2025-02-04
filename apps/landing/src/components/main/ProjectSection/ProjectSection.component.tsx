@@ -33,9 +33,9 @@ const PROJECTS = [
   },
   {
     generation: '13th',
-    title: 'HUMAN\nDEVELOPMENT\nREPORTS',
-    subTitle: 'Education app design',
-    backgroundImageUrl: `${createPngUrl('landing/project')('landing-project-dummy-1-3x-min')}`,
+    title: 'TwoToo',
+    subTitle: '커플 목표 달성 챌린지 서비스',
+    backgroundImageUrl: `${createPngUrl('landing/project')('twotoo-3x-min')}`,
   },
   {
     generation: '13th',
