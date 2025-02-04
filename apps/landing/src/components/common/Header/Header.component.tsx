@@ -7,8 +7,9 @@ const Header = () => (
     <Styled.HeaderInner>
       <Heading />
       <Navigation />
-      <RecruitingBanner />
     </Styled.HeaderInner>
+
+    <RecruitingBanner />
   </Styled.Header>
 );
 
