@@ -70,7 +70,7 @@ export const RecruitBannerTextContainer = styled.div`
     }
     @media (max-width: ${theme.breakPoint.media.tabletS}) {
       flex-flow: column nowrap;
-      gap: 0.3rem;
+      gap: 0.1rem;
       align-items: start;
     }
   `}
@@ -172,7 +172,7 @@ export const MashUpLogo = styled(MashUpLogoIcon)`
     @media (max-width: ${theme.breakPoint.media.tabletS}) {
       width: 1.6rem;
       height: 1.6rem;
-      margin-bottom: 3px;
+      margin-bottom: 2px;
     }
   `}
 `;
