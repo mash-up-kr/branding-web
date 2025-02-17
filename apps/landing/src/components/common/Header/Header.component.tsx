@@ -1,4 +1,4 @@
-import { Heading, Navigation, RecruitingBanner } from '@/components/common';
+import { Heading, Navigation } from '@/components/common';
 
 import * as Styled from './Header.styled';
 
@@ -8,8 +8,6 @@ const Header = () => (
       <Heading />
       <Navigation />
     </Styled.HeaderInner>
-
-    <RecruitingBanner />
   </Styled.Header>
 );
 
