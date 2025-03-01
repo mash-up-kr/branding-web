@@ -1,6 +1,6 @@
 import { PLATFORM_NAME_MAP } from 'constant';
 import { cookies, headers } from 'next/headers';
-import { assert, isKeyOfObject, getDaysSince } from 'utils';
+import { assert, isKeyOfObject } from 'utils';
 
 import { styled } from '@/styled-system/jsx';
 
@@ -46,6 +46,32 @@ async function getMashongStatus() {
   }
 }
 
+async function getWithMashongDays() {
+  try {
+    const authToken = cookies().get('token')?.value ?? headers().get('authorization');
+
+    if (!authToken) {
+      throw new Error(`유효한 인증 토큰이 필요합니다.`);
+    }
+
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_BASE_PATH}/v1/mashong/with-mashong-days`,
+      {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      },
+    );
+
+    const { data } = await res.json();
+
+    return data;
+  } catch (error) {
+    console.error(error);
+    return 0;
+  }
+}
+
 async function checkAttendance() {
   try {
     const authToken = cookies().get('token')?.value ?? headers().get('authorization');
@@ -71,6 +97,7 @@ async function checkAttendance() {
 
 const Page = async ({ params }: { params: { team: string } }) => {
   const { currentXP, maxXP, remainingPopcorn, currentLevel } = await getMashongStatus();
+  const withMashongDays = await getWithMashongDays();
 
   const platformName: string = params.team.toUpperCase();
   assert(isKeyOfObject(platformName, PLATFORM_NAME_MAP));
@@ -82,11 +109,7 @@ const Page = async ({ params }: { params: { team: string } }) => {
       <Header currentLevel={currentLevel} platformName={platformName} />
       <styled.div px={24} pt={56}>
         <styled.h2 fontWeight={600} fontSize={24} lineHeight="28.6px" letterSpacing="-1%" mb={16}>
-          매숑이가 성장한지{' '}
-          <styled.span color="brand.500">
-            {/** 14기 시작 기준 */}
-            {getDaysSince('2024-03-09')}
-          </styled.span>
+          매숑이가 성장한지 <styled.span color="brand.500">{withMashongDays}</styled.span>
           일째
         </styled.h2>
         <styled.div display="flex" gap={16}>
